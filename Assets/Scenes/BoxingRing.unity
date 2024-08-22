@@ -1058,10 +1058,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: training_dummy
       objectReference: {fileID: 0}
+    - target: {fileID: -5609321221556402741, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: -5423853908868595283, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.321
+      objectReference: {fileID: 0}
+    - target: {fileID: -1433525304616111354, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 5146681718063874739, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
@@ -1526,7 +1536,7 @@ GameObject:
   - component: {fileID: 1304403210829049599}
   m_Layer: 0
   m_Name: MAIN_CTRL.R
-  m_TagString: Untagged
+  m_TagString: Gloves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1898,7 +1908,7 @@ GameObject:
   - component: {fileID: 8661512806148533213}
   m_Layer: 0
   m_Name: MAIN_CTRL.L
-  m_TagString: Untagged
+  m_TagString: Gloves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
