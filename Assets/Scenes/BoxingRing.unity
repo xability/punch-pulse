@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 347628038}
   - component: {fileID: 347628040}
   - component: {fileID: 347628039}
+  - component: {fileID: 347628041}
   m_Layer: 0
   m_Name: LeftHand
   m_TagString: Gloves
@@ -629,6 +630,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: -0.06, y: -0.01, z: 0.03}
+--- !u!114 &347628041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347628036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7085d328719d99244829271a11f7630b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &372829246
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,6 +653,7 @@ GameObject:
   - component: {fileID: 372829247}
   - component: {fileID: 372829248}
   - component: {fileID: 372829249}
+  - component: {fileID: 372829250}
   m_Layer: 0
   m_Name: RightHand
   m_TagString: Gloves
@@ -927,6 +941,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: 0.06, y: -0.01, z: 0.03}
+--- !u!114 &372829250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372829246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7085d328719d99244829271a11f7630b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &520409612
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1626,7 +1652,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

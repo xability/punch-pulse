@@ -11,21 +11,17 @@ public class Boxing_Collisions : MonoBehaviour
     //}
 
     // Update is called once per frame
-    void Update()
-    {
-        Debug.Log("Collision detected with ");
-    }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
         Debug.Log("Collision detected with " + collision.gameObject.name);
         // Check if the collided object has a specific tag or name
         if (collision.gameObject.CompareTag("Enemy"))
         {
             // Perform actions on collision
-            UnityEngine.Debug.Log("Collision detected with " + collision.gameObject.name);
+            Debug.Log("Collision detected with " + collision.gameObject.name);
 
-
+            
             // Apply force to the other object
             // Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
             // if (rb != null)
