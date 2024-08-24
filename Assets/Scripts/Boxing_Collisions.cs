@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
+using TMPro; // Required for TextMeshPro
+
 
 
 public class Boxing_Collisions : MonoBehaviour
@@ -10,6 +12,10 @@ public class Boxing_Collisions : MonoBehaviour
     public XRBaseController leftController;  // Assign via Inspector
     public XRBaseController rightController; // Assign via Inspector
     public InputActionReference hapticAction;
+    public int score = 0;  // Variable to keep track of the score
+    public TMP_Text scoreText; // Assign via Inspector, TextMeshPro text element to display the score
+
+
     // Start is called before the first frame update
     //void Start()
     //{
@@ -20,6 +26,10 @@ public class Boxing_Collisions : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
+
+        // Increment the score
+        score++;
+        UpdateScoreText();
 
         // Check if the collided object has a specific tag or name
         if (collision.gameObject.CompareTag("Enemy"))
@@ -44,6 +54,14 @@ public class Boxing_Collisions : MonoBehaviour
         if (controller != null)
         {
             controller.SendHapticImpulse(amplitude, duration);
+        }
+    }
+
+    void UpdateScoreText()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = score.ToString();
         }
     }
 
