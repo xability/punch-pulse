@@ -1,27 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
+
 
 public class Boxing_Collisions : MonoBehaviour
 {
+    public XRBaseController leftController;  // Assign via Inspector
+    public XRBaseController rightController; // Assign via Inspector
+    public InputActionReference hapticAction;
     // Start is called before the first frame update
     //void Start()
     //{
-        
+
     //}
 
     // Update is called once per frame
 
     void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("Collision detected with " + collision.gameObject.name);
+
         // Check if the collided object has a specific tag or name
         if (collision.gameObject.CompareTag("Enemy"))
         {
             // Perform actions on collision
             Debug.Log("Collision detected with " + collision.gameObject.name);
+            SendHapticImpulse(leftController, 0.5f, 0.2f);
+            SendHapticImpulse(rightController, 0.5f, 0.2f);
 
-            
+
             // Apply force to the other object
             // Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
             // if (rb != null)
@@ -30,4 +38,14 @@ public class Boxing_Collisions : MonoBehaviour
             // }
         }
     }
+
+    void SendHapticImpulse(XRBaseController controller, float amplitude, float duration)
+    {
+        if (controller != null)
+        {
+            controller.SendHapticImpulse(amplitude, duration);
+        }
+    }
+
 }
+
