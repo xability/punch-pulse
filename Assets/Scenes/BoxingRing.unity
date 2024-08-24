@@ -642,6 +642,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7085d328719d99244829271a11f7630b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftController: {fileID: 347628038}
+  rightController: {fileID: 372829248}
+  hapticAction: {fileID: 0}
+  score: 0
+  scoreText: {fileID: 743237385}
 --- !u!1 &372829246
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,6 +958,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7085d328719d99244829271a11f7630b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftController: {fileID: 0}
+  rightController: {fileID: 0}
+  hapticAction: {fileID: 0}
+  score: 0
+  scoreText: {fileID: 0}
 --- !u!1001 &520409612
 PrefabInstance:
   m_ObjectHideFlags: 0
