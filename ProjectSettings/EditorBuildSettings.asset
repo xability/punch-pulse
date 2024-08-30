@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/BoxingRing.unity
+    guid: f23f4eed710de444292e4a91eba5eb80
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2228ce2b025195140b63b5316361deec,
       type: 2}
