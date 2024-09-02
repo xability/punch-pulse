@@ -13,7 +13,7 @@ public class PlayAudioOnTriggerEnter : MonoBehaviour
     public float maxVelocity = 2;
 
     public bool randomizePitch = true;
-    public float minPitch = 0.0f;
+    public float minPitch = 0.6f;
     public float maxPitch = 1.2f;
 
 
