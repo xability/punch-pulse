@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayAudioOnTriggerEnter : MonoBehaviour
+public class PlayAudioOnBoxing : MonoBehaviour
 {
     public AudioClip clip;
     private AudioSource source;
