@@ -252,7 +252,6 @@ GameObject:
   - component: {fileID: 347628038}
   - component: {fileID: 347628040}
   - component: {fileID: 347628039}
-  - component: {fileID: 347628041}
   m_Layer: 0
   m_Name: LeftHand
   m_TagString: Gloves
@@ -630,23 +629,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: -0.06, y: -0.01, z: 0.03}
---- !u!114 &347628041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347628036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7085d328719d99244829271a11f7630b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftController: {fileID: 347628038}
-  rightController: {fileID: 372829248}
-  hapticAction: {fileID: 0}
-  score: 0
-  scoreText: {fileID: 743237385}
 --- !u!1 &372829246
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +640,6 @@ GameObject:
   - component: {fileID: 372829247}
   - component: {fileID: 372829248}
   - component: {fileID: 372829249}
-  - component: {fileID: 372829250}
   m_Layer: 0
   m_Name: RightHand
   m_TagString: Gloves
@@ -946,23 +927,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: 0.06, y: -0.01, z: 0.03}
---- !u!114 &372829250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 372829246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7085d328719d99244829271a11f7630b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftController: {fileID: 347628038}
-  rightController: {fileID: 372829248}
-  hapticAction: {fileID: 0}
-  score: 0
-  scoreText: {fileID: 743237385}
 --- !u!1001 &520409612
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1945,9 +1909,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 595104fb051ba4a9187cc458d42712c4, type: 3}
   targetTag: Gloves
+  leftController: {fileID: 347628038}
+  rightController: {fileID: 372829248}
+  hapticAction: {fileID: 0}
+  score: 0
+  scoreText: {fileID: 743237385}
   useVelocity: 1
   minVelocity: 1
-  maxVelocity: 2
+  maxVelocity: 3
   randomizePitch: 1
   minPitch: 0.6
   maxPitch: 1.2
@@ -2398,8 +2367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399ec84b5c2cc432298aff2bd08e9c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 0}
-  targetTag: Player
+  audioSource: {fileID: 2047914134}
+  exitSound: {fileID: 8300000, guid: 83057b139a64945ea87f6466b58dc63d, type: 3}
 --- !u!1 &2056665194
 GameObject:
   m_ObjectHideFlags: 0
@@ -3188,8 +3157,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 106512746}
   - {fileID: 1643626631}
-  - {fileID: 1167029021}
   - {fileID: 2042691868}
+  - {fileID: 1167029021}
   - {fileID: 332635954189836327}
   - {fileID: 520409612}
   - {fileID: 1953239091}

@@ -1,29 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayAudioOnBoundaryCollision : MonoBehaviour
 {
-    public AudioClip clip;
-    private AudioSource source;
-    public string targetTag;
+    public AudioSource audioSource; // The AudioSource that will play the sound
+    public AudioClip exitSound; // The sound clip to play when the player leaves the collision box
+    private bool isPlayerInBox = true; // Tracks whether the player is in the box
 
-
-    // Start is called before the first frame update
     void Start()
     {
-        source = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
 
-        
+        if (audioSource != null)
+        {
+            audioSource.loop = true; // Ensure the sound loops
+            audioSource.clip = exitSound;
+        }
     }
 
-    // OnTriggerLeave
-    void OnTriggerLeave(Collider other)
+    void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(targetTag))
+        // Check if the player has left the collision box
+        if (other.CompareTag("Player") && isPlayerInBox)
         {
-            source.PlayOneShot(clip);
+            isPlayerInBox = false;
+            PlayExitSound();
         }
-        
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        // Check if the player has re-entered the collision box
+        if (other.CompareTag("Player") && !isPlayerInBox)
+        {
+            isPlayerInBox = true;
+            StopExitSound();
+        }
+    }
+
+    void PlayExitSound()
+    {
+        if (audioSource != null && !audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+    }
+
+    void StopExitSound()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 }
