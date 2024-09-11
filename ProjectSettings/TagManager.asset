@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Gloves
+  - Ring
   layers:
   - Default
   - TransparentFX

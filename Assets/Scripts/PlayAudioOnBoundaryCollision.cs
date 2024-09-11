@@ -4,7 +4,6 @@ public class PlayAudioOnBoundaryCollision : MonoBehaviour
 {
     public AudioSource audioSource; // The AudioSource that will play the sound
     public AudioClip exitSound; // The sound clip to play when the player leaves the collision box
-    private bool isPlayerInBox = true; // Tracks whether the player is in the box
 
     void Start()
     {
@@ -23,9 +22,9 @@ public class PlayAudioOnBoundaryCollision : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         // Check if the player has left the collision box
-        if (other.CompareTag("Player") && isPlayerInBox)
+        if (other.CompareTag("Ring"))
         {
-            isPlayerInBox = false;
+            Debug.Log("Outside");
             PlayExitSound();
         }
     }
@@ -33,9 +32,9 @@ public class PlayAudioOnBoundaryCollision : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // Check if the player has re-entered the collision box
-        if (other.CompareTag("Player") && !isPlayerInBox)
+        if (other.CompareTag("Ring"))
         {
-            isPlayerInBox = true;
+            Debug.Log("Here");
             StopExitSound();
         }
     }
