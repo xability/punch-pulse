@@ -63,26 +63,22 @@ public class PlayAudioOnBoxing : MonoBehaviour
         if (estimator && useVelocity)
         {
             float v = estimator.GetVelocityEstimate().magnitude;
-            Debug.Log(v);
-
-            float volume = Mathf.InverseLerp(minVelocity, maxVelocity, v);
+            Debug.Log("Velocity :" + v);
+            float volume;
             if (v < minVelocity)
             {
                 source.pitch = minPitch;
+                volume = 0.7f;
             }
             else
             {
                 source.pitch = maxPitch;
+                volume = 1f;
             }
             source.PlayOneShot(clip, volume);
         }
         else
         {
-            if (randomizePitch)
-            {
-                source.pitch = Random.Range(minPitch, maxPitch);
-            }
-
             source.PlayOneShot(clip);
         }
     }
