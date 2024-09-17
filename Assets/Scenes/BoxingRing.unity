@@ -1308,7 +1308,7 @@ Transform:
   m_GameObject: {fileID: 231266944}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: -0.945, z: -0.633}
+  m_LocalPosition: {x: -0.5, y: -0.285, z: -0.633}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1326,7 +1326,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.8
+  m_Volume: 0.701
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -4737,7 +4737,7 @@ Transform:
   m_GameObject: {fileID: 884327785}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.99104404, z: -0, w: 0.13353586}
-  m_LocalPosition: {x: -4.384, y: 0.063, z: 0.69}
+  m_LocalPosition: {x: -4.563, y: 0.026, z: 1.004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7347,7 +7347,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -7371,10 +7371,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.45
+  m_Radius: 0.37
   m_Height: 1.9
   m_Direction: 2
-  m_Center: {x: 0, y: 0.29, z: 1.26}
+  m_Center: {x: 0, y: 0.31, z: 1.26}
 --- !u!82 &1953239095
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7498,7 +7498,7 @@ MonoBehaviour:
   randomizePitch: 1
   minPitch: 0.6
   maxPitch: 1.2
-  cheerCooldownTime: 2
+  noCollisionTimeout: 5
 --- !u!1 &1966607307
 GameObject:
   m_ObjectHideFlags: 0

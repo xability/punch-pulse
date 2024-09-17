@@ -29,7 +29,7 @@ public class PlayAudioOnLoop : MonoBehaviour
 
         if (timeSinceLastPlay >= interval)
         {
-            PlayAudioClip();
+            //PlayAudioClip();
             timeSinceLastPlay = 0f;
         }
     }
@@ -38,7 +38,7 @@ public class PlayAudioOnLoop : MonoBehaviour
     {
         if (audioSource != null && !audioSource.isPlaying)
         {
-            audioSource.Play();
+            //audioSource.Play();
         }
     }
 
