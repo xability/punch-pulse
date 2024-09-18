@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Gloves
   - Ring
+  - Ragdoll
   layers:
   - Default
   - TransparentFX

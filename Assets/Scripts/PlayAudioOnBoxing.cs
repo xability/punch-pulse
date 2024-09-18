@@ -33,9 +33,11 @@ public class PlayAudioOnBoxing : MonoBehaviour
 
     private bool hasPlayed = false; // New flag to track if the sound has been played
     private bool isCheering = false; // Flag to check if cheering is playing
-    public float noCollisionTimeout = 5f; // Time in seconds before stopping the cheering sound
+    public float noCollisionTimeout = 5f; // Time in seconds before stopping the cheering sound]
+    public float cheerFadeOutDuration = 1.5f;
 
     private float timeSinceLastCollision = 0f; // Timer to track the last collision time
+
 
     // Start is called before the first frame update
     void Start()
@@ -118,8 +120,10 @@ public class PlayAudioOnBoxing : MonoBehaviour
 
     void StopCheerSound()
     {
-        isCheering = false;
-        cheeringSource.Stop(); // Stop the cheering sound when no collisions happen for 5 seconds
+        if (isCheering)
+        {
+            StartCoroutine(FadeOutCheering());
+        }
     }
 
     // OnTriggerExit
@@ -158,6 +162,24 @@ public class PlayAudioOnBoxing : MonoBehaviour
         {
             scoreText.text = score.ToString();
         }
+    }
+
+    private IEnumerator FadeOutCheering()
+    {
+        float startVolume = cheeringSource.volume;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < cheerFadeOutDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float newVolume = Mathf.Lerp(startVolume, 0f, elapsedTime / cheerFadeOutDuration);
+            cheeringSource.volume = newVolume;
+            yield return null;
+        }
+
+        cheeringSource.Stop();
+        cheeringSource.volume = startVolume; // Reset volume for next use
+        isCheering = false;
     }
 
 }
