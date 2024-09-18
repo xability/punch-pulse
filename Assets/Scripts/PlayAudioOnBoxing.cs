@@ -39,11 +39,22 @@ public class PlayAudioOnBoxing : MonoBehaviour
     private float timeSinceLastCollision = 0f; // Timer to track the last collision time
 
 
+    public Camera playerCamera;
+    public Transform leftControllerTransform;
+    public Transform rightControllerTransform;
+    public float minForwardDistance = 0.2f; // Minimum distance the controller needs to be in front of the player
+
     // Start is called before the first frame update
     void Start()
     {
         source = GetComponent<AudioSource>();
         UpdateScoreText(); // Initialize score display
+
+        if (playerCamera == null)
+            playerCamera = Camera.main;
+
+        if (leftControllerTransform == null || rightControllerTransform == null)
+            Debug.LogWarning("Controller transforms not assigned in PlayAudioOnBoxing script!");
     }
 
     // Update is called once per frame
@@ -59,27 +70,46 @@ public class PlayAudioOnBoxing : MonoBehaviour
         }
     }
 
+    private bool IsControllerInFront(Transform controllerTransform)
+    {
+        if (controllerTransform == null || playerCamera == null)
+            return false;
+
+        Vector3 playerForward = playerCamera.transform.forward;
+        playerForward.y = 0; // Ignore vertical difference
+        playerForward.Normalize();
+
+        Vector3 controllerDirection = controllerTransform.position - playerCamera.transform.position;
+        controllerDirection.y = 0; // Ignore vertical difference
+        controllerDirection.Normalize();
+
+        float dotProduct = Vector3.Dot(playerForward, controllerDirection);
+        float forwardDistance = Vector3.Project(controllerTransform.position - playerCamera.transform.position, playerForward).magnitude;
+
+        return dotProduct > 0 && forwardDistance >= minForwardDistance;
+    }
+
     // OnTriggerEnter
     void OnTriggerEnter(Collider other)
     {
         if (!hasPlayed && other.CompareTag(targetTag))
         {
-            hasPlayed = true; // Set the flag to true to prevent re-triggering
-            // Play the audio clip for punching
-            PlaySound(other);
+            // Check if either controller is in front of the player
+            bool isLeftControllerInFront = IsControllerInFront(leftControllerTransform);
+            bool isRightControllerInFront = IsControllerInFront(rightControllerTransform);
 
-            // Increment the score
-            score++;
-            UpdateScoreText();
-           
-            
-            // Reset the collision timer
-            timeSinceLastCollision = 0f;
-
-            // Play cheering sound if not already playing
-            if (!isCheering)
+            if (isLeftControllerInFront || isRightControllerInFront)
             {
-                PlayCheerSound();
+                hasPlayed = true;
+                PlaySound(other);
+                score++;
+                UpdateScoreText();
+                timeSinceLastCollision = 0f;
+
+                if (!isCheering)
+                {
+                    PlayCheerSound();
+                }
             }
         }
     }
