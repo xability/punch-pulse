@@ -8391,6 +8391,11 @@ MonoBehaviour:
   minPitch: 0.6
   maxPitch: 1.2
   noCollisionTimeout: 5
+  cheerFadeOutDuration: 1.5
+  playerCamera: {fileID: 2036805231}
+  leftControllerTransform: {fileID: 347628037}
+  rightControllerTransform: {fileID: 372829247}
+  minForwardDistance: 0.5
 --- !u!1 &1966607307
 GameObject:
   m_ObjectHideFlags: 0

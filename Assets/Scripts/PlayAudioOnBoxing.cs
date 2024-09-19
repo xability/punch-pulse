@@ -98,9 +98,9 @@ public class PlayAudioOnBoxing : MonoBehaviour
             bool isLeftControllerInFront = IsControllerInFront(leftControllerTransform);
             bool isRightControllerInFront = IsControllerInFront(rightControllerTransform);
 
-            if (isLeftControllerInFront || isRightControllerInFront)
-            {
-                hasPlayed = true;
+            // if (isLeftControllerInFront || isRightControllerInFront)
+            // {
+               hasPlayed = true;
                 PlaySound(other);
                 score++;
                 UpdateScoreText();
@@ -110,7 +110,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
                 {
                     PlayCheerSound();
                 }
-            }
+            //}
         }
     }
 
