@@ -85,6 +85,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
 
         float dotProduct = Vector3.Dot(playerForward, controllerDirection);
         float forwardDistance = Vector3.Project(controllerTransform.position - playerCamera.transform.position, playerForward).magnitude;
+        // Debug.Log("Dot Product: " + dotProduct + " Forward Distance: " + forwardDistance);
 
         return dotProduct > 0 && forwardDistance >= minForwardDistance;
     }
@@ -97,9 +98,10 @@ public class PlayAudioOnBoxing : MonoBehaviour
             // Check if either controller is in front of the player
             bool isLeftControllerInFront = IsControllerInFront(leftControllerTransform);
             bool isRightControllerInFront = IsControllerInFront(rightControllerTransform);
+            Debug.Log(isLeftControllerInFront + " " + isRightControllerInFront + " " + isCheering);
 
-            // if (isLeftControllerInFront || isRightControllerInFront)
-            // {
+            if (isLeftControllerInFront || isRightControllerInFront)
+             {
                hasPlayed = true;
                 PlaySound(other);
                 score++;
@@ -110,7 +112,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
                 {
                     PlayCheerSound();
                 }
-            //}
+            }
         }
     }
 
@@ -144,8 +146,16 @@ public class PlayAudioOnBoxing : MonoBehaviour
 
     void PlayCheerSound()
     {
+
+        if (cheeringSource == null || cheeringClip == null)
+        {
+            Debug.LogWarning("Cheering source or cheering clip is not assigned!");
+            return;
+        }
+
         isCheering = true;
-        cheeringSource.Play(); // Start playing the cheering sound loop
+        Debug.LogWarning("Cheering starting now!");
+        cheeringSource.PlayOneShot(cheeringClip, 0.7f);
     }
 
     void StopCheerSound()
