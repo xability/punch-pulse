@@ -8,16 +8,18 @@ public class MoveEnemyInFront : MonoBehaviour
 {
     public Transform enemy;  // The enemy GameObject to be moved, assign via Inspector
     public Transform player;  // The player's position (usually attach to the XR Rig or player object)
-    public Camera playerCamera; // The player's camera (usually assign to the main VR camera)
+    public Camera playerCamera; // The player's camera (assign the main VR camera)
 
     public InputActionReference rightTriggerAction;  // Input action for the right controller trigger
-    public float distanceInFront = 3f;  // Distance to place the enemy in front of the player
+    public float distanceInFront;  // Distance to place the enemy in front of the player
     public float moveSpeed = 2f;  // Speed at which the enemy moves
     public float rotationSpeed = 3f; // Speed at which the enemy rotates to face the player
 
     private Vector3 targetPosition;
     private bool shouldMove = false;
-    private float initialYPosition;  // To store enemy's initial Y position
+    private float initialXPosition;  // To store the enemy's initial X position (vertical)
+    private float initialYPosition;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +29,7 @@ public class MoveEnemyInFront : MonoBehaviour
             playerCamera = Camera.main;  // Assign the main camera if none provided
         }
 
-        // Get and store the initial Y position of the enemy
+        // Store the initial X (vertical) position of the enemy
         if (enemy != null)
         {
             initialYPosition = enemy.position.y;
@@ -50,7 +52,7 @@ public class MoveEnemyInFront : MonoBehaviour
         shouldMove = true;  // Start moving the enemy
     }
 
-    // Sets the target position for the enemy in front of the player (only x and z change)
+    // Sets the target position for the enemy in front of the player (only Z and Y change)
     void SetTargetPositionInFrontOfPlayer()
     {
         if (enemy == null || playerCamera == null)
@@ -59,12 +61,11 @@ public class MoveEnemyInFront : MonoBehaviour
             return;
         }
 
-        // Calculate the target position in front of the player, only change x and z
+        // Calculate the target position in front of the player (only Z and Y change, X stays the same)
         Vector3 forwardDirection = playerCamera.transform.forward;
-        forwardDirection.y = 0;  // Ignore vertical direction to keep it level
+        forwardDirection.x = 0;  // Ignore X-axis direction to keep it horizontal
         forwardDirection.Normalize();  // Normalize the forward vector
 
-        // Target position with only x and z being updated, y remains the same
         targetPosition = playerCamera.transform.position + forwardDirection * distanceInFront;
         targetPosition.y = initialYPosition;  // Keep the enemy's y-coordinate fixed
     }
@@ -78,12 +79,12 @@ public class MoveEnemyInFront : MonoBehaviour
         }
     }
 
-    // Smoothly moves the enemy towards the target position (only in x and z)
+    // Smoothly moves the enemy towards the target position (only in Z and Y)
     void MoveEnemyTowardsTarget()
     {
         if (enemy == null) return;
 
-        // Move the enemy towards the target position (only x and z)
+        // Move the enemy towards the target position (only Z and Y)
         Vector3 currentPosition = enemy.position;
         currentPosition = Vector3.MoveTowards(
             new Vector3(currentPosition.x, initialYPosition, currentPosition.z),
@@ -92,16 +93,34 @@ public class MoveEnemyInFront : MonoBehaviour
         );
         enemy.position = currentPosition;
 
-        // Rotate the enemy to face the player along the y-axis (no other axis rotation)
+        // Rotate the enemy to face the player along the X-axis (vertical rotation)
+        RotateEnemyTowardsPlayer();
+
+
+    }
+
+    // Rotates the enemy to face the player (only around X-axis)
+    void RotateEnemyTowardsPlayer()
+    {
+        if (enemy == null || playerCamera == null) return;
+
+        // Get the direction from the enemy to the player (ignoring X-axis difference)
         Vector3 directionToPlayer = playerCamera.transform.position - enemy.position;
-        directionToPlayer.y = 0;  // Ignore vertical direction to keep rotation level
-        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+        //directionToPlayer.x = 0;  // Ignore vertical (X-axis) difference
+        directionToPlayer.z = 0;
+        // Calculate the target rotation
+        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
+
+
+        // Apply the rotation smoothly over time
         enemy.rotation = Quaternion.Slerp(enemy.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-        // Stop moving when the enemy reaches the target position
-        if (Vector3.Distance(enemy.position, targetPosition) < 0.1f)
+        // enemy.rotation.x = enemy.rotation.x + 270;
+        // Stop rotation once it's nearly complete
+        if (Quaternion.Angle(enemy.rotation, targetRotation) < 0.1f)
         {
-            shouldMove = false;  // Stop moving the enemy
+            shouldMove = false;  // Stop rotating once close enough
         }
     }
+
 }

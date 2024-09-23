@@ -1569,8 +1569,9 @@ MonoBehaviour:
   playerCamera: {fileID: 2036805231}
   rightTriggerAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  distanceInFront: 3
-  heightOffset: 0
+  distanceInFront: 1
+  moveSpeed: 2
+  rotationSpeed: 2
 --- !u!1 &301230425
 GameObject:
   m_ObjectHideFlags: 0
@@ -8307,17 +8308,17 @@ PrefabInstance:
     - target: {fileID: 5146681718063874739, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.031515855
       objectReference: {fileID: 0}
     - target: {fileID: 5146681718063874739, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.522
+      value: 0.51650006
       objectReference: {fileID: 0}
     - target: {fileID: 5146681718063874739, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.7
+      value: 0.7177298
       objectReference: {fileID: 0}
     - target: {fileID: 5146681718063874739, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
