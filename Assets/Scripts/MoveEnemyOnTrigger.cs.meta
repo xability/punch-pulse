@@ -3,7 +3,12 @@ guid: afbb8c482a52b8347beb47010593c04a
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - enemy: {instanceID: 0}
+  - player: {instanceID: 0}
+  - playerCamera: {instanceID: 0}
+  - rightTriggerAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
