@@ -81,6 +81,7 @@ public class DirectionHelper : MonoBehaviour
             return $"{clockHour} o'clock";
     }
 
+    //test, and check if this implementation works
     public static string GetClockDirectionText(float angle)
     {
         if (angle >= 337.5f || angle < 22.5f)
