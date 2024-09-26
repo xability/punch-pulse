@@ -1516,6 +1516,7 @@ GameObject:
   - component: {fileID: 282555734}
   - component: {fileID: 282555733}
   - component: {fileID: 282555735}
+  - component: {fileID: 282555736}
   m_Layer: 0
   m_Name: Input Action Manager
   m_TagString: Untagged
@@ -1572,6 +1573,23 @@ MonoBehaviour:
   distanceInFront: 1
   moveSpeed: 2
   rotationSpeed: 2
+--- !u!114 &282555736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282555732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312ca56a0d000f242a9289579b3ff5f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 1953239092}
+  stepDistance: 0.5
+  leftTriggerAction: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  playerCamera: {fileID: 2036805231}
 --- !u!1 &301230425
 GameObject:
   m_ObjectHideFlags: 0
@@ -6497,8 +6515,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
 --- !u!4 &1167029021
 Transform:
   m_ObjectHideFlags: 0

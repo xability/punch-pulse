@@ -1,20 +1,87 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using System;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class DirectionHelper : MonoBehaviour
 {
-    public static float CalculateAngle(Vector3 playerPosition, Vector3 enemyPosition)
-    {
-        Vector2 playerPos2D = new Vector2(playerPosition.x, playerPosition.z);
-        Vector2 enemyPos2D = new Vector2(enemyPosition.x, enemyPosition.z);
-        Vector2 vectorToEnemy = enemyPos2D - playerPos2D;
+    public GameObject enemy;
+  public float stepDistance = 1f; // Adjust this value based on your game's scale
+    public InputActionReference leftTriggerAction;
+    public Camera playerCamera; // The player's camera (assign the main VR camera)
 
-        float angle = Mathf.Atan2(vectorToEnemy.y, vectorToEnemy.x) * Mathf.Rad2Deg;
-        if (angle < 0) angle += 360f;
-        return angle;
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (playerCamera == null)
+        {
+            playerCamera = Camera.main;  // Assign the main camera if none provided
+        }
+
+        // Subscribe to trigger action
+        leftTriggerAction.action.performed += OnLeftTriggerPressed;
+        Debug.Log("Left Trigger Action Performed");
     }
 
-    public static string GetClockDirection(float angle)
+    private void OnDestroy()
+    {
+        // Unsubscribe to avoid memory leaks
+        if (leftTriggerAction != null && leftTriggerAction.action != null)
+        {
+            leftTriggerAction.action.performed -= OnLeftTriggerPressed;
+        }
+        else
+        {
+            Debug.Log("Left Trigger Action was already null on destroy");
+        }
+    }
+
+    // Called when the right trigger is pressed
+    private void OnLeftTriggerPressed(InputAction.CallbackContext context)
+    {
+        Vector3 playerPosition = playerCamera.transform.position;
+        Debug.Log($"Player position = {playerPosition}");
+        Vector3 enemyPosition = enemy.transform.position;
+        Debug.Log($"Enemy position = {enemyPosition}");
+
+        // Calculate direction and angle
+        Vector3 directionToEnemy = enemyPosition - playerPosition;
+        Debug.Log($"Direction to enemy = {directionToEnemy}");
+        float angle = Vector3.SignedAngle(playerCamera.transform.forward, directionToEnemy, Vector3.up);
+        Debug.Log($"Enemy angle = {angle}");
+
+        // Determine clock direction
+        string clockDirection = GetClockDirection(angle);
+
+        // Calculate distance and steps
+        float distance = Vector3.Distance(playerPosition, enemyPosition);
+
+        Debug.Log($"Enemy distance = {distance}");  
+        int steps = Mathf.CeilToInt(distance / stepDistance);
+
+        // Output the result
+        Debug.Log($"Enemy is at {clockDirection}. {steps} steps away.");
+    }
+
+    private string GetClockDirection(float angle)
+    {
+        // Normalize angle to 0-360 range
+        angle = (angle + 360) % 360;
+        Debug.Log($"Enemy angle on a scale of 0-360 : {angle}");
+
+        // Convert angle to clock direction
+        int clockHour = Mathf.RoundToInt(angle / 30f);
+        Debug.Log($"Enemy angle in clock hours : {clockHour}");
+
+        // Adjust for 12 o'clock position
+        if (clockHour == 0 || clockHour == 12)
+            return "12 o'clock";
+        else
+            return $"{clockHour} o'clock";
+    }
+
+    public static string GetClockDirectionText(float angle)
     {
         if (angle >= 337.5f || angle < 22.5f)
             return "12 o'clock (Straight)";

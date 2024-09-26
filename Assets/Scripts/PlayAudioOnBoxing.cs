@@ -98,7 +98,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
             // Check if either controller is in front of the player
             bool isLeftControllerInFront = IsControllerInFront(leftControllerTransform);
             bool isRightControllerInFront = IsControllerInFront(rightControllerTransform);
-            Debug.Log(isLeftControllerInFront + " " + isRightControllerInFront + " " + isCheering);
+            Debug.Log("Left controller extended : " + isLeftControllerInFront + "\n Right controller extended : " + isRightControllerInFront + "\n Cheering sound : " + isCheering);
 
             if (isLeftControllerInFront || isRightControllerInFront)
              {
@@ -124,7 +124,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
         {
             float v = estimator.GetVelocityEstimate().magnitude;
             ApplyHapticFeedbackBasedOnVelocity(v);
-            Debug.Log("Velocity :" + v);
+            // Debug.Log("Velocity :" + v);
             float volume;
             if (v < minVelocity)
             {
@@ -149,12 +149,12 @@ public class PlayAudioOnBoxing : MonoBehaviour
 
         if (cheeringSource == null || cheeringClip == null)
         {
-            Debug.LogWarning("Cheering source or cheering clip is not assigned!");
+            Debug.Log("Cheering source or cheering clip is not assigned!");
             return;
         }
 
         isCheering = true;
-        Debug.LogWarning("Cheering starting now!");
+        Debug.Log("Cheering starting now!");
         cheeringSource.PlayOneShot(cheeringClip, 0.7f);
     }
 

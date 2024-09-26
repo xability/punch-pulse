@@ -93,6 +93,13 @@ public class MoveEnemyInFront : MonoBehaviour
         );
         enemy.position = currentPosition;
 
+        float distanceToTarget = Vector3.Distance(currentPosition, targetPosition);
+        if (distanceToTarget < 0.1f)
+        {
+            shouldMove = false;  // Stop moving once close enough
+        }
+
+
         // Rotate the enemy to face the player along the X-axis (vertical rotation)
         RotateEnemyTowardsPlayer();
 
