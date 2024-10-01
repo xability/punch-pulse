@@ -11,6 +11,13 @@ public class DirectionHelper : MonoBehaviour
     public InputActionReference leftTriggerAction;
     public Camera playerCamera; // The player's camera (assign the main VR camera)
 
+
+    // Add Audio Source and Audio Clips
+    public AudioSource audioSource;
+    public AudioClip[] clockDirectionClips; // 12 audio clips for each hour direction
+    public AudioClip[] stepClips; // Audio clips representing the number of steps away (e.g. 1 step, 2 steps, etc.)
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,6 +89,12 @@ public class DirectionHelper : MonoBehaviour
         // Visualize the directions (for debugging)
         // Debug.DrawRay(playerPosition, playerForward * 5f, Color.blue, 2f);
         // Debug.DrawRay(playerPosition, directionToEnemy * 5f, Color.red, 2f);
+        // Play the corresponding audio
+
+        int clockDirectionIndex = Mathf.RoundToInt(angle / 30f) % 12;
+        StartCoroutine(PlayDirectionAndStepsAudio(clockDirectionIndex, steps));
+
+    
     }
 
     private string GetClockDirection(float angle)
@@ -100,5 +113,33 @@ public class DirectionHelper : MonoBehaviour
         else
             return $"{clockHour} o'clock";
     }
+    
+    private IEnumerator PlayDirectionAndStepsAudio(int clockDirectionIndex, int steps)
+    {
+        // Play clock direction audio first
+        if (clockDirectionClips != null && clockDirectionIndex >= 0 && clockDirectionIndex < clockDirectionClips.Length)
+        {
+            audioSource.PlayOneShot(clockDirectionClips[clockDirectionIndex]);
 
+            // Wait for the clock direction clip to finish playing
+            yield return new WaitForSeconds(clockDirectionClips[clockDirectionIndex].length);
+        }
+        else
+        {
+            Debug.LogWarning("Clock direction audio clip not found!");
+        }
+
+        // Play steps audio next
+        if (stepClips != null && steps > 0 && steps - 1 < stepClips.Length)
+        {
+            audioSource.PlayOneShot(stepClips[steps - 1]);
+
+            // Wait for the steps clip to finish playing
+            yield return new WaitForSeconds(stepClips[steps - 1].length);
+        }
+        else
+        {
+            Debug.LogWarning("Steps audio clip not found!");
+        }
+    }
 }

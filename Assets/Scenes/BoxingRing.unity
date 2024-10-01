@@ -1547,7 +1547,7 @@ Transform:
   m_GameObject: {fileID: 282555732}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.95, y: 1.2743553, z: -1.0740845}
+  m_LocalPosition: {x: -0.088, y: 3.359, z: -0.245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1590,6 +1590,26 @@ MonoBehaviour:
   leftTriggerAction: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   playerCamera: {fileID: 2036805231}
+  audioSource: {fileID: 2042691871}
+  clockDirectionClips:
+  - {fileID: 8300000, guid: ad8fe776221bd4aa4a26573201178bfa, type: 3}
+  - {fileID: 8300000, guid: 8c1ac9cf171594d51b5473fcca957c3a, type: 3}
+  - {fileID: 8300000, guid: 4b5f21c88157d40c5979370655baa394, type: 3}
+  - {fileID: 8300000, guid: 171739e00143841c0801c4b1a3068cae, type: 3}
+  - {fileID: 8300000, guid: 3e4a76ae04ce144489aae4edbe5c943e, type: 3}
+  - {fileID: 8300000, guid: bb93bd48052f7463dbcfaeb461a316bd, type: 3}
+  - {fileID: 8300000, guid: 284cb0d899e7c495f854f75f98138a7e, type: 3}
+  - {fileID: 8300000, guid: ace467ac7f0c047acac567d5a5053c27, type: 3}
+  - {fileID: 8300000, guid: 2488c42bd94a142fd93f6173a07ab503, type: 3}
+  - {fileID: 8300000, guid: a0f33e6cabff6432aa1428da7e65ddaf, type: 3}
+  - {fileID: 8300000, guid: 3c55bfc3461714726a707fcb58945133, type: 3}
+  - {fileID: 8300000, guid: c917a38c314ef4daeb3b36c36a630f9c, type: 3}
+  stepClips:
+  - {fileID: 8300000, guid: e322240716e964196a6ce20504ed7b26, type: 3}
+  - {fileID: 8300000, guid: 6d4a890e23dda47aba4081f1f9b2f1ca, type: 3}
+  - {fileID: 8300000, guid: be5f9fc2cfb3e4fc487d169a7fb69049, type: 3}
+  - {fileID: 8300000, guid: d765897254e7d4c8cbcc82d855ad5f15, type: 3}
+  - {fileID: 8300000, guid: 2a239440cd2d24e9db33e562af3fd693, type: 3}
 --- !u!1 &301230425
 GameObject:
   m_ObjectHideFlags: 0
@@ -6515,6 +6535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
 --- !u!4 &1167029021
 Transform:
   m_ObjectHideFlags: 0
@@ -9642,7 +9664,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042691865}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
