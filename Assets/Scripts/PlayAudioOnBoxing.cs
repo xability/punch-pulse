@@ -37,7 +37,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
     public float cheerFadeOutDuration = 1.5f;
 
     private float timeSinceLastCollision = 0f; // Timer to track the last collision time
-
+    private Coroutine cheeringCoroutine;
     public Camera playerCamera;
     public Transform leftControllerTransform;
     public Transform rightControllerTransform;
@@ -54,18 +54,28 @@ public class PlayAudioOnBoxing : MonoBehaviour
 
         if (leftControllerTransform == null || rightControllerTransform == null)
             Debug.LogWarning("Controller transforms not assigned in PlayAudioOnBoxing script!");
+
+        // Ensure the cheering source is not playing at start
+        if (cheeringSource != null)
+        {
+            cheeringSource.Stop();
+            cheeringSource.loop = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Increment timer each frame
-        timeSinceLastCollision += Time.deltaTime;
-
-        // Stop the cheering sound if no collision happens for the timeout duration
-        if (timeSinceLastCollision >= noCollisionTimeout && isCheering)
+        
+        if (isCheering)
         {
-            StopCheerSound();
+            // Increment timer each frame
+            timeSinceLastCollision += Time.deltaTime;
+
+            if (timeSinceLastCollision >= noCollisionTimeout)
+            {
+                StopCheerSound();
+            }
         }
     }
 
@@ -104,13 +114,8 @@ public class PlayAudioOnBoxing : MonoBehaviour
                 PlaySound(other);
                 score++;
                 UpdateScoreText();
-                timeSinceLastCollision = 0f;
+                PlayCheerSound();
 
-                // Start playing the cheering sound if it's not already playing
-                if (!isCheering)
-                {
-                    PlayCheerSound();
-                }
             }
         }
     }
@@ -147,24 +152,36 @@ public class PlayAudioOnBoxing : MonoBehaviour
     {
         if (cheeringSource == null || cheeringClip == null)
         {
-            Debug.Log("Cheering source or cheering clip is not assigned!");
+            Debug.LogWarning("Cheering source or cheering clip is not assigned!");
             return;
         }
 
+        // Stop any ongoing fading coroutine
+        if (cheeringCoroutine != null)
+        {
+            StopCoroutine(cheeringCoroutine);
+        }
+
+        // Reset the volume and play the cheering sound
+        cheeringSource.volume = 1f;
+        if (!cheeringSource.isPlaying)
+        {
+            cheeringSource.clip = cheeringClip;
+            cheeringSource.Play();
+        }
+
         isCheering = true;
-        cheeringSource.clip = cheeringClip; // Assign the cheering clip
-        cheeringSource.loop = true; // Set the cheering audio to loop
-        cheeringSource.Play(); // Play the cheering sound
-        Debug.Log("Cheering starting now!");
+        timeSinceLastCollision = 0f;
     }
 
     void StopCheerSound()
     {
         if (isCheering)
         {
-            StartCoroutine(FadeOutCheering());
+            cheeringCoroutine = StartCoroutine(FadeOutCheering());
         }
     }
+
 
     // OnTriggerExit
     void OnTriggerExit(Collider other)
