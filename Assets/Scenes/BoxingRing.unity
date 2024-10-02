@@ -6536,8 +6536,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
 --- !u!4 &1167029021
 Transform:
   m_ObjectHideFlags: 0
@@ -8324,6 +8322,31 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.321
       objectReference: {fileID: 0}
+    - target: {fileID: -3178086960585824795, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -3178086960585824795, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3178086960585824795, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3178086960585824795, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.379
+      objectReference: {fileID: 0}
+    - target: {fileID: -3178086960585824795, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -1433525304616111354, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
       propertyPath: m_TagString
@@ -8352,12 +8375,12 @@ PrefabInstance:
     - target: {fileID: 5146681718063874739, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.51650006
+      value: 0.501
       objectReference: {fileID: 0}
     - target: {fileID: 5146681718063874739, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.7177298
+      value: 0.72
       objectReference: {fileID: 0}
     - target: {fileID: 5146681718063874739, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
@@ -8419,6 +8442,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1953239095}
+    - targetCorrespondingSourceObject: {fileID: -5609321221556402741, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1953239097}
     - targetCorrespondingSourceObject: {fileID: -1433525304616111354, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
       insertIndex: -1
@@ -8443,7 +8470,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953239092}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -8477,7 +8504,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -8614,6 +8641,20 @@ MonoBehaviour:
   leftControllerTransform: {fileID: 347628037}
   rightControllerTransform: {fileID: 372829247}
   minForwardDistance: 0.3
+--- !u!114 &1953239097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953239092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6cc68126196094dbaf69943503dcec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  punchForce: 10
+  playerGloveTag: Gloves
 --- !u!1 &1966607307
 GameObject:
   m_ObjectHideFlags: 0

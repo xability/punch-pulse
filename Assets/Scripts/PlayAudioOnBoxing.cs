@@ -106,7 +106,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
             // Check if either controller is in front of the player
             bool isLeftControllerInFront = IsControllerInFront(leftControllerTransform);
             bool isRightControllerInFront = IsControllerInFront(rightControllerTransform);
-            Debug.Log("Left controller extended : " + isLeftControllerInFront + "\n Right controller extended : " + isRightControllerInFront + "\n Cheering sound : " + isCheering);
+            // Debug.Log("Left controller extended : " + isLeftControllerInFront + "\n Right controller extended : " + isRightControllerInFront + "\n Cheering sound : " + isCheering);
 
             if (isLeftControllerInFront || isRightControllerInFront)
             {
