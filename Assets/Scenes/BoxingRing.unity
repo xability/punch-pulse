@@ -8508,10 +8508,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.37
+  m_Radius: 0.31
   m_Height: 1.9
   m_Direction: 2
-  m_Center: {x: 0, y: 0.31, z: 1.26}
+  m_Center: {x: 0, y: 0.31, z: 1.3}
 --- !u!82 &1953239095
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8653,8 +8653,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6cc68126196094dbaf69943503dcec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  punchForce: 10
+  punchForce: 3
   playerGloveTag: Gloves
+  dampingFactor: 0.9
+  minimumVelocity: 0.1
 --- !u!1 &1966607307
 GameObject:
   m_ObjectHideFlags: 0

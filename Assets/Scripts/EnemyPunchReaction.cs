@@ -4,7 +4,12 @@ public class EnemyPunchReaction : MonoBehaviour
 {
     public float punchForce = 10f;
     public string playerGloveTag;
+    public float dampingFactor = 0.95f;
+    public float minimumVelocity = 0.1f;
+
     private Rigidbody rb;
+    private Vector3 currentVelocity;
+    private bool isPunched = false;
 
     void Start()
     {
@@ -13,24 +18,42 @@ public class EnemyPunchReaction : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(playerGloveTag)) // Make sure your player's fist has this tag
+        if (other.CompareTag(playerGloveTag))
         {
-            Debug.Log("Player glove tag matched!");
             Vector3 punchDirection = transform.position - other.transform.position;
             punchDirection.y = 0;
             punchDirection = punchDirection.normalized;
 
-            Debug.Log("Applying force: " + (punchDirection * punchForce));
-            rb.AddForce(punchDirection * punchForce, ForceMode.Impulse);
+            currentVelocity = punchDirection * punchForce;
+            rb.velocity = currentVelocity;
+            isPunched = true;
         }
+    }
+
+    void FixedUpdate()
+    {
+        if (isPunched)
+        {
+            ApplyDamping();
+        }
+    }
+
+    void ApplyDamping()
+    {
+        currentVelocity *= dampingFactor;
+
+        if (currentVelocity.magnitude < minimumVelocity)
+        {
+            currentVelocity = Vector3.zero;
+            isPunched = false;
+        }
+
+        rb.velocity = currentVelocity;
     }
 }
 
 /*
- * using UnityEngine;
-
-public class EnemyPunchReaction : MonoBehaviour
-{
+ 
     public float punchForce = 10f;
     public string playerGloveTag;
     public float minPunchForce = 2f; // Minimum force required to move the enemy
