@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyPunchReaction : MonoBehaviour
 {
-    public float punchForce = 10f;
+    public float punchForce = 7f;
     public string playerGloveTag;
     public float dampingFactor = 0.95f;
     public float minimumVelocity = 0.1f;
@@ -25,7 +25,6 @@ public class EnemyPunchReaction : MonoBehaviour
             punchDirection = punchDirection.normalized;
 
             currentVelocity = punchDirection * punchForce;
-            rb.velocity = currentVelocity;
             isPunched = true;
         }
     }
@@ -35,6 +34,7 @@ public class EnemyPunchReaction : MonoBehaviour
         if (isPunched)
         {
             ApplyDamping();
+            MoveObject();
         }
     }
 
@@ -47,11 +47,13 @@ public class EnemyPunchReaction : MonoBehaviour
             currentVelocity = Vector3.zero;
             isPunched = false;
         }
+    }
 
-        rb.velocity = currentVelocity;
+    void MoveObject()
+    {
+        rb.MovePosition(rb.position + currentVelocity * Time.fixedDeltaTime);
     }
 }
-
 /*
  
     public float punchForce = 10f;

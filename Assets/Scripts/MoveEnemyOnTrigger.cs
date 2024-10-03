@@ -94,7 +94,7 @@ public class MoveEnemyInFront : MonoBehaviour
         enemy.position = currentPosition;
 
         float distanceToTarget = Vector3.Distance(currentPosition, targetPosition);
-        if (distanceToTarget < 0.1f)
+        if (distanceToTarget < 0.07f)
         {
             shouldMove = false;  // Stop moving once close enough
         }
