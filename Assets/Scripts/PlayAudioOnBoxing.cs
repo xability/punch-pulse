@@ -20,8 +20,6 @@ public class PlayAudioOnBoxing : MonoBehaviour
     public XRBaseController leftController;  // Assign via Inspector
     public XRBaseController rightController; // Assign via Inspector
     public InputActionReference hapticAction;
-    public int score = 0;  // Variable to keep track of the score
-    public TMP_Text scoreText; // Assign via Inspector, TextMeshPro text element to display the score
 
     public bool useVelocity = true;
     public float minVelocity = 0;
@@ -47,7 +45,6 @@ public class PlayAudioOnBoxing : MonoBehaviour
     void Start()
     {
         source = GetComponent<AudioSource>();
-        UpdateScoreText(); // Initialize score display
 
         if (playerCamera == null)
             playerCamera = Camera.main;
@@ -112,8 +109,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
             {
                 hasPlayed = true;
                 PlaySound(other);
-                score++;
-                UpdateScoreText();
+                ScoreManager.AddScore(1);
                 PlayCheerSound();
 
             }
@@ -213,13 +209,6 @@ public class PlayAudioOnBoxing : MonoBehaviour
         SendHapticImpulse(rightController, intensity, 0.2f);
     }
 
-    void UpdateScoreText()
-    {
-        if (scoreText != null)
-        {
-            scoreText.text = score.ToString();
-        }
-    }
 
     private IEnumerator FadeOutCheering()
     {
