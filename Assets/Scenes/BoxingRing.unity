@@ -8838,10 +8838,14 @@ MonoBehaviour:
   minAttackInterval: 0
   maxAttackInterval: 15
   cooldownAfterAttack: 7
-  attackSound: {fileID: 0}
+  attackIncomingSound: {fileID: 8300000, guid: d77c69e78cf80f845a7af1da332213b3, type: 3}
+  attackHitSound: {fileID: 8300000, guid: 184ba3fec7159c24daec2e879fb39d35, type: 3}
+  attackMissSound: {fileID: 8300000, guid: bb82353bc2057a9439078946ecefda72, type: 3}
   warningLight: {fileID: 1268229800}
   flashDuration: 0.5
   flashCount: 5
+  duckingThresholdPercentage: 0.75
+  audioSource: {fileID: 231266947}
 --- !u!1 &1966607307
 GameObject:
   m_ObjectHideFlags: 0
