@@ -9024,7 +9024,7 @@ MonoBehaviour:
   duckingThresholdPercentage: 0.75
   audioSource: {fileID: 1672657542}
   enemyObject: {fileID: 1953239092}
-  safeDistance: 2
+  safeDistance: 1.2
 --- !u!1 &1966607307
 GameObject:
   m_ObjectHideFlags: 0

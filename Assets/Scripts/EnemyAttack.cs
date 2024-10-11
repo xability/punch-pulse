@@ -4,9 +4,9 @@ using UnityEngine.XR;
 
 public class EnemyAttackBehavior : MonoBehaviour
 {
-    public float minAttackInterval = 3f;
+    public float minAttackInterval = 2f;
     public float maxAttackInterval = 10f;
-    public float cooldownAfterAttack = 4.5f;
+    public float cooldownAfterAttack = 5f;
     private AudioClip attackIncomingSound;
     public AudioClip attackIncomingSoundEasy;
     public AudioClip attackIncomingSoundHard;
@@ -23,7 +23,7 @@ public class EnemyAttackBehavior : MonoBehaviour
     private float duckingThreshold;
 
     public GameObject enemyObject;
-    public float safeDistance = 2f; // The distance at which the player is considered safe
+    public float safeDistance; // The distance at which the player is considered safe
 
     void Start()
     {
@@ -91,21 +91,18 @@ public class EnemyAttackBehavior : MonoBehaviour
             }   
         }
 
-        // Play attack sound
-        if (attackIncomingSound != null)
+        Debug.Log("diffuculty level : " + difficultyLevel);
+        if (difficultyLevel == 0)
         {
-  
-            if (difficultyLevel == 0)
-            {
-                attackIncomingSound = attackIncomingSoundEasy;
-            }
-            else
-            {
-                attackIncomingSound = attackIncomingSoundHard;
-            }
-
-            audioSource.PlayOneShot(attackIncomingSound);
+             attackIncomingSound = attackIncomingSoundEasy;
         }
+        else
+        {
+            attackIncomingSound = attackIncomingSoundHard;
+        }
+
+        audioSource.PlayOneShot(attackIncomingSound);
+   
 
         // Check if player is safe (ducking or far enough away)
         if (!IsPlayerSafe())
