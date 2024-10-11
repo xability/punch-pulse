@@ -4,10 +4,12 @@ using UnityEngine.XR;
 
 public class EnemyAttackBehavior : MonoBehaviour
 {
-    public float minAttackInterval = 0f;
+    public float minAttackInterval = 3f;
     public float maxAttackInterval = 10f;
     public float cooldownAfterAttack = 4.5f;
-    public AudioClip attackIncomingSound;
+    private AudioClip attackIncomingSound;
+    public AudioClip attackIncomingSoundEasy;
+    public AudioClip attackIncomingSoundHard;
     public AudioClip attackHitSound;
     public AudioClip attackMissSound;
     public Light warningLight;
@@ -71,11 +73,8 @@ public class EnemyAttackBehavior : MonoBehaviour
         duckingThresholdPercentage = 0.75f; // Set to 75% of initial height
         duckingThreshold = duckingThresholdPercentage * initialHeadsetHeight;
 
-        // Play attack sound
-        if (attackIncomingSound != null)
-        {
-            audioSource.PlayOneShot(attackIncomingSound);
-        }
+        // Set the attack sound based on the difficulty level
+        int difficultyLevel = DifficultyManager.Instance.GetDifficultyLevel();
 
         // Flash red lights
         if (warningLight != null)
@@ -87,6 +86,22 @@ public class EnemyAttackBehavior : MonoBehaviour
                 warningLight.enabled = false;
                 yield return new WaitForSeconds(flashDuration / 2);
             }   
+        }
+
+        // Play attack sound
+        if (attackIncomingSound != null)
+        {
+  
+            if (difficultyLevel == 0)
+            {
+                attackIncomingSound = attackIncomingSoundEasy;
+            }
+            else
+            {
+                attackIncomingSound = attackIncomingSoundHard;
+            }
+
+            audioSource.PlayOneShot(attackIncomingSound);
         }
 
         // Check if player is ducking
