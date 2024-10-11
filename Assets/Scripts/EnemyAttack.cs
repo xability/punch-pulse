@@ -14,13 +14,16 @@ public class EnemyAttackBehavior : MonoBehaviour
     public AudioClip attackMissSound;
     public Light warningLight;
     public float flashDuration = 0.5f;
-    public int flashCount = 3;
+    public int flashCount = 4;
     public float duckingThresholdPercentage = 0.75f;
 
     private bool canAttack = true;
     public AudioSource audioSource;
     private float initialHeadsetHeight;
     private float duckingThreshold;
+
+    public GameObject enemyObject;
+    public float safeDistance = 2f; // The distance at which the player is considered safe
 
     void Start()
     {
@@ -104,16 +107,16 @@ public class EnemyAttackBehavior : MonoBehaviour
             audioSource.PlayOneShot(attackIncomingSound);
         }
 
-        // Check if player is ducking
-        if (!IsPlayerDucking())
+        // Check if player is safe (ducking or far enough away)
+        if (!IsPlayerSafe())
         {
-            // If the player is not ducking, reduce score
+            // If the player is not safe, reduce score
             audioSource.PlayOneShot(attackHitSound);
             ScoreManager.DecrementScore(5);
         }
         else
         {
-            Debug.Log("Player ducked! No score penalty.");
+            Debug.Log("Player is safe! No score penalty.");
             audioSource.PlayOneShot(attackMissSound);
             // Implement your actual attack logic here
         }
@@ -143,7 +146,7 @@ public class EnemyAttackBehavior : MonoBehaviour
     }
 
 
-    bool IsPlayerDucking()
+    bool IsPlayerSafe()
     {
         // Get headset position
         InputDevice headDevice = InputDevices.GetDeviceAtXRNode(XRNode.Head);
@@ -151,9 +154,25 @@ public class EnemyAttackBehavior : MonoBehaviour
         Debug.Log("ducking height: " + duckingThreshold);
         if (headDevice.TryGetFeatureValue(CommonUsages.devicePosition, out headPosition))
         {
-            // Return true if the player's head is below the ducking threshold
-            Debug.Log("captured headset position : " + headPosition.y);
-            return headPosition.y < duckingThreshold;
+            // Check if the player is ducking
+            bool isDucking = headPosition.y < duckingThreshold;
+
+            // Check the distance between player and enemy
+            if (enemyObject != null)
+            {
+                float distanceToEnemy = Vector3.Distance(headPosition, enemyObject.transform.position);
+                bool isDistanceSafe = distanceToEnemy > safeDistance;
+
+                Debug.Log($"Distance to enemy: {distanceToEnemy}, Is distance safe: {isDistanceSafe}");
+
+                // Player is safe if they are either ducking or far enough away
+                return isDucking || isDistanceSafe;
+            }
+            else
+            {
+                Debug.LogWarning("Enemy object not set in EnemyAttackBehavior!");
+                return isDucking; // Fall back to just checking ducking if enemy object is not set
+            }
         }
 
         return false;
