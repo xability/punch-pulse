@@ -16,11 +16,16 @@ public class EnemyAttackBehavior : MonoBehaviour
     public float flashDuration = 0.5f;
     public int flashCount = 4;
     public float duckingThresholdPercentage = 0.75f;
+    public Camera playerCamera; // The player's camera (assign the main VR camera)
+    public float distanceInFront;
 
     private bool canAttack = true;
     public AudioSource audioSource;
     private float initialHeadsetHeight;
     private float duckingThreshold;
+    public MoveEnemyInFront MoveEnemyInFront;
+    private float initialYPosition;
+    private Vector3 targetPosition;
 
     public GameObject enemyObject;
     public float safeDistance; // The distance at which the player is considered safe
@@ -34,6 +39,7 @@ public class EnemyAttackBehavior : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
         }
     }
+
 
     IEnumerator AttackRoutine()
     {
@@ -78,6 +84,7 @@ public class EnemyAttackBehavior : MonoBehaviour
 
         // Set the attack sound based on the difficulty level
         int difficultyLevel = DifficultyManager.Instance.GetDifficultyLevel();
+       
 
         // Flash red lights
         if (warningLight != null)
@@ -88,7 +95,22 @@ public class EnemyAttackBehavior : MonoBehaviour
                 yield return new WaitForSeconds(flashDuration / 2);
                 warningLight.enabled = false;
                 yield return new WaitForSeconds(flashDuration / 2);
-            }   
+            }
+            if (MoveEnemyInFront != null)
+            {
+                // Move the enemy in front of the player
+                SetTargetPositionInFrontOfPlayer();
+                float distanceToTarget;
+                do
+                {
+                    distanceToTarget = MoveEnemyInFront.MoveEnemyTowardsTarget();
+                    yield return null; // Wait for the next frame
+                } while (distanceToTarget > 0.9f); // Continue until the enemy is close enough
+            }
+            else
+            {
+                Debug.LogError("MoveEnemyInFront reference not set in the Inspector");
+            }
         }
 
         Debug.Log("diffuculty level : " + difficultyLevel);
@@ -102,7 +124,10 @@ public class EnemyAttackBehavior : MonoBehaviour
         }
 
         audioSource.PlayOneShot(attackIncomingSound);
-   
+
+        // Wait for 0.3s before checking if player is safe after the warning sound
+        // reduce this if needed
+        yield return new WaitForSeconds(0.3f);
 
         // Check if player is safe (ducking or far enough away)
         if (!IsPlayerSafe())
@@ -174,4 +199,22 @@ public class EnemyAttackBehavior : MonoBehaviour
 
         return false;
     }
+
+    void SetTargetPositionInFrontOfPlayer()
+    {
+        if (enemyObject == null || playerCamera == null)
+        {
+            Debug.LogWarning("Enemy or Player Camera is not assigned!");
+            return;
+        }
+
+        // Calculate the target position in front of the player (only Z and Y change, X stays the same)
+        Vector3 forwardDirection = playerCamera.transform.forward;
+        forwardDirection.x = 0;  // Ignore X-axis direction to keep it horizontal
+        forwardDirection.Normalize();  // Normalize the forward vector
+
+        targetPosition = playerCamera.transform.position + forwardDirection * distanceInFront;
+        targetPosition.y = initialYPosition;  // Keep the enemy's y-coordinate fixed
+    }
+
 }

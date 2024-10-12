@@ -1309,7 +1309,7 @@ Transform:
   m_GameObject: {fileID: 231266944}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0.159, z: -0.633}
+  m_LocalPosition: {x: -0.5, y: 3.28, z: -0.633}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1327,7 +1327,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.701
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1336,7 +1336,7 @@ AudioSource:
   Priority: 180
   DopplerLevel: 1
   MinDistance: 2
-  MaxDistance: 10
+  MaxDistance: 6
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1519,6 +1519,7 @@ GameObject:
   - component: {fileID: 282555735}
   - component: {fileID: 282555736}
   - component: {fileID: 282555737}
+  - component: {fileID: 282555738}
   m_Layer: 0
   m_Name: Input Action Manager
   m_TagString: Untagged
@@ -1572,7 +1573,7 @@ MonoBehaviour:
   playerCamera: {fileID: 2036805231}
   rightTriggerAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  distanceInFront: 1
+  distanceInFront: 0.7
   moveSpeed: 2
   rotationSpeed: 2
 --- !u!114 &282555736
@@ -1626,6 +1627,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 743237385}
+--- !u!114 &282555738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282555732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 622b412cb6c9f9c46826c50f559f4ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minAttackInterval: 3
+  maxAttackInterval: 10
+  cooldownAfterAttack: 4
+  attackIncomingSoundEasy: {fileID: 8300000, guid: d77c69e78cf80f845a7af1da332213b3,
+    type: 3}
+  attackIncomingSoundHard: {fileID: 8300000, guid: 5feacde8b4fa7dc4badf063b5ec9fff9,
+    type: 3}
+  attackHitSound: {fileID: 8300000, guid: 184ba3fec7159c24daec2e879fb39d35, type: 3}
+  attackMissSound: {fileID: 8300000, guid: bb82353bc2057a9439078946ecefda72, type: 3}
+  warningLight: {fileID: 1268229800}
+  flashDuration: 0.5
+  flashCount: 5
+  duckingThresholdPercentage: 0.75
+  playerCamera: {fileID: 2036805231}
+  distanceInFront: 0.7
+  audioSource: {fileID: 1672657542}
+  MoveEnemyInFront: {fileID: 282555735}
+  enemyObject: {fileID: 1953239092}
+  safeDistance: 1.2
 --- !u!1 &301230425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1653,7 +1685,7 @@ Transform:
   m_GameObject: {fileID: 301230425}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.32, y: -3.5, z: 3.5}
+  m_LocalPosition: {x: -0.32, y: -3.5, z: 4.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1671,13 +1703,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.55
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 180
+  Priority: 189
   DopplerLevel: 1
   MinDistance: 2
   MaxDistance: 7
@@ -3569,7 +3601,7 @@ Transform:
   m_GameObject: {fileID: 431786912}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.5, z: -4.7}
+  m_LocalPosition: {x: 0, y: -3.5, z: -7.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3587,13 +3619,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.55
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 180
+  Priority: 189
   DopplerLevel: 1
   MinDistance: 2
   MaxDistance: 7
@@ -6406,7 +6438,7 @@ Transform:
   m_GameObject: {fileID: 1163669761}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.46, y: -3.5, z: -0.51}
+  m_LocalPosition: {x: 5.62, y: -3.5, z: -0.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6424,13 +6456,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.55
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 180
+  Priority: 189
   DopplerLevel: 1
   MinDistance: 2
   MaxDistance: 7
@@ -7042,7 +7074,7 @@ Transform:
   m_GameObject: {fileID: 1311211262}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.4, y: -3.5, z: -0.51}
+  m_LocalPosition: {x: -7.37, y: -3.5, z: -0.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7060,13 +7092,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.55
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 180
+  Priority: 189
   DopplerLevel: 1
   MinDistance: 2
   MaxDistance: 7
@@ -7897,7 +7929,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 2
   MaxDistance: 10
   Pan2D: 0
@@ -9004,7 +9036,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953239092}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 622b412cb6c9f9c46826c50f559f4ca0, type: 3}
   m_Name: 
@@ -9022,7 +9054,10 @@ MonoBehaviour:
   flashDuration: 0.5
   flashCount: 5
   duckingThresholdPercentage: 0.75
+  playerCamera: {fileID: 2036805231}
+  distanceInFront: 0.7
   audioSource: {fileID: 1672657542}
+  MoveEnemyInFront: {fileID: 282555735}
   enemyObject: {fileID: 1953239092}
   safeDistance: 1.2
 --- !u!1 &1966607307

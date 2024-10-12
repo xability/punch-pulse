@@ -80,9 +80,9 @@ public class MoveEnemyInFront : MonoBehaviour
     }
 
     // Smoothly moves the enemy towards the target position (only in Z and Y)
-    void MoveEnemyTowardsTarget()
+    public float MoveEnemyTowardsTarget()
     {
-        if (enemy == null) return;
+        if (enemy == null) return 0.0f;
 
         // Move the enemy towards the target position (only Z and Y)
         Vector3 currentPosition = enemy.position;
@@ -102,12 +102,12 @@ public class MoveEnemyInFront : MonoBehaviour
 
         // Rotate the enemy to face the player along the X-axis (vertical rotation)
         RotateEnemyTowardsPlayer();
-
+        return distanceToTarget;
 
     }
 
     // Rotates the enemy to face the player (only around X-axis)
-    void RotateEnemyTowardsPlayer()
+    public void RotateEnemyTowardsPlayer()
     {
         if (enemy == null || playerCamera == null) return;
 
