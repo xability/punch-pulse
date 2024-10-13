@@ -75,12 +75,11 @@ public class MoveEnemyInFront : MonoBehaviour
     {
         if (shouldMove)
         {
-            MoveEnemyTowardsTarget();
+            MoveEnemyTowardsTarget(targetPosition);
         }
     }
 
-    // Smoothly moves the enemy towards the target position (only in Z and Y)
-    public float MoveEnemyTowardsTarget()
+    public float MoveEnemyTowardsTarget(Vector3 targetPosition)
     {
         if (enemy == null) return 0.0f;
 
@@ -99,11 +98,9 @@ public class MoveEnemyInFront : MonoBehaviour
             shouldMove = false;  // Stop moving once close enough
         }
 
-
         // Rotate the enemy to face the player along the X-axis (vertical rotation)
         RotateEnemyTowardsPlayer();
         return distanceToTarget;
-
     }
 
     // Rotates the enemy to face the player (only around X-axis)

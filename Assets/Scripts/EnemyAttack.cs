@@ -103,7 +103,8 @@ public class EnemyAttackBehavior : MonoBehaviour
                 float distanceToTarget;
                 do
                 {
-                    distanceToTarget = MoveEnemyInFront.MoveEnemyTowardsTarget();
+                    distanceToTarget = MoveEnemyInFront.MoveEnemyTowardsTarget(targetPosition);
+                    Debug.Log("Distance to target: " + distanceToTarget);
                     yield return null; // Wait for the next frame
                 } while (distanceToTarget > 0.9f); // Continue until the enemy is close enough
             }

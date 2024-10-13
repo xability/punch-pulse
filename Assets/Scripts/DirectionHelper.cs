@@ -28,7 +28,7 @@ public class DirectionHelper : MonoBehaviour
 
         // Subscribe to trigger action
         leftTriggerAction.action.performed += OnLeftTriggerPressed;
-        Debug.Log("Left Trigger Action Performed");
+        // Debug.Log("Left Trigger Action Performed");
     }
 
     private void OnDestroy()
@@ -66,25 +66,25 @@ public class DirectionHelper : MonoBehaviour
         // Adjust angle to match clock face (12 o'clock is forward)
         angle = (angle + 180) % 360;
 
-        Debug.Log($"Adjusted angle: {angle}");
+        // Debug.Log($"Adjusted angle: {angle}");
 
         // Determine clock direction
         string clockDirection = GetClockDirection(angle);
 
         // Calculate distance and steps
-        Debug.Log($"Player position: {playerPosition}, Enemy position: {enemyPosition}");
+        // Debug.Log($"Player position: {playerPosition}, Enemy position: {enemyPosition}");
 
         // Calculate distance ignoring vertical component
         Vector3 playerPositionFlat = new Vector3(playerPosition.x, 0, playerPosition.z);
         Vector3 enemyPositionFlat = new Vector3(enemyPosition.x, 0, enemyPosition.z);
         float distance = Vector3.Distance(playerPositionFlat, enemyPositionFlat);
-        Debug.Log($"Step distance: {stepDistance}");
-        Debug.Log($"Distance to enemy: {distance}");
+        // Debug.Log($"Step distance: {stepDistance}");
+        // Debug.Log($"Distance to enemy: {distance}");
 
         int steps = Mathf.CeilToInt(distance / stepDistance);
 
         // Output the result
-        Debug.Log($"Enemy is at {clockDirection}. {steps} steps away.");
+        // Debug.Log($"Enemy is at {clockDirection}. {steps} steps away.");
 
         // Visualize the directions (for debugging)
         // Debug.DrawRay(playerPosition, playerForward * 5f, Color.blue, 2f);
@@ -101,7 +101,7 @@ public class DirectionHelper : MonoBehaviour
     {
         // Normalize angle to 0-360 range
         angle = (angle + 360) % 360;
-        Debug.Log($"Enemy angle on a scale of 0-360 : {angle}");
+        // Debug.Log($"Enemy angle on a scale of 0-360 : {angle}");
 
         // Convert angle to clock direction
         int clockHour = Mathf.RoundToInt(angle / 30f);
