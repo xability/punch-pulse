@@ -65,7 +65,7 @@ public class EnemyAttackBehavior : MonoBehaviour
 
     IEnumerator PerformAttack()
     {
-        Debug.Log("Enemy is attacking!");
+        // Debug.Log("Enemy is attacking!");
         InputDevice headDevice = InputDevices.GetDeviceAtXRNode(XRNode.Head);
         Vector3 headPosition;
 
@@ -76,7 +76,7 @@ public class EnemyAttackBehavior : MonoBehaviour
         }
 
         // Capture the initial height
-        Debug.Log("Initial headset height: " + initialHeadsetHeight);
+        // Debug.Log("Initial headset height: " + initialHeadsetHeight);
 
         // Set the ducking threshold as a percentage of the initial height
         duckingThresholdPercentage = 0.75f; // Set to 75% of initial height
@@ -114,7 +114,7 @@ public class EnemyAttackBehavior : MonoBehaviour
             }
         }
 
-        Debug.Log("diffuculty level : " + difficultyLevel);
+        // Debug.Log("diffuculty level : " + difficultyLevel);
         if (difficultyLevel == 0)
         {
              attackIncomingSound = attackIncomingSoundEasy;
@@ -159,8 +159,8 @@ public class EnemyAttackBehavior : MonoBehaviour
 
         // Capture the initial height
         initialHeadsetHeight = headPosition.y;
-        Debug.Log("Initial headset height: " + initialHeadsetHeight);
-        Debug.Log("captured headset position : " + headPosition.y);
+        // Debug.Log("Initial headset height: " + initialHeadsetHeight);
+        // Debug.Log("captured headset position : " + headPosition.y);
 
         // Set the ducking threshold as a percentage of the initial height
         duckingThresholdPercentage = 0.75f; // Set to 75% of initial height
