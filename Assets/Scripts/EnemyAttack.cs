@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.XR;
 
+
 public class EnemyAttackBehavior : MonoBehaviour
 {
     public float minAttackInterval = 2f;
@@ -29,6 +30,8 @@ public class EnemyAttackBehavior : MonoBehaviour
 
     public GameObject enemyObject;
     public float safeDistance; // The distance at which the player is considered safe
+    public Animator modelAnimator;
+
 
     void Start()
     {
@@ -125,6 +128,7 @@ public class EnemyAttackBehavior : MonoBehaviour
         }
 
         audioSource.PlayOneShot(attackIncomingSound);
+        TriggerPunchAnimation();
 
         // Wait for 0.3s before checking if player is safe after the warning sound
         // reduce this if needed
@@ -144,6 +148,19 @@ public class EnemyAttackBehavior : MonoBehaviour
             // Implement your actual attack logic here
         }
 
+    }
+
+    void TriggerPunchAnimation()
+    {
+        if (modelAnimator != null)
+        {
+            modelAnimator.SetTrigger("Punch");
+            Debug.LogWarning("Punch triggered!");
+        }
+        else
+        {
+            Debug.LogWarning("Animator not assigned!");
+        }
     }
 
     IEnumerator CaptureInitialHeadsetHeight()
