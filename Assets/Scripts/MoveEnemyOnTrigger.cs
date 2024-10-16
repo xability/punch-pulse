@@ -20,6 +20,9 @@ public class MoveEnemyInFront : MonoBehaviour
     private float initialXPosition;  // To store the enemy's initial X position (vertical)
     private float initialYPosition;
 
+    public float animationRotationOffset = 20f; // Adjust this value as needed
+    private Quaternion initialRotation;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +36,7 @@ public class MoveEnemyInFront : MonoBehaviour
         if (enemy != null)
         {
             initialYPosition = enemy.position.y;
+            initialRotation = enemy.rotation;
         }
 
         // Subscribe to trigger action
@@ -104,13 +108,13 @@ public class MoveEnemyInFront : MonoBehaviour
     }
 
     // Rotates the enemy to face the player (only around X-axis)
-    public void RotateEnemyTowardsPlayer()
+    /*public void RotateEnemyTowardsPlayer()
     {
         if (enemy == null || playerCamera == null) return;
 
         // Get the direction from the enemy to the player (ignoring X-axis difference)
         Vector3 directionToPlayer = playerCamera.transform.position - enemy.position;
-        directionToPlayer.x = 0;  // Ignore vertical (X-axis) difference
+        directionToPlayer.y = 0;  // Ignore vertical (X-axis) difference
         // directionToPlayer.z = 0;
         // Calculate the target rotation
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
@@ -125,6 +129,37 @@ public class MoveEnemyInFront : MonoBehaviour
         {
             shouldMove = false;  // Stop rotating once close enough
         }
-    }
+    }*/
 
+    public void RotateEnemyTowardsPlayer()
+    {
+        if (enemy == null || playerCamera == null) return;
+
+        // Get the direction from the enemy to the player
+        Vector3 directionToPlayer = playerCamera.transform.position - enemy.position;
+        directionToPlayer.y = 0;  // Ignore vertical difference
+
+        // Calculate the target rotation
+        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
+
+        // Apply the rotation smoothly over time
+        enemy.rotation = Quaternion.Slerp(enemy.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+        // Apply correction for animation rotation
+        Vector3 currentEulerAngles = enemy.rotation.eulerAngles;
+        //currentEulerAngles.y += animationRotationOffset;
+        enemy.rotation = Quaternion.Euler(currentEulerAngles);
+
+        // Ensure the enemy stays upright
+        Vector3 uprightEulerAngles = enemy.rotation.eulerAngles;
+        uprightEulerAngles.x = initialRotation.eulerAngles.x;
+        uprightEulerAngles.z = initialRotation.eulerAngles.z;
+        enemy.rotation = Quaternion.Euler(uprightEulerAngles);
+
+        // Stop rotation once it's nearly complete
+        if (Quaternion.Angle(enemy.rotation, targetRotation) < 0.1f)
+        {
+            shouldMove = false;  // Stop rotating once close enough
+        }
+    }
 }
