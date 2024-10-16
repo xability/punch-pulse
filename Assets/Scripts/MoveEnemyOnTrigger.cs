@@ -110,8 +110,8 @@ public class MoveEnemyInFront : MonoBehaviour
 
         // Get the direction from the enemy to the player (ignoring X-axis difference)
         Vector3 directionToPlayer = playerCamera.transform.position - enemy.position;
-        //directionToPlayer.x = 0;  // Ignore vertical (X-axis) difference
-        directionToPlayer.z = 0;
+        directionToPlayer.x = 0;  // Ignore vertical (X-axis) difference
+        // directionToPlayer.z = 0;
         // Calculate the target rotation
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
 

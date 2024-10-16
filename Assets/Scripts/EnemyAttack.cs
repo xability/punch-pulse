@@ -116,6 +116,7 @@ public class EnemyAttackBehavior : MonoBehaviour
                 Debug.LogError("MoveEnemyInFront reference not set in the Inspector");
             }
         }
+        TriggerPunchAnimation();
 
         // Debug.Log("diffuculty level : " + difficultyLevel);
         if (difficultyLevel == 0)
@@ -128,7 +129,6 @@ public class EnemyAttackBehavior : MonoBehaviour
         }
 
         audioSource.PlayOneShot(attackIncomingSound);
-        TriggerPunchAnimation();
 
         // Wait for 0.3s before checking if player is safe after the warning sound
         // reduce this if needed
@@ -155,7 +155,6 @@ public class EnemyAttackBehavior : MonoBehaviour
         if (modelAnimator != null)
         {
             modelAnimator.SetTrigger("Punch");
-            Debug.LogWarning("Punch triggered!");
         }
         else
         {
@@ -191,7 +190,8 @@ public class EnemyAttackBehavior : MonoBehaviour
         // Get headset position
         InputDevice headDevice = InputDevices.GetDeviceAtXRNode(XRNode.Head);
         Vector3 headPosition;
-        Debug.Log("ducking height: " + duckingThreshold);
+        // Debug.Log("ducking height: " + duckingThreshold);
+        
         if (headDevice.TryGetFeatureValue(CommonUsages.devicePosition, out headPosition))
         {
             // Check if the player is ducking
