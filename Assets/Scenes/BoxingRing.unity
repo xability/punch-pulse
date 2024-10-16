@@ -1657,7 +1657,7 @@ MonoBehaviour:
   distanceInFront: 0.7
   audioSource: {fileID: 1672657542}
   MoveEnemyInFront: {fileID: 282555735}
-  enemyObject: {fileID: 897061040}
+  enemyObject: {fileID: 1848126064}
   safeDistance: 1.2
   modelAnimator: {fileID: 1848126072}
 --- !u!1 &301230425
@@ -7136,7 +7136,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.092
+      value: -2.897
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
@@ -7146,7 +7146,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.168
+      value: 2.893
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
@@ -8429,7 +8429,7 @@ PrefabInstance:
     - target: {fileID: 5146681718063874739, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.79
+      value: -0.064
       objectReference: {fileID: 0}
     - target: {fileID: 5146681718063874739, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}
