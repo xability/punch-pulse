@@ -108,9 +108,9 @@ public class PlayAudioOnBoxing : MonoBehaviour
             if (isLeftControllerInFront || isRightControllerInFront)
             {
                 hasPlayed = true;
-                PlaySound(other);
+                PlaySound(other); // --> adding punching sound
                 ScoreManager.AddScore(1);
-                PlayCheerSound();
+                // PlayCheerSound(); -- commenting out cheering sound
 
             }
         }

@@ -109,7 +109,7 @@ public class EnemyAttackBehavior : MonoBehaviour
                     distanceToTarget = MoveEnemyInFront.MoveEnemyTowardsTarget(targetPosition);
                     Debug.Log("Distance to target: " + distanceToTarget);
                     yield return null; // Wait for the next frame
-                } while (distanceToTarget > 0.9f); // Continue until the enemy is close enough
+                } while (distanceToTarget > 0.8f); // Continue until the enemy is close enough
             }
             else
             {
@@ -130,9 +130,8 @@ public class EnemyAttackBehavior : MonoBehaviour
 
         audioSource.PlayOneShot(attackIncomingSound);
 
-        // Wait for 0.3s before checking if player is safe after the warning sound
-        // reduce this if needed
-        yield return new WaitForSeconds(0.3f);
+        // Wait for 1s before checking if player is safe after the warning sound
+        yield return new WaitForSeconds((0.75)f);
 
         // Check if player is safe (ducking or far enough away)
         if (!IsPlayerSafe())
