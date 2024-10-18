@@ -23,6 +23,9 @@ public class MoveEnemyInFront : MonoBehaviour
     public float animationRotationOffset = 20f; // Adjust this value as needed
     private Quaternion initialRotation;
 
+    // Movement audio
+    public AudioSource movementAudioSource;  // Assign this in the Inspector
+    private bool isMoving = false;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +40,15 @@ public class MoveEnemyInFront : MonoBehaviour
         {
             initialYPosition = enemy.position.y;
             initialRotation = enemy.rotation;
+        }
+
+        if (movementAudioSource == null)
+        {
+            movementAudioSource = enemy.GetComponent<AudioSource>();
+            if (movementAudioSource == null)
+            {
+                Debug.LogWarning("AudioSource not found on the enemy. Please assign it in the Inspector or add an AudioSource component to the enemy.");
+            }
         }
 
         // Subscribe to trigger action
@@ -54,6 +66,12 @@ public class MoveEnemyInFront : MonoBehaviour
     {
         SetTargetPositionInFrontOfPlayer();
         shouldMove = true;  // Start moving the enemy
+
+        if (!isMoving && movementAudioSource != null)
+        {
+            movementAudioSource.Play();
+            isMoving = true;
+        }
     }
 
     // Sets the target position for the enemy in front of the player (only Z and Y change)
@@ -77,9 +95,22 @@ public class MoveEnemyInFront : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if (shouldMove)
+        //{
+        //    MoveEnemyTowardsTarget(targetPosition);
+        //}
         if (shouldMove)
         {
-            MoveEnemyTowardsTarget(targetPosition);
+            float distanceToTarget = MoveEnemyTowardsTarget(targetPosition);
+            if (distanceToTarget < 0.7f)
+            {
+                shouldMove = false;
+                if (isMoving && movementAudioSource != null)
+                {
+                    movementAudioSource.Stop();
+                    isMoving = false;
+                }
+            }
         }
     }
 
@@ -97,10 +128,10 @@ public class MoveEnemyInFront : MonoBehaviour
         enemy.position = currentPosition;
 
         float distanceToTarget = Vector3.Distance(currentPosition, targetPosition);
-        if (distanceToTarget < 0.07f)
-        {
-            shouldMove = false;  // Stop moving once close enough
-        }
+        //if (distanceToTarget < 0.07f)
+        //{
+        //    shouldMove = false;  // Stop moving once close enough
+        //}
 
         // Rotate the enemy to face the player along the X-axis (vertical rotation)
         RotateEnemyTowardsPlayer();
@@ -160,6 +191,11 @@ public class MoveEnemyInFront : MonoBehaviour
         if (Quaternion.Angle(enemy.rotation, targetRotation) < 0.1f)
         {
             shouldMove = false;  // Stop rotating once close enough
+            if (isMoving && movementAudioSource != null)
+            {
+                movementAudioSource.Stop();
+                isMoving = false;
+            }
         }
     }
 }
