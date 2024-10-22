@@ -17,6 +17,7 @@ public class DirectionHelper : MonoBehaviour
     public AudioClip[] clockDirectionClips; // 12 audio clips for each hour direction
     public AudioClip[] stepClips; // Audio clips representing the number of steps away (e.g. 1 step, 2 steps, etc.)
 
+    private bool isAudioPlaying = false;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +48,11 @@ public class DirectionHelper : MonoBehaviour
     // Called when the right trigger is pressed
     private void OnLeftTriggerPressed(InputAction.CallbackContext context)
     {
+        if (isAudioPlaying)
+        {
+            Debug.Log("Audio is currently playing, skipping this trigger.");
+            return;
+        }
         Vector3 playerPosition = playerCamera.transform.position;
         Vector3 enemyPosition = enemy.transform.position;
 
@@ -116,6 +122,7 @@ public class DirectionHelper : MonoBehaviour
     
     private IEnumerator PlayDirectionAndStepsAudio(int clockDirectionIndex, int steps)
     {
+        isAudioPlaying = true;
         // Play clock direction audio first
         if (clockDirectionClips != null && clockDirectionIndex >= 0 && clockDirectionIndex < clockDirectionClips.Length)
         {
@@ -127,6 +134,8 @@ public class DirectionHelper : MonoBehaviour
         else
         {
             Debug.LogWarning("Clock direction audio clip not found!");
+            isAudioPlaying = false;
+            yield break;
         }
 
         // Play steps audio next
@@ -140,6 +149,10 @@ public class DirectionHelper : MonoBehaviour
         else
         {
             Debug.LogWarning("Steps audio clip not found!");
+            isAudioPlaying = false;
+            yield break;
         }
+        isAudioPlaying = false;
+     
     }
 }
