@@ -1577,7 +1577,7 @@ MonoBehaviour:
   moveSpeed: 2
   rotationSpeed: 2
   animationRotationOffset: -3.5
-  movementAudioSource: {fileID: 0}
+  movementAudioSource: {fileID: 2042691871}
 --- !u!114 &282555736
 MonoBehaviour:
   m_ObjectHideFlags: 0

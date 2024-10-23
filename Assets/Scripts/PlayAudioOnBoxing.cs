@@ -124,7 +124,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
     // OnTriggerEnter
     void OnTriggerEnter(Collider other)
     {
-        if (!hasPlayed && other.CompareTag("Gloves"))
+        if (!hasPlayed && other.CompareTag(targetTag))
         {
             // Check if either controller is in front of the player
             bool isLeftControllerInFront = IsControllerInFront(leftControllerTransform);
