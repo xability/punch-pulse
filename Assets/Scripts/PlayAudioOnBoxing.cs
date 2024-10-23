@@ -41,6 +41,8 @@ public class PlayAudioOnBoxing : MonoBehaviour
     public Transform rightControllerTransform;
     public float minForwardDistance = 0.2f; // Minimum distance the controller needs to be in front of the player
 
+    public Animator modelAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,6 +97,18 @@ public class PlayAudioOnBoxing : MonoBehaviour
         return dotProduct > 0 && forwardDistance >= minForwardDistance;
     }
 
+    void TriggerHitAnimation()
+    {
+        if (modelAnimator != null)
+        {
+            modelAnimator.SetTrigger("Hit_body");
+        }
+        else
+        {
+            Debug.LogWarning("Animator not assigned!");
+        }
+    }
+
     // OnTriggerEnter
     void OnTriggerEnter(Collider other)
     {
@@ -109,11 +123,13 @@ public class PlayAudioOnBoxing : MonoBehaviour
             {
                 hasPlayed = true;
                 PlaySound(other); // --> adding punching sound
+                TriggerHitAnimation();
                 ScoreManager.AddScore(1);
                 // PlayCheerSound(); -- commenting out cheering sound
 
             }
         }
+        Debug.Log("test" + other.CompareTag('Head_Collider'));
     }
 
     void PlaySound(Collider other)

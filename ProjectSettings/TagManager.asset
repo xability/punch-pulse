@@ -8,6 +8,7 @@ TagManager:
   - Gloves
   - Ring
   - Ragdoll
+  - Head_Collider
   layers:
   - Default
   - TransparentFX

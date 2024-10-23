@@ -102,7 +102,7 @@ public class MoveEnemyInFront : MonoBehaviour
         if (shouldMove)
         {
             float distanceToTarget = MoveEnemyTowardsTarget(targetPosition);
-            if (distanceToTarget < 0.7f)
+            if (distanceToTarget < 0.8f)
             {
                 shouldMove = false;
                 if (isMoving && movementAudioSource != null)
