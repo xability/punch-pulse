@@ -129,7 +129,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
 
             }
         }
-        Debug.Log("test" + other.CompareTag('Head_Collider'));
+        //Debug.Log("test" + other.CompareTag('Head_Collider'));
     }
 
     void PlaySound(Collider other)
