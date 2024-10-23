@@ -97,7 +97,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
         return dotProduct > 0 && forwardDistance >= minForwardDistance;
     }
 
-    void TriggerHitAnimation()
+    void TriggerBodyHitAnimation()
     {
         if (modelAnimator != null)
         {
@@ -109,10 +109,22 @@ public class PlayAudioOnBoxing : MonoBehaviour
         }
     }
 
+    void TriggerHeadHitAnimation()
+    {
+        if (modelAnimator != null)
+        {
+            modelAnimator.SetTrigger("Hit_Head");
+        }
+        else
+        {
+            Debug.LogWarning("Animator not assigned!");
+        }
+    }
+
     // OnTriggerEnter
     void OnTriggerEnter(Collider other)
     {
-        if (!hasPlayed && other.CompareTag(targetTag))
+        if (!hasPlayed && other.CompareTag("Gloves"))
         {
             // Check if either controller is in front of the player
             bool isLeftControllerInFront = IsControllerInFront(leftControllerTransform);
@@ -123,8 +135,17 @@ public class PlayAudioOnBoxing : MonoBehaviour
             {
                 hasPlayed = true;
                 PlaySound(other); // --> adding punching sound
-                TriggerHitAnimation();
-                ScoreManager.AddScore(1);
+
+                if (other.CompareTag("Head_Collider"))
+                {
+                    TriggerHeadHitAnimation();
+                    ScoreManager.AddScore(2); // Give more points for head hits
+                }
+                else
+                {
+                    TriggerBodyHitAnimation();
+                    ScoreManager.AddScore(1);
+                }
                 // PlayCheerSound(); -- commenting out cheering sound
 
             }
