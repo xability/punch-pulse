@@ -29,7 +29,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
     public float minPitch = 0.6f;
     public float maxPitch = 1.2f;
 
-    private bool hasPlayed = false; // Flag to track if the sound has been played
+    public bool hasPlayed = false; // Flag to track if the sound has been played
     private bool isCheering = false; // Flag to check if cheering is playing
     public float noCollisionTimeout = 5f; // Time in seconds before stopping the cheering sound
     public float cheerFadeOutDuration = 1.5f;
@@ -78,7 +78,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
         }
     }
 
-    private bool IsControllerInFront(Transform controllerTransform)
+    protected virtual bool IsControllerInFront(Transform controllerTransform)
     {
         if (controllerTransform == null || playerCamera == null)
             return false;
@@ -109,7 +109,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
         }
     }
 
-    void TriggerHeadHitAnimation()
+    protected virtual void TriggerHeadHitAnimation()
     {
         if (modelAnimator != null)
         {
@@ -122,10 +122,12 @@ public class PlayAudioOnBoxing : MonoBehaviour
     }
 
     // OnTriggerEnter
-    void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (!hasPlayed && other.CompareTag(targetTag))
         {
+            Debug.Log("Punch hit!" + other.gameObject.tag);
+
             // Check if either controller is in front of the player
             bool isLeftControllerInFront = IsControllerInFront(leftControllerTransform);
             bool isRightControllerInFront = IsControllerInFront(rightControllerTransform);
@@ -135,25 +137,29 @@ public class PlayAudioOnBoxing : MonoBehaviour
             {
                 hasPlayed = true;
                 PlaySound(other); // --> adding punching sound
-
-                if (other.CompareTag("Head_Collider"))
-                {
-                    TriggerHeadHitAnimation();
-                    ScoreManager.AddScore(2); // Give more points for head hits
-                }
-                else
-                {
-                    TriggerBodyHitAnimation();
-                    ScoreManager.AddScore(1);
-                }
+                TriggerBodyHitAnimation();
+                ScoreManager.AddScore(1);
                 // PlayCheerSound(); -- commenting out cheering sound
 
             }
         }
-        //Debug.Log("test" + other.CompareTag('Head_Collider'));
+
     }
 
-    void PlaySound(Collider other)
+    void OnCollisionEnter(Collision collision)
+    {
+        // Loop through all contact points in the collision
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            // Get the position of the contact point
+            Vector3 contactPoint = contact.point;
+            Debug.Log("Collision occurred at: " + contactPoint);
+
+            // Optionally, visualize the contact point
+        }
+    }
+
+    protected virtual void PlaySound(Collider other)
     {
         VelocityEstimator estimator = other.GetComponent<VelocityEstimator>();
 
@@ -239,11 +245,11 @@ public class PlayAudioOnBoxing : MonoBehaviour
         float intensity = velocity / maxVelocity;
 
         // Clamps the given value between the given minimum float and maximum float values.
-        intensity = Mathf.Clamp(intensity, 0.25f, 0.75f);
+        intensity = Mathf.Clamp(intensity, 0.4f, 0.75f);
 
         // Apply the intensity to the haptic feedback
-        SendHapticImpulse(leftController, intensity, 0.2f);
-        SendHapticImpulse(rightController, intensity, 0.2f);
+        SendHapticImpulse(leftController, intensity, 0.1f);
+        SendHapticImpulse(rightController, intensity, 0.1f);
     }
 
 
