@@ -50,7 +50,7 @@ public class DirectionHelper : MonoBehaviour
     {
         if (isAudioPlaying)
         {
-            Debug.Log("Audio is currently playing, skipping this trigger.");
+            // Debug.Log("Audio is currently playing, skipping this trigger.");
             return;
         }
         Vector3 playerPosition = playerCamera.transform.position;

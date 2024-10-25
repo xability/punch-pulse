@@ -28,6 +28,8 @@ public class PlayAudioOnBoxing : MonoBehaviour
     public bool randomizePitch = true;
     public float minPitch = 0.6f;
     public float maxPitch = 1.2f;
+    private Transform hittingGlove;
+    private Vector3 hittingGloveVelocity;
 
     public bool hasPlayed = false; // Flag to track if the sound has been played
     private bool isCheering = false; // Flag to check if cheering is playing
@@ -42,6 +44,10 @@ public class PlayAudioOnBoxing : MonoBehaviour
     public float minForwardDistance = 0.2f; // Minimum distance the controller needs to be in front of the player
 
     public Animator modelAnimator;
+    // New variables for hit detection
+    public string headColliderTag = "Head_Collider";
+    public string bodyColliderTag = "Torso_Collider";
+    public string component;
 
     // Start is called before the first frame update
     void Start()
@@ -124,48 +130,48 @@ public class PlayAudioOnBoxing : MonoBehaviour
     // OnTriggerEnter
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (!hasPlayed && other.CompareTag(targetTag))
+        
+        if (!hasPlayed && (other.CompareTag(headColliderTag) || other.CompareTag(bodyColliderTag)))
         {
-            Debug.Log("Punch hit!" + other.gameObject.tag);
-
-            // Check if either controller is in front of the player
+            Debug.Log("Punch hit! Component : " + component + " Tag : " + other.gameObject.tag);
+            Debug.Log("Gloves : " + other.CompareTag(targetTag) + " Head punch : " + other.CompareTag(headColliderTag) + " Body punch : " + other.CompareTag(bodyColliderTag));
             bool isLeftControllerInFront = IsControllerInFront(leftControllerTransform);
             bool isRightControllerInFront = IsControllerInFront(rightControllerTransform);
-            // Debug.Log("Left controller extended : " + isLeftControllerInFront + "\n Right controller extended : " + isRightControllerInFront + "\n Cheering sound : " + isCheering);
+
+            hittingGlove = isLeftControllerInFront ? leftControllerTransform : rightControllerTransform;
+            VelocityEstimator estimator = hittingGlove.GetComponent<VelocityEstimator>();
+            hittingGloveVelocity = estimator.GetVelocityEstimate();
+            float velocityMagnitude = hittingGloveVelocity.magnitude;
+            
 
             if (isLeftControllerInFront || isRightControllerInFront)
             {
                 hasPlayed = true;
-                PlaySound(other); // --> adding punching sound
-                TriggerBodyHitAnimation();
-                ScoreManager.AddScore(1);
-                // PlayCheerSound(); -- commenting out cheering sound
+                PlaySound(velocityMagnitude);
 
+                // Determine which animation to play based on hit location
+                if (other.CompareTag(headColliderTag))
+                {
+                    TriggerHeadHitAnimation();
+                    ScoreManager.AddScore(2);
+                }
+                else
+                {
+                    TriggerBodyHitAnimation();
+                    ScoreManager.AddScore(1);
+                }
+                
             }
         }
-
     }
 
-    void OnCollisionEnter(Collision collision)
+
+    protected virtual void PlaySound(float v)
     {
-        // Loop through all contact points in the collision
-        foreach (ContactPoint contact in collision.contacts)
+       
+        if (useVelocity)
         {
-            // Get the position of the contact point
-            Vector3 contactPoint = contact.point;
-            Debug.Log("Collision occurred at: " + contactPoint);
-
-            // Optionally, visualize the contact point
-        }
-    }
-
-    protected virtual void PlaySound(Collider other)
-    {
-        VelocityEstimator estimator = other.GetComponent<VelocityEstimator>();
-
-        if (estimator && useVelocity)
-        {
-            float v = estimator.GetVelocityEstimate().magnitude;
+            Debug.Log("Hitting glove velocity: " + v);
             ApplyHapticFeedbackBasedOnVelocity(v);
 
             float volume;
@@ -225,10 +231,9 @@ public class PlayAudioOnBoxing : MonoBehaviour
     // OnTriggerExit
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(targetTag))
-        {
+       
             hasPlayed = false; // Reset the flag when the player exits the collision box
-        }
+        
     }
 
     void SendHapticImpulse(XRBaseController controller, float amplitude, float duration)

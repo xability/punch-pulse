@@ -122,6 +122,59 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &15860159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 15860160}
+  - component: {fileID: 15860161}
+  m_Layer: 0
+  m_Name: head
+  m_TagString: Head_Collider
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &15860160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15860159}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.579, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1848126075}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &15860161
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15860159}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.43
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &15947216
 GameObject:
   m_ObjectHideFlags: 0
@@ -2024,9 +2077,10 @@ GameObject:
   - component: {fileID: 347628042}
   - component: {fileID: 347628044}
   - component: {fileID: 347628043}
+  - component: {fileID: 347628045}
   m_Layer: 0
   m_Name: LeftHand
-  m_TagString: Untagged
+  m_TagString: Gloves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2395,7 +2449,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -2553,6 +2607,42 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &347628045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347628036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd18d198ad8e4474a4f84e087afcb9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 595104fb051ba4a9187cc458d42712c4, type: 3}
+  targetTag: 
+  cheeringClip: {fileID: 8300000, guid: 28abc50063b470e42960ae2182bb5f8e, type: 3}
+  cheeringSource: {fileID: 231266947}
+  leftController: {fileID: 347628038}
+  rightController: {fileID: 372829248}
+  hapticAction: {fileID: 0}
+  useVelocity: 1
+  minVelocity: 2
+  maxVelocity: 4
+  randomizePitch: 1
+  minPitch: 0.6
+  maxPitch: 1.2
+  hasPlayed: 0
+  noCollisionTimeout: 5
+  cheerFadeOutDuration: 1.5
+  playerCamera: {fileID: 2036805231}
+  leftControllerTransform: {fileID: 347628037}
+  rightControllerTransform: {fileID: 372829247}
+  minForwardDistance: 0.3
+  modelAnimator: {fileID: 1848126072}
+  headColliderTag: Head_Collider
+  bodyColliderTag: Torso_Collider
+  component: left glove
 --- !u!1 &361513068
 GameObject:
   m_ObjectHideFlags: 0
@@ -2665,9 +2755,10 @@ GameObject:
   - component: {fileID: 372829252}
   - component: {fileID: 372829254}
   - component: {fileID: 372829253}
+  - component: {fileID: 372829255}
   m_Layer: 0
   m_Name: RightHand
-  m_TagString: Untagged
+  m_TagString: Gloves
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2946,7 +3037,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -3194,6 +3285,42 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &372829255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372829246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd18d198ad8e4474a4f84e087afcb9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 595104fb051ba4a9187cc458d42712c4, type: 3}
+  targetTag: 
+  cheeringClip: {fileID: 8300000, guid: 28abc50063b470e42960ae2182bb5f8e, type: 3}
+  cheeringSource: {fileID: 231266947}
+  leftController: {fileID: 347628038}
+  rightController: {fileID: 372829248}
+  hapticAction: {fileID: 0}
+  useVelocity: 1
+  minVelocity: 2
+  maxVelocity: 4
+  randomizePitch: 1
+  minPitch: 0.6
+  maxPitch: 1.2
+  hasPlayed: 0
+  noCollisionTimeout: 5
+  cheerFadeOutDuration: 1.5
+  playerCamera: {fileID: 2036805231}
+  leftControllerTransform: {fileID: 347628037}
+  rightControllerTransform: {fileID: 372829247}
+  minForwardDistance: 0.3
+  modelAnimator: {fileID: 1848126072}
+  headColliderTag: Head_Collider
+  bodyColliderTag: Torso_Collider
+  component: right glove
 --- !u!1 &375615818
 GameObject:
   m_ObjectHideFlags: 0
@@ -4093,6 +4220,61 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &632711890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 632711891}
+  - component: {fileID: 632711892}
+  m_Layer: 0
+  m_Name: body
+  m_TagString: Torso_Collider
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &632711891
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632711890}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1848126075}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &632711892
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632711890}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!1 &665441081
 GameObject:
   m_ObjectHideFlags: 0
@@ -6777,61 +6959,6 @@ Transform:
   - {fileID: 1106901322}
   m_Father: {fileID: 1990521289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1393379905
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1393379906}
-  - component: {fileID: 1393379907}
-  m_Layer: 0
-  m_Name: torso
-  m_TagString: Torso_Collider
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1393379906
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1393379905}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1848126075}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1393379907
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1393379905}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 1.1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!1 &1404587215
 GameObject:
   m_ObjectHideFlags: 0
@@ -6932,93 +7059,6 @@ Transform:
   - {fileID: 67690663}
   m_Father: {fileID: 1599763950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1489751701
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1489751702}
-  - component: {fileID: 1489751703}
-  - component: {fileID: 1489751704}
-  m_Layer: 0
-  m_Name: head
-  m_TagString: Head_Collider
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1489751702
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489751701}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1848126075}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1489751703
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489751701}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.39
-  m_Center: {x: 0.06, y: 1.54, z: 0.04}
---- !u!114 &1489751704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489751701}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10e5bacad22585941a016eb4b43efc13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 595104fb051ba4a9187cc458d42712c4, type: 3}
-  targetTag: Gloves
-  cheeringClip: {fileID: 8300000, guid: 28abc50063b470e42960ae2182bb5f8e, type: 3}
-  cheeringSource: {fileID: 231266947}
-  leftController: {fileID: 347628038}
-  rightController: {fileID: 372829248}
-  hapticAction: {fileID: 0}
-  useVelocity: 1
-  minVelocity: 1
-  maxVelocity: 3
-  randomizePitch: 1
-  minPitch: 0.6
-  maxPitch: 1.2
-  hasPlayed: 0
-  noCollisionTimeout: 5
-  cheerFadeOutDuration: 1.5
-  playerCamera: {fileID: 2036805231}
-  leftControllerTransform: {fileID: 347628037}
-  rightControllerTransform: {fileID: 372829247}
-  minForwardDistance: 0.3
-  modelAnimator: {fileID: 1848126072}
 --- !u!54 &1564111313
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7285,7 +7325,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.924
+      value: 0.931
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
@@ -7353,11 +7393,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1489751702}
+      addedObject: {fileID: 15860160}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1393379906}
+      addedObject: {fileID: 632711891}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
@@ -7367,10 +7407,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1848126069}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1848126068}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
       insertIndex: -1
@@ -7927,39 +7963,6 @@ MonoBehaviour:
   playerGloveTag: Gloves
   dampingFactor: 0.9
   minimumVelocity: 0.1
---- !u!114 &1848126068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1848126064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdd18d198ad8e4474a4f84e087afcb9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 595104fb051ba4a9187cc458d42712c4, type: 3}
-  targetTag: Gloves
-  cheeringClip: {fileID: 8300000, guid: 28abc50063b470e42960ae2182bb5f8e, type: 3}
-  cheeringSource: {fileID: 231266947}
-  leftController: {fileID: 347628038}
-  rightController: {fileID: 372829248}
-  hapticAction: {fileID: 0}
-  useVelocity: 1
-  minVelocity: 1
-  maxVelocity: 3
-  randomizePitch: 1
-  minPitch: 0.6
-  maxPitch: 1.2
-  hasPlayed: 0
-  noCollisionTimeout: 5
-  cheerFadeOutDuration: 1.5
-  playerCamera: {fileID: 2036805231}
-  leftControllerTransform: {fileID: 347628037}
-  rightControllerTransform: {fileID: 372829247}
-  minForwardDistance: 0.3
-  modelAnimator: {fileID: 1848126072}
 --- !u!82 &1848126069
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8827,6 +8830,9 @@ MonoBehaviour:
   rightControllerTransform: {fileID: 372829247}
   minForwardDistance: 0.3
   modelAnimator: {fileID: 0}
+  headColliderTag: Head_Collider
+  bodyColliderTag: Torso_Collider
+  component: 
 --- !u!114 &1953239097
 MonoBehaviour:
   m_ObjectHideFlags: 0

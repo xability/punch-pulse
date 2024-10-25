@@ -142,7 +142,7 @@ public class EnemyAttackBehavior : MonoBehaviour
         }
         else
         {
-            Debug.Log("Player is safe! No score penalty.");
+            // Debug.Log("Player is safe! No score penalty.");
             audioSource.PlayOneShot(attackMissSound);
             // Implement your actual attack logic here
         }
@@ -180,7 +180,7 @@ public class EnemyAttackBehavior : MonoBehaviour
         // Set the ducking threshold as a percentage of the initial height
         duckingThresholdPercentage = 0.75f; // Set to 75% of initial height
         duckingThreshold = duckingThresholdPercentage * initialHeadsetHeight;
-        Debug.Log("Initial headset height: " + initialHeadsetHeight + ". Ducking threshold set to: " + duckingThresholdPercentage * initialHeadsetHeight);
+        // Debug.Log("Initial headset height: " + initialHeadsetHeight + ". Ducking threshold set to: " + duckingThresholdPercentage * initialHeadsetHeight);
     }
 
 
@@ -202,7 +202,7 @@ public class EnemyAttackBehavior : MonoBehaviour
                 float distanceToEnemy = Vector3.Distance(headPosition, enemyObject.transform.position);
                 bool isDistanceSafe = distanceToEnemy > safeDistance;
 
-                Debug.Log($"Distance to enemy: {distanceToEnemy}, Is distance safe: {isDistanceSafe}");
+                // Debug.Log($"Distance to enemy: {distanceToEnemy}, Is distance safe: {isDistanceSafe}");
 
                 // Player is safe if they are either ducking or far enough away
                 return isDucking || isDistanceSafe;
