@@ -1362,7 +1362,7 @@ Transform:
   m_GameObject: {fileID: 231266944}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 3.28, z: -0.633}
+  m_LocalPosition: {x: -0.5, y: 1.91, z: -0.633}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1681,10 +1681,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f201e8db22e1184a8e28f1511287d11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberClips: []
-  audioSource: {fileID: 0}
+  numberClips:
+  - {fileID: 8300000, guid: 1c7b1e16b73cd4548ab06a5a7d3d8f42, type: 3}
+  - {fileID: 8300000, guid: 60b15074c63ea804dac040d87b324619, type: 3}
+  - {fileID: 8300000, guid: 1f2291d063b8a6642a6bb3cd98199620, type: 3}
+  - {fileID: 8300000, guid: 02d2828600d02e34ba91316474bac245, type: 3}
+  - {fileID: 8300000, guid: ecdd376ddccc68d4a9bd1b2359443da7, type: 3}
+  - {fileID: 8300000, guid: 2f1c533616fa2d4499b94f1ba682ddd9, type: 3}
+  - {fileID: 8300000, guid: afb21b84a738f11448e6854697ccacdf, type: 3}
+  - {fileID: 8300000, guid: 5eff32c12d06b4b4690a4bdf6e84ec4e, type: 3}
+  - {fileID: 8300000, guid: 1257af226d1d83440b79d002ed6401f4, type: 3}
+  - {fileID: 8300000, guid: a5d9bec951d04c045bda33447ec478ac, type: 3}
+  - {fileID: 8300000, guid: 313ae2fd71b3ee041b827ab2b77a5587, type: 3}
+  - {fileID: 8300000, guid: a62d7dce7de78314dbeb9c649cfe4399, type: 3}
+  audioSource: {fileID: 231266947}
+  playerScore: {fileID: 8300000, guid: bf1b16fb25f505441966313253989e64, type: 3}
   scoreText: {fileID: 743237385}
-  rightButtonAction: {fileID: 0}
+  rightButtonAction: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
 --- !u!114 &282555738
 MonoBehaviour:
   m_ObjectHideFlags: 0

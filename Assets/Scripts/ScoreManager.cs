@@ -7,12 +7,15 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; }
-    public AudioClip[] numberClips; // Assign in the Inspector, e.g., index 0 = "zero", 1 = "one", etc.
-    public AudioSource audioSource; // Assign the AudioSource component
+    public AudioClip[] numberClips;
+    public AudioSource audioSource;
+    public AudioClip playerScoreIs;
 
     public static int Score { get; private set; }
     public TextMeshProUGUI scoreText;
-    public InputActionReference rightButtonAction; // Assign via Inspector
+    public InputActionReference rightButtonAction;
+
+    private bool isAnnouncingScore = false; // New flag to track if score is being announced
 
     private void OnEnable()
     {
@@ -26,7 +29,10 @@ public class ScoreManager : MonoBehaviour
 
     private void OnRightButtonPressed(InputAction.CallbackContext context)
     {
-        StartCoroutine(AnnounceScore());
+        if (!isAnnouncingScore) // Only start if not already announcing
+        {
+            StartCoroutine(AnnounceScore());
+        }
     }
 
     private void Awake()
@@ -63,16 +69,23 @@ public class ScoreManager : MonoBehaviour
     {
         if (scoreText != null)
         {
-            scoreText.text = Score.ToString(); ;
+            scoreText.text = Score.ToString();
         }
     }
 
     private IEnumerator AnnounceScore()
     {
-        string scoreString = ScoreManager.Score.ToString();
+        if (isAnnouncingScore) yield break; // Safety check
+
+        isAnnouncingScore = true;
+
+        audioSource.PlayOneShot(playerScoreIs);
+        yield return new WaitForSeconds(playerScoreIs.length);
+
+        string scoreString = Score.ToString();
         foreach (char digitChar in scoreString)
         {
-            int digit = digitChar - '0'; // Convert char to int
+            int digit = digitChar - '0';
 
             if (digit >= 0 && digit < numberClips.Length)
             {
@@ -82,8 +95,10 @@ public class ScoreManager : MonoBehaviour
             else
             {
                 Debug.LogWarning("Number audio clip not found for digit: " + digit);
-                yield break;
+                break;
             }
         }
+
+        isAnnouncingScore = false;
     }
 }
