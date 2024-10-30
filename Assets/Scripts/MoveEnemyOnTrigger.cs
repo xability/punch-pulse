@@ -25,6 +25,7 @@ public class MoveEnemyInFront : MonoBehaviour
 
     // Movement audio
     public AudioSource movementAudioSource;  // Assign this in the Inspector
+    public AudioClip footsteps;
     private bool isMoving = false;
 
     // Start is called before the first frame update
@@ -51,6 +52,14 @@ public class MoveEnemyInFront : MonoBehaviour
             }
         }
 
+        if (movementAudioSource != null)
+        {
+            movementAudioSource.loop = true;
+            movementAudioSource.clip = footsteps;
+            movementAudioSource.volume = 1f;
+            movementAudioSource.Play();
+        }
+
         // Subscribe to trigger action
         rightTriggerAction.action.performed += OnRightTriggerPressed;
     }
@@ -67,11 +76,6 @@ public class MoveEnemyInFront : MonoBehaviour
         SetTargetPositionInFrontOfPlayer();
         shouldMove = true;  // Start moving the enemy
 
-        if (!isMoving && movementAudioSource != null)
-        {
-            movementAudioSource.Play();
-            isMoving = true;
-        }
     }
 
     // Sets the target position for the enemy in front of the player (only Z and Y change)
@@ -105,12 +109,32 @@ public class MoveEnemyInFront : MonoBehaviour
             if (distanceToTarget < 0.8f)
             {
                 shouldMove = false;
-                if (isMoving && movementAudioSource != null)
-                {
-                    movementAudioSource.Stop();
-                    isMoving = false;
-                }
             }
+        }
+        // Adjust volume based on movement
+        if (movementAudioSource != null)
+        {
+            //movementAudioSource.volume = shouldMove ? 1f : 0f;
+        }
+    }
+
+    private void StartMovementAudio()
+    {
+        if (movementAudioSource != null && !isMoving)
+        {
+            movementAudioSource.loop = true;
+            movementAudioSource.clip = footsteps;
+            movementAudioSource.Play();
+            isMoving = true;
+        }
+    }
+
+    private void StopMovementAudio()
+    {
+        if (movementAudioSource != null && isMoving)
+        {
+            movementAudioSource.Stop();
+            isMoving = false;
         }
     }
 
@@ -191,11 +215,6 @@ public class MoveEnemyInFront : MonoBehaviour
         if (Quaternion.Angle(enemy.rotation, targetRotation) < 0.1f)
         {
             shouldMove = false;  // Stop rotating once close enough
-            if (isMoving && movementAudioSource != null)
-            {
-                movementAudioSource.Stop();
-                isMoving = false;
-            }
         }
     }
 }

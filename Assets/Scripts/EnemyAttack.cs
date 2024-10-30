@@ -131,7 +131,7 @@ public class EnemyAttackBehavior : MonoBehaviour
         audioSource.PlayOneShot(attackIncomingSound);
 
         // Wait for 1s before checking if player is safe after the warning sound
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         // Check if player is safe (ducking or far enough away)
         if (!IsPlayerSafe())
