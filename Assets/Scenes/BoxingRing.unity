@@ -1908,6 +1908,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14c634453331f04ab0f3c76afbc3d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseActionReference: {fileID: 0}
+  playerCamera: {fileID: 0}
+  menuDistance: 2
   difficultyButton: {fileID: 45560451}
   tutorialButton: {fileID: 1050866560}
   boxingModeButton: {fileID: 538141463}
@@ -1963,7 +1966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuCanvas: {fileID: 387403147}
-  pauseActionReference: {fileID: 3279264004350380116, guid: c348712bda248c246b8c49b3db54643f,
+  pauseActionReference: {fileID: -5812838698425806477, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   playerCamera: {fileID: 2042691868}
   menuDistance: 1
