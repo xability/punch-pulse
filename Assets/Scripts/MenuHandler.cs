@@ -9,8 +9,9 @@ using UnityEngine.InputSystem;
 public class AccessibleMenu : MonoBehaviour
 {
 
-    public InputActionReference pauseActionReference;
+    public InputActionReference pauseAction;
     private bool isPaused = false;
+    public GameObject pausePanel;
     public Transform playerCamera; // Assign the VR camera in the inspector
     public float menuDistance = 2f;
 
@@ -49,6 +50,54 @@ public class AccessibleMenu : MonoBehaviour
     private bool isOffensiveMode = true;
     private bool isLowExerciseLevel = true;
 
+    private void Awake()
+    {
+        if (pauseAction == null)
+        {
+            Debug.LogError("Pause action reference is not set in the inspector");
+        }
+        pauseAction.action.Enable();
+        pauseAction.action.performed += TogglePause;
+    }
+
+    private void Destroy()
+    {
+        pauseAction.action.Disable();
+        pauseAction.action.performed -= TogglePause;
+    }
+
+    private void TogglePause(InputAction.CallbackContext context)
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
+        // AudioListener.pause = isPaused;
+        pausePanel.SetActive(!pausePanel.activeSelf);
+        if (isPaused)
+        {
+            PositionMenuInFrontOfPlayer();
+        }
+    }
+
+    private void onDeviceChange(InputDevice device, InputDeviceChange change)
+    {
+       switch (change)
+        {
+            case InputDeviceChange.Disconnected:
+                Debug.Log("Device disconnected: " + device);
+                pauseAction.action.Disable();
+                pauseAction.action.performed -= TogglePause;
+                break;
+            case InputDeviceChange.Reconnected:
+                pauseAction.action.Enable();
+                pauseAction.action.performed += TogglePause;
+                Debug.Log("Device reconnected: " + device);
+                break;
+            default:
+                Debug.Log("Device change: " + device);
+                break;
+        }
+    }
+
     void Start()
     {
         SetupButtons();
@@ -61,7 +110,6 @@ public class AccessibleMenu : MonoBehaviour
         SetupButton(tutorialButton, PlayTutorial, "tutorial");
         SetupButton(boxingModeButton, ToggleBoxingMode, "boxing");
         SetupButton(exerciseLevelButton, ToggleExerciseLevel, "exercise");
-        SetupButton(resumeButton, ResumeGame, "resume");
     }
 
     void SetupButton(CustomButton button, UnityEngine.Events.UnityAction action, string buttonID)
@@ -121,17 +169,6 @@ public class AccessibleMenu : MonoBehaviour
         audioSource.PlayOneShot(clickSound);
     }
 
-    private void TogglePause(InputAction.CallbackContext context)
-    {
-        isPaused = !isPaused;
-        Time.timeScale = isPaused ? 0 : 1;
-        AudioListener.pause = isPaused;
-        gameObject.SetActive(isPaused);
-        if (isPaused)
-        {
-            PositionMenuInFrontOfPlayer();
-        }
-    }
 
     private void PositionMenuInFrontOfPlayer()
     {
@@ -141,18 +178,6 @@ public class AccessibleMenu : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(transform.position - playerCamera.position);
         }
     }
-
-    private void OnEnable()
-    {
-        pauseActionReference.action.performed += TogglePause;
-    }
-
-    private void OnDisable()
-    {
-        pauseActionReference.action.performed -= TogglePause;
-    }
-
-
 
     void SendHapticImpulse(XRBaseController controller, float amplitude, float duration)
     {
@@ -189,12 +214,6 @@ public class AccessibleMenu : MonoBehaviour
         PlayClickSound();
     }
 
-    void ResumeGame()
-    {
-        PlayClickSound();
-        // Implement your game resuming logic here
-        gameObject.SetActive(false);
-    }
 
     void UpdateButtonTexts()
     {
