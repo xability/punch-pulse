@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PauseManager : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
     public GameObject pauseMenuCanvas;
     public InputActionReference pauseActionReference;

@@ -8,6 +8,12 @@ using UnityEngine.InputSystem;
 
 public class AccessibleMenu : MonoBehaviour
 {
+
+    public InputActionReference pauseActionReference;
+    private bool isPaused = false;
+    public Transform playerCamera; // Assign the VR camera in the inspector
+    public float menuDistance = 2f;
+
     [Header("Menu Buttons")]
     public CustomButton difficultyButton;
     public CustomButton tutorialButton;
@@ -64,6 +70,26 @@ public class AccessibleMenu : MonoBehaviour
         button.onPointerEnter.AddListener(() => PlayHoverSound(buttonID));
     }
 
+
+    /*
+      
+     void SetupButtons()
+        {
+            SetupButton(difficultyButton.GetComponent<XRSimpleInteractable>(), ToggleDifficulty, "difficulty");
+            SetupButton(tutorialButton.GetComponent<XRSimpleInteractable>(), PlayTutorial, "tutorial");
+            SetupButton(boxingModeButton.GetComponent<XRSimpleInteractable>(), ToggleBoxingMode, "boxing");
+            SetupButton(exerciseLevelButton.GetComponent<XRSimpleInteractable>(), ToggleExerciseLevel, "exercise");
+            SetupButton(resumeButton.GetComponent<XRSimpleInteractable>(), ResumeGame, "resume");
+        }
+
+        void SetupButton(XRSimpleInteractable button, UnityEngine.Events.UnityAction action, string buttonID)
+        {
+            button.selectEntered.AddListener((args) => PlayHoverSound(buttonID));
+            button.activated.AddListener((args) => action());
+        }
+     */
+
+
     void PlayHoverSound(string buttonID)
     {
         SendHapticImpulse(leftController, 0.6f, 0.1f);
@@ -94,6 +120,39 @@ public class AccessibleMenu : MonoBehaviour
     {
         audioSource.PlayOneShot(clickSound);
     }
+
+    private void TogglePause(InputAction.CallbackContext context)
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
+        AudioListener.pause = isPaused;
+        gameObject.SetActive(isPaused);
+        if (isPaused)
+        {
+            PositionMenuInFrontOfPlayer();
+        }
+    }
+
+    private void PositionMenuInFrontOfPlayer()
+    {
+        if (playerCamera != null)
+        {
+            transform.position = playerCamera.position + playerCamera.forward * menuDistance;
+            transform.rotation = Quaternion.LookRotation(transform.position - playerCamera.position);
+        }
+    }
+
+    private void OnEnable()
+    {
+        pauseActionReference.action.performed += TogglePause;
+    }
+
+    private void OnDisable()
+    {
+        pauseActionReference.action.performed -= TogglePause;
+    }
+
+
 
     void SendHapticImpulse(XRBaseController controller, float amplitude, float duration)
     {
