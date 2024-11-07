@@ -26,7 +26,7 @@ public class MoveEnemyInFront : MonoBehaviour
     // Movement audio
     public AudioSource movementAudioSource;  // Assign this in the Inspector
     public AudioClip footsteps;
-    private bool isMoving = false;
+    //rivate bool isMoving = false;
 
     // Start is called before the first frame update
     void Start()
@@ -118,26 +118,6 @@ public class MoveEnemyInFront : MonoBehaviour
         }
     }
 
-    private void StartMovementAudio()
-    {
-        if (movementAudioSource != null && !isMoving)
-        {
-            movementAudioSource.loop = true;
-            movementAudioSource.clip = footsteps;
-            movementAudioSource.Play();
-            isMoving = true;
-        }
-    }
-
-    private void StopMovementAudio()
-    {
-        if (movementAudioSource != null && isMoving)
-        {
-            movementAudioSource.Stop();
-            isMoving = false;
-        }
-    }
-
     public float MoveEnemyTowardsTarget(Vector3 targetPosition)
     {
         if (enemy == null) return 0.0f;
@@ -161,30 +141,6 @@ public class MoveEnemyInFront : MonoBehaviour
         RotateEnemyTowardsPlayer();
         return distanceToTarget;
     }
-
-    // Rotates the enemy to face the player (only around X-axis)
-    /*public void RotateEnemyTowardsPlayer()
-    {
-        if (enemy == null || playerCamera == null) return;
-
-        // Get the direction from the enemy to the player (ignoring X-axis difference)
-        Vector3 directionToPlayer = playerCamera.transform.position - enemy.position;
-        directionToPlayer.y = 0;  // Ignore vertical (X-axis) difference
-        // directionToPlayer.z = 0;
-        // Calculate the target rotation
-        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
-
-
-        // Apply the rotation smoothly over time
-        enemy.rotation = Quaternion.Slerp(enemy.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-        // enemy.rotation.x = enemy.rotation.x + 270;
-        // Stop rotation once it's nearly complete
-        if (Quaternion.Angle(enemy.rotation, targetRotation) < 0.1f)
-        {
-            shouldMove = false;  // Stop rotating once close enough
-        }
-    }*/
 
     public void RotateEnemyTowardsPlayer()
     {
