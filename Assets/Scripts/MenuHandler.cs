@@ -41,16 +41,16 @@ public class AccessibleMenu : MonoBehaviour
     public XRBaseController rightController; // Assign via Inspector
 
     [Header("Input")]
-    public InputActionAsset xriInputActions;
-    private InputAction navigateAction;
-    private InputAction selectAction;
+    public InputActionReference moveAction;
+    public InputActionReference selectAction;
+
+    private CustomButton[] menuButtons;
+    private int currentButtonIndex = 0;
 
     private bool isEasyDifficulty = true;
     private bool isOffensiveMode = true;
     private bool isLowExerciseLevel = true;
 
-    private Button[] buttons;
-    private int currentButtonIndex = 0;
 
     void Start()
     {
@@ -60,22 +60,17 @@ public class AccessibleMenu : MonoBehaviour
         // Initialize buttons array
         buttons = new Button[] { difficultyButton, tutorialButton, boxingModeButton, exerciseLevelButton, resumeButton };
 
-        var actionMap = xriInputActions.FindActionMap("XRI LeftHand");
-
         // Get the specific actions
-        navigateAction = actionMap.FindAction("Move");
-        selectAction = actionMap.FindAction("Select");
+        // Get all buttons and store them in an array
+        menuButtons = GetComponentsInChildren<CustomButton>();
 
-        // Enable the actions
-        navigateAction.Enable();
-        selectAction.Enable();
+        // Enable input actions
+        moveAction.action.Enable();
+        selectAction.action.Enable();
 
-        // Subscribe to the actions
-        navigateAction.performed += OnNavigatePerformed;
-        selectAction.performed += OnSelectPerformed;
-
-        // Set initial selection
-        SetSelectedButton(0);
+        // Subscribe to input events
+        moveAction.action.performed += OnMove;
+        selectAction.action.performed += OnSelect;
     }
 
 
@@ -99,36 +94,6 @@ public class AccessibleMenu : MonoBehaviour
         trigger.triggers.Add(entry);
     }
 
-    void OnJoystickMoved(InputAction.CallbackContext context)
-    {
-        Vector2 joystickValue = context.ReadValue<Vector2>();
-
-        if (joystickValue.y > 0.5f)
-        {
-            NavigateButtons(-1); // Move up
-        }
-        else if (joystickValue.y < -0.5f)
-        {
-            NavigateButtons(1); // Move down
-        }
-    }
-
-    void OnSelectPressed(InputAction.CallbackContext context)
-    {
-        buttons[currentButtonIndex].onClick.Invoke();
-    }
-
-    void NavigateButtons(int direction)
-    {
-        currentButtonIndex = (currentButtonIndex + direction + buttons.Length) % buttons.Length;
-        SetSelectedButton(currentButtonIndex);
-    }
-
-    void SetSelectedButton(int index)
-    {
-        buttons[index].Select();
-        PlayHoverSound(GetButtonID(buttons[index]));
-    }
 
     string GetButtonID(Button button)
     {
@@ -162,17 +127,55 @@ public class AccessibleMenu : MonoBehaviour
 
     void OnDisable()
     {
-        if (navigateAction != null)
+        // Unsubscribe from input events
+        moveAction.action.performed -= OnMove;
+        selectAction.action.performed -= OnSelect;
+    }
+
+    void OnMove(InputAction.CallbackContext context)
+    {
+        Vector2 movement = context.ReadValue<Vector2>();
+
+        if (movement.y > 0.5f)
         {
-            navigateAction.performed -= OnNavigatePerformed;
-            navigateAction.Disable();
+            NavigateMenu(-1); // Move up
         }
-        if (selectAction != null)
+        else if (movement.y < -0.5f)
         {
-            selectAction.performed -= OnSelectPerformed;
-            selectAction.Disable();
+            NavigateMenu(1); // Move down
         }
     }
+
+    void NavigateMenu(int direction)
+    {
+        currentButtonIndex += direction;
+        currentButtonIndex = Mathf.Clamp(currentButtonIndex, 0, menuButtons.Length - 1);
+
+        // Highlight the current button
+        HighlightButton(menuButtons[currentButtonIndex]);
+    }
+
+    void HighlightButton(CustomButton button)
+    {
+        // Deselect all buttons
+        foreach (var btn in menuButtons)
+        {
+            btn.GetComponent<Selectable>().OnDeselect(null);
+        }
+
+        // Select the current button
+        button.GetComponent<Selectable>().OnSelect(null);
+
+        // Play hover sound
+        PlayHoverSound(GetButtonID(button));
+    }
+
+    void OnSelect(InputAction.CallbackContext context)
+    {
+        // Trigger the current button's action
+        menuButtons[currentButtonIndex].onClick.Invoke();
+    }
+
 
     void PlayHoverSound(string buttonID)
     {
