@@ -19,6 +19,15 @@ public class DirectionHelper : MonoBehaviour
 
     private bool isAudioPlaying = false;
 
+    // Static variable to count trigger presses
+    private static int triggerPressCount = 0;
+
+    // Public static method to get the count
+    public static int GetLeftTriggerPressCount()
+    {
+        return triggerPressCount;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +62,8 @@ public class DirectionHelper : MonoBehaviour
             // Debug.Log("Audio is currently playing, skipping this trigger.");
             return;
         }
+        triggerPressCount++;
+
         Vector3 playerPosition = playerCamera.transform.position;
         Vector3 enemyPosition = enemy.transform.position;
 
@@ -154,5 +165,9 @@ public class DirectionHelper : MonoBehaviour
         }
         isAudioPlaying = false;
      
+    }
+    public static void ResetTriggerPressCount()
+    {
+        triggerPressCount = 0;
     }
 }

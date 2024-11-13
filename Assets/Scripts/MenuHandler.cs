@@ -41,6 +41,7 @@ public class AccessibleMenu : MonoBehaviour
     public AudioClip exerciseHighHoverSound;
     public AudioClip resumeHoverSound;
     public AudioClip pauseMenuActive;
+    public AudioClip difficultyMediumHoverSound;
 
 
     [Header("UI")]
@@ -59,9 +60,15 @@ public class AccessibleMenu : MonoBehaviour
     private int currentButtonIndex = 0;
     private float lastJoystickYValue = 0f;
 
-    private bool isEasyDifficulty = true;
+    private static DifficultyLevel currentDifficulty = DifficultyLevel.Easy;
     private bool isOffensiveMode = true;
     private bool isLowExerciseLevel = true;
+    public enum DifficultyLevel
+    {
+        Easy,
+        Medium,
+        Hard
+    }
 
 
     private bool isFirstActivation = true;
@@ -223,8 +230,19 @@ public class AccessibleMenu : MonoBehaviour
             case "difficulty":
                 Debug.Log("Hovering over difficulty button");
                 if (!isFirstActivation)
-                { 
-                    audioSource.PlayOneShot(isEasyDifficulty ? difficultyEasyHoverSound : difficultyHardHoverSound);
+                {
+                    switch (currentDifficulty)
+                    {
+                        case DifficultyLevel.Easy:
+                            audioSource.PlayOneShot(difficultyEasyHoverSound);
+                            break;
+                        case DifficultyLevel.Medium:
+                            audioSource.PlayOneShot(difficultyMediumHoverSound);
+                            break;
+                        case DifficultyLevel.Hard:
+                            audioSource.PlayOneShot(difficultyHardHoverSound);
+                            break;
+                    }
                 }
                 break;
             case "tutorial":
@@ -265,10 +283,25 @@ public class AccessibleMenu : MonoBehaviour
     }
 
     // ... (rest of your existing methods like ToggleDifficulty, PlayTutorial, etc.)
+    public static DifficultyLevel CurrentDifficulty
+    {
+        get { return currentDifficulty; }
+    }
 
     void ToggleDifficulty()
     {
-        isEasyDifficulty = !isEasyDifficulty;
+        switch (currentDifficulty)
+        {
+            case DifficultyLevel.Easy:
+                currentDifficulty = DifficultyLevel.Medium;
+                break;
+            case DifficultyLevel.Medium:
+                currentDifficulty = DifficultyLevel.Hard;
+                break;
+            case DifficultyLevel.Hard:
+                currentDifficulty = DifficultyLevel.Easy;
+                break;
+        }
         UpdateButtonTexts();
         PlayClickSound();
     }
@@ -296,8 +329,18 @@ public class AccessibleMenu : MonoBehaviour
 
     void UpdateButtonTexts()
     {
-        Debug.Log("Updating button TEXTSs...");
-        difficultyText.text = isEasyDifficulty ? "Difficulty: Easy" : "Difficulty: Hard";
+        switch (currentDifficulty)
+        {
+            case DifficultyLevel.Easy:
+                difficultyText.text = "Difficulty: Easy";
+                break;
+            case DifficultyLevel.Medium:
+                difficultyText.text = "Difficulty: Medium";
+                break;
+            case DifficultyLevel.Hard:
+                difficultyText.text = "Difficulty: Hard";
+                break;
+        }
         boxingModeText.text = isOffensiveMode ? "Mode: Offensive" : "Mode: Defensive";
         exerciseLevelText.text = isLowExerciseLevel ? "Exercise: Low" : "Exercise: High";
     }
@@ -306,5 +349,23 @@ public class AccessibleMenu : MonoBehaviour
     {
         // Implement your resume game logic here
         Debug.Log("Resuming game...");
+    }
+
+    void GetLeftTriggerCount()
+    {
+        int currentCount = DirectionHelper.GetLeftTriggerPressCount();
+        Debug.Log("Left trigger has been pressed " + currentCount + " times.");
+    }
+
+    void ResetLeftTriggerCount()
+    {
+        DirectionHelper.ResetTriggerPressCount();
+        MoveEnemyInFront.ResetTriggerPressCount();
+    }
+
+    void GetRightTriggerCount()
+    {
+        int currentCount = MoveEnemyInFront.GetRightTriggerPressCount();
+        Debug.Log("Right trigger has been pressed " + currentCount + " times.");
     }
 }

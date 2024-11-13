@@ -27,6 +27,13 @@ public class MoveEnemyInFront : MonoBehaviour
     public AudioSource movementAudioSource;  // Assign this in the Inspector
     public AudioClip footsteps;
     //rivate bool isMoving = false;
+    private static int rightTriggerPressCount = 0;
+
+    // Public static method to get the count
+    public static int GetRightTriggerPressCount()
+    {
+        return rightTriggerPressCount;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +81,7 @@ public class MoveEnemyInFront : MonoBehaviour
     private void OnRightTriggerPressed(InputAction.CallbackContext context)
     {
         SetTargetPositionInFrontOfPlayer();
+        rightTriggerPressCount++;
         shouldMove = true;  // Start moving the enemy
 
     }
@@ -172,5 +180,9 @@ public class MoveEnemyInFront : MonoBehaviour
         {
             shouldMove = false;  // Stop rotating once close enough
         }
+    }
+    public static void ResetTriggerPressCount()
+    {
+        rightTriggerPressCount = 0;
     }
 }
