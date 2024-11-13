@@ -20,7 +20,6 @@ public class AccessibleMenu : MonoBehaviour
     public Button tutorialButton;
     public Button boxingModeButton;
     public Button exerciseLevelButton;
-    public Button resumeButton;
 
     [Header("Text Components")]
     public TextMeshProUGUI difficultyText;
@@ -67,6 +66,7 @@ public class AccessibleMenu : MonoBehaviour
 
     private bool isFirstActivation = true;
 
+    private CustomButtonHighlight[] buttonHighlights;
 
     void Start()
     {
@@ -78,7 +78,7 @@ public class AccessibleMenu : MonoBehaviour
             Debug.LogError("MenuUI reference is not set in the Inspector.");
         }
 
-        menuButtons = new Button[] { difficultyButton, tutorialButton, boxingModeButton, exerciseLevelButton, resumeButton };
+        menuButtons = new Button[] { difficultyButton, tutorialButton, boxingModeButton, exerciseLevelButton };
 
         if (joystickAction == null)
         {
@@ -89,6 +89,16 @@ public class AccessibleMenu : MonoBehaviour
             joystickAction.action.performed += OnJoystickMoved;
         }
         triggerAction.action.performed += OnTriggerPressed;
+
+        buttonHighlights = new CustomButtonHighlight[menuButtons.Length];
+        for (int i = 0; i < menuButtons.Length; i++)
+        {
+            buttonHighlights[i] = menuButtons[i].GetComponent<CustomButtonHighlight>();
+            if (buttonHighlights[i] == null)
+            {
+                Debug.LogError($"CustomButtonHighlight component missing on button {i}");
+            }
+        }
     }
 
     void OnDisable()
@@ -103,7 +113,6 @@ public class AccessibleMenu : MonoBehaviour
         SetupButton(tutorialButton, PlayTutorial, "tutorial");
         SetupButton(boxingModeButton, ToggleBoxingMode, "boxing");
         SetupButton(exerciseLevelButton, ToggleExerciseLevel, "exercise");
-        SetupButton(resumeButton, ResumeGame, "resume");
     }
 
     void SetupButton(Button button, UnityEngine.Events.UnityAction action, string buttonID)
@@ -172,11 +181,12 @@ public class AccessibleMenu : MonoBehaviour
 
     void UpdateButtonHighlights()
     {
-        for (int i = 0; i < menuButtons.Length; i++)
+        for (int i = 0; i < buttonHighlights.Length; i++)
         {
-            ColorBlock colors = menuButtons[i].colors;
-            colors.normalColor = (i == currentButtonIndex) ? selectedColor : normalColor;
-            menuButtons[i].colors = colors;
+            if (buttonHighlights[i] != null)
+            {
+                buttonHighlights[i].SetHighlighted(i == currentButtonIndex);
+            }
         }
         EventSystem.current.SetSelectedGameObject(menuButtons[currentButtonIndex].gameObject);
     }
@@ -212,7 +222,10 @@ public class AccessibleMenu : MonoBehaviour
         {
             case "difficulty":
                 Debug.Log("Hovering over difficulty button");
-                audioSource.PlayOneShot(isEasyDifficulty ? difficultyEasyHoverSound : difficultyHardHoverSound);
+                if (!isFirstActivation)
+                { 
+                    audioSource.PlayOneShot(isEasyDifficulty ? difficultyEasyHoverSound : difficultyHardHoverSound);
+                }
                 break;
             case "tutorial":
                 audioSource.PlayOneShot(tutorialHoverSound);
@@ -222,9 +235,6 @@ public class AccessibleMenu : MonoBehaviour
                 break;
             case "exercise":
                 audioSource.PlayOneShot(isLowExerciseLevel ? exerciseLowHoverSound : exerciseHighHoverSound);
-                break;
-            case "resume":
-                audioSource.PlayOneShot(resumeHoverSound);
                 break;
             default:
                 audioSource.PlayOneShot(hoverSound);
@@ -251,7 +261,6 @@ public class AccessibleMenu : MonoBehaviour
         if (button == tutorialButton) return "tutorial";
         if (button == boxingModeButton) return "boxing";
         if (button == exerciseLevelButton) return "exercise";
-        if (button == resumeButton) return "resume";
         return "";
     }
 
