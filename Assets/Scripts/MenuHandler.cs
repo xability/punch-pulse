@@ -6,8 +6,14 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
+
 public class AccessibleMenu : MonoBehaviour
 {
+
+    [Header("Menu UI")]
+    public MenuUI menuUI;
+
+    private bool IsMenuActive => menuUI != null && menuUI.IsPaused;
 
     [Header("Menu Buttons")]
     public Button difficultyButton;
@@ -35,21 +41,31 @@ public class AccessibleMenu : MonoBehaviour
     public AudioClip exerciseLowHoverSound;
     public AudioClip exerciseHighHoverSound;
     public AudioClip resumeHoverSound;
+    public AudioClip pauseMenuActive;
 
-    // Score and haptic feedback
-    public XRBaseController leftController;  // Assign via Inspector
-    public XRBaseController rightController; // Assign via Inspector
+
+    [Header("UI")]
+    public Color normalColor = Color.white;
+    public Color selectedColor = Color.green;
+
+    [Header("Controllers")]
+    public XRBaseController leftController;
+    public XRBaseController rightController;
 
     [Header("Input")]
-    public InputActionReference moveAction;
-    public InputActionReference selectAction;
+    public InputActionReference joystickAction;
+    public InputActionReference triggerAction;
 
-    private CustomButton[] menuButtons;
+    private Button[] menuButtons;
     private int currentButtonIndex = 0;
+    private float lastJoystickYValue = 0f;
 
     private bool isEasyDifficulty = true;
     private bool isOffensiveMode = true;
     private bool isLowExerciseLevel = true;
+
+
+    private bool isFirstActivation = true;
 
 
     void Start()
@@ -57,22 +73,29 @@ public class AccessibleMenu : MonoBehaviour
         SetupButtons();
         UpdateButtonTexts();
 
-        // Initialize buttons array
-        buttons = new Button[] { difficultyButton, tutorialButton, boxingModeButton, exerciseLevelButton, resumeButton };
+        if (menuUI == null)
+        {
+            Debug.LogError("MenuUI reference is not set in the Inspector.");
+        }
 
-        // Get the specific actions
-        // Get all buttons and store them in an array
-        menuButtons = GetComponentsInChildren<CustomButton>();
+        menuButtons = new Button[] { difficultyButton, tutorialButton, boxingModeButton, exerciseLevelButton, resumeButton };
 
-        // Enable input actions
-        moveAction.action.Enable();
-        selectAction.action.Enable();
-
-        // Subscribe to input events
-        moveAction.action.performed += OnMove;
-        selectAction.action.performed += OnSelect;
+        if (joystickAction == null)
+        {
+            Debug.LogError("Joystick action is not assigned. Please assign it in the Inspector.");
+        }
+        else
+        {
+            joystickAction.action.performed += OnJoystickMoved;
+        }
+        triggerAction.action.performed += OnTriggerPressed;
     }
 
+    void OnDisable()
+    {
+        joystickAction.action.performed -= OnJoystickMoved;
+        triggerAction.action.performed -= OnTriggerPressed;
+    }
 
     void SetupButtons()
     {
@@ -87,95 +110,100 @@ public class AccessibleMenu : MonoBehaviour
     {
         button.onClick.AddListener(action);
         button.onClick.AddListener(PlayClickSound);
-        EventTrigger trigger = button.gameObject.AddComponent<EventTrigger>();
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.Select;
-        entry.callback.AddListener((data) => { PlayHoverSound(buttonID); });
-        trigger.triggers.Add(entry);
-    }
 
-
-    string GetButtonID(Button button)
-    {
-        if (button == difficultyButton) return "difficulty";
-        if (button == tutorialButton) return "tutorial";
-        if (button == boxingModeButton) return "boxing";
-        if (button == exerciseLevelButton) return "exercise";
-        if (button == resumeButton) return "resume";
-        return "";
-    }
-
-    private void OnNavigatePerformed(InputAction.CallbackContext context)
-    {
-        Vector2 navigateValue = context.ReadValue<Vector2>();
-        // Use navigateValue.y for vertical navigation
-        if (navigateValue.y > 0.5f)
+        // Add EventTrigger component if it doesn't exist
+        EventTrigger eventTrigger = button.gameObject.GetComponent<EventTrigger>();
+        if (eventTrigger == null)
         {
-            NavigateButtons(-1); // Move up
+            eventTrigger = button.gameObject.AddComponent<EventTrigger>();
         }
-        else if (navigateValue.y < -0.5f)
-        {
-            NavigateButtons(1); // Move down
-        }
+
+        // Add select event
+        EventTrigger.Entry selectEntry = new EventTrigger.Entry();
+        selectEntry.eventID = EventTriggerType.Select;
+        selectEntry.callback.AddListener((data) => { PlayHoverSound(buttonID); });
+        eventTrigger.triggers.Add(selectEntry);
     }
 
-    private void OnSelectPerformed(InputAction.CallbackContext context)
+    void OnJoystickMoved(InputAction.CallbackContext context)
     {
-        // Invoke the currently selected button
-        buttons[currentButtonIndex].onClick.Invoke();
-    }
+        if (!IsMenuActive) return;
 
-    void OnDisable()
-    {
-        // Unsubscribe from input events
-        moveAction.action.performed -= OnMove;
-        selectAction.action.performed -= OnSelect;
-    }
+        Vector2 joystickValue = context.ReadValue<Vector2>();
+        float newJoystickYValue = joystickValue.y;
 
-    void OnMove(InputAction.CallbackContext context)
-    {
-        Vector2 movement = context.ReadValue<Vector2>();
-
-        if (movement.y > 0.5f)
+        // Check if the joystick has moved enough to trigger a new selection
+        if (newJoystickYValue > 0.5f && lastJoystickYValue <= 0.5f)
         {
             NavigateMenu(-1); // Move up
+            lastJoystickYValue = newJoystickYValue;
         }
-        else if (movement.y < -0.5f)
+        else if (newJoystickYValue < -0.5f && lastJoystickYValue >= -0.5f)
         {
             NavigateMenu(1); // Move down
+            lastJoystickYValue = newJoystickYValue;
+        }
+        else if (Mathf.Abs(newJoystickYValue) < 0.1f)
+        {
+            // Reset when joystick is near neutral position
+            lastJoystickYValue = 0f;
+        }
+    }
+
+    void OnTriggerPressed(InputAction.CallbackContext context)
+    {
+        if (!IsMenuActive) return;
+
+        if (context.performed)
+        {
+            SelectCurrentButton();
         }
     }
 
     void NavigateMenu(int direction)
     {
         currentButtonIndex += direction;
-        currentButtonIndex = Mathf.Clamp(currentButtonIndex, 0, menuButtons.Length - 1);
+        if (currentButtonIndex < 0) currentButtonIndex = menuButtons.Length - 1;
+        if (currentButtonIndex >= menuButtons.Length) currentButtonIndex = 0;
 
-        // Highlight the current button
-        HighlightButton(menuButtons[currentButtonIndex]);
+        UpdateButtonHighlights();
+        PlayHoverSound(GetButtonID(menuButtons[currentButtonIndex]));
     }
 
-    void HighlightButton(CustomButton button)
+    void UpdateButtonHighlights()
     {
-        // Deselect all buttons
-        foreach (var btn in menuButtons)
+        for (int i = 0; i < menuButtons.Length; i++)
         {
-            btn.GetComponent<Selectable>().OnDeselect(null);
+            ColorBlock colors = menuButtons[i].colors;
+            colors.normalColor = (i == currentButtonIndex) ? selectedColor : normalColor;
+            menuButtons[i].colors = colors;
         }
-
-        // Select the current button
-        button.GetComponent<Selectable>().OnSelect(null);
-
-        // Play hover sound
-        PlayHoverSound(GetButtonID(button));
+        EventSystem.current.SetSelectedGameObject(menuButtons[currentButtonIndex].gameObject);
     }
 
-    void OnSelect(InputAction.CallbackContext context)
+    public void OnPauseStateChanged(bool isPaused)
     {
-        // Trigger the current button's action
+        if (isPaused)
+        {
+            if (isFirstActivation)
+            {
+                audioSource.PlayOneShot(pauseMenuActive);
+                isFirstActivation = false;
+            }
+            currentButtonIndex = 0;
+            UpdateButtonHighlights();
+        }
+        else
+        {
+            // Reset first activation flag when menu is closed
+            isFirstActivation = true;
+        }
+    }
+
+    void SelectCurrentButton()
+    {
         menuButtons[currentButtonIndex].onClick.Invoke();
     }
-
 
     void PlayHoverSound(string buttonID)
     {
@@ -183,6 +211,7 @@ public class AccessibleMenu : MonoBehaviour
         switch (buttonID)
         {
             case "difficulty":
+                Debug.Log("Hovering over difficulty button");
                 audioSource.PlayOneShot(isEasyDifficulty ? difficultyEasyHoverSound : difficultyHardHoverSound);
                 break;
             case "tutorial":
@@ -216,6 +245,18 @@ public class AccessibleMenu : MonoBehaviour
         }
     }
 
+    string GetButtonID(Button button)
+    {
+        if (button == difficultyButton) return "difficulty";
+        if (button == tutorialButton) return "tutorial";
+        if (button == boxingModeButton) return "boxing";
+        if (button == exerciseLevelButton) return "exercise";
+        if (button == resumeButton) return "resume";
+        return "";
+    }
+
+    // ... (rest of your existing methods like ToggleDifficulty, PlayTutorial, etc.)
+
     void ToggleDifficulty()
     {
         isEasyDifficulty = !isEasyDifficulty;
@@ -246,6 +287,7 @@ public class AccessibleMenu : MonoBehaviour
 
     void UpdateButtonTexts()
     {
+        Debug.Log("Updating button TEXTSs...");
         difficultyText.text = isEasyDifficulty ? "Difficulty: Easy" : "Difficulty: Hard";
         boxingModeText.text = isOffensiveMode ? "Mode: Offensive" : "Mode: Defensive";
         exerciseLevelText.text = isLowExerciseLevel ? "Exercise: Low" : "Exercise: High";

@@ -327,7 +327,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 20}
+  m_AnchoredPosition: {x: 0, y: 17.18}
   m_SizeDelta: {x: 210, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &45560449
@@ -1497,7 +1497,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -8.97}
+  m_AnchoredPosition: {x: 0, y: -11.790001}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &216769279
@@ -1909,6 +1909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14c634453331f04ab0f3c76afbc3d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuUI: {fileID: 252214666}
   difficultyButton: {fileID: 45560451}
   tutorialButton: {fileID: 1050866560}
   boxingModeButton: {fileID: 538141463}
@@ -1929,13 +1930,20 @@ MonoBehaviour:
     type: 3}
   boxingDefensiveHoverSound: {fileID: 8300000, guid: 27806986ea41ad04584f6817577ce6b4,
     type: 3}
-  exerciseLowHoverSound: {fileID: 8300000, guid: 5b8617bed0a7d1247a1bf757ef073655,
+  exerciseLowHoverSound: {fileID: 8300000, guid: 526a58b1fbec05248afa81ed90ffed61,
     type: 3}
   exerciseHighHoverSound: {fileID: 8300000, guid: 885354e822cec33478c281d7784682ba,
     type: 3}
   resumeHoverSound: {fileID: 8300000, guid: 75e008418dc9fc445a73607950c6ce2a, type: 3}
+  pauseMenuActive: {fileID: 8300000, guid: 324afcccc73eeb4419b189ee8382f408, type: 3}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 0, g: 1, b: 0, a: 1}
   leftController: {fileID: 347628038}
   rightController: {fileID: 372829248}
+  joystickAction: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  triggerAction: {fileID: -1979991170543050200, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
 --- !u!4 &252214665
 Transform:
   m_ObjectHideFlags: 0
@@ -4851,7 +4859,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 6}
+  m_AnchoredPosition: {x: 0, y: 3.179999}
   m_SizeDelta: {x: 210, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &538141461
@@ -4975,7 +4983,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1}
+  m_AnchoredPosition: {x: 0, y: -3.820001}
   m_SizeDelta: {x: 220, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &543664094
@@ -7535,7 +7543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 13}
+  m_AnchoredPosition: {x: 0, y: 10.179999}
   m_SizeDelta: {x: 180, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1050866558
@@ -8141,8 +8149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
 --- !u!4 &1167029021
 Transform:
   m_ObjectHideFlags: 0

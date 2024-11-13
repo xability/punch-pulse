@@ -7,6 +7,9 @@ public class MenuUI : MonoBehaviour
     public GameObject pauseMenuCanvas;
     public InputActionReference pauseAction;
     private bool isPaused = false;
+    public bool IsPaused => isPaused;
+
+    private AccessibleMenu accessibleMenu;
     public Transform playerCamera; // Assign the VR camera in the inspector
     public float menuDistance = 1f; // Distance from the camera
 
@@ -25,6 +28,12 @@ public class MenuUI : MonoBehaviour
         }
         pauseAction.action.Enable();
         pauseAction.action.performed += TogglePause;
+
+        accessibleMenu = GetComponent<AccessibleMenu>();
+        if (accessibleMenu == null)
+        {
+            Debug.LogError("AccessibleMenu component not found on the same GameObject.");
+        }
         // Initialize audio
         SetMixerVolumes(gameplayMixer, activeVolume, menuMixer, inactiveVolume);
     }
@@ -81,6 +90,11 @@ public class MenuUI : MonoBehaviour
         }
 
         Time.timeScale = isPaused ? 0 : 1;
+        // Notify AccessibleMenu about the pause state change
+        if (accessibleMenu != null)
+        {
+            accessibleMenu.OnPauseStateChanged(isPaused);
+        }
     }
 
     private System.Collections.IEnumerator TransitionAudio(AudioMixer fromMixer, float fromVolume, AudioMixer toMixer, float toVolume)

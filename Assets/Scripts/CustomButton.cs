@@ -10,6 +10,6 @@ public class CustomButton : Button, IPointerEnterHandler
     public override void OnPointerEnter(PointerEventData eventData)
     {
         base.OnPointerEnter(eventData);
-        onPointerEnter.Invoke();
+        // onPointerEnter.Invoke();
     }
 }
