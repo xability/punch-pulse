@@ -32,6 +32,10 @@ public class EnemyAttackBehavior : MonoBehaviour
     public float safeDistance; // The distance at which the player is considered safe
     public Animator modelAnimator;
 
+    public float medium_difficulty_duration;
+    public float hard_difficulty_duration;
+    public float easy_difficulty_duration;
+
 
     void Start()
     {
@@ -50,9 +54,17 @@ public class EnemyAttackBehavior : MonoBehaviour
         {
             if (canAttack)
             {
+
+                // ADD CHECK HERE FOR PLAYER DIFFICULTY LEVEL
+                // Easy : min - 3s, max - 12
+                // Medium : min - 2s, max - 8
+                // Hard : min - 1.5s, max - 6
+                // Exercise Set to High - min- - 2 , max - 5
                 float randomDelay = Random.Range(minAttackInterval, maxAttackInterval);
                 yield return new WaitForSeconds(randomDelay);
 
+
+                // If mode is set to defensive , do not attack
                 yield return StartCoroutine(PerformAttack());
 
                 canAttack = false;
@@ -87,7 +99,9 @@ public class EnemyAttackBehavior : MonoBehaviour
 
         // Set the attack sound based on the difficulty level
         int difficultyLevel = DifficultyManager.Instance.GetDifficultyLevel();
-       
+        medium_difficulty_duration = 1.7f;
+        hard_difficulty_duration = 1.3f;
+        easy_difficulty_duration = 2f;
 
         // Flash red lights
         if (warningLight != null)

@@ -20,6 +20,10 @@ public class MenuUI : MonoBehaviour
     public float activeVolume = 0f; // 0 dB, full volume
     public float inactiveVolume = -80f; // -80 dB, effectively muted
 
+    public GameObject enemyModel;
+    public float enemyMoveDistance = 2.5f; // Distance to move the enemy back
+    private Vector3 originalEnemyPosition;
+
     private void Awake()
     {
         if (pauseAction == null)
@@ -36,6 +40,15 @@ public class MenuUI : MonoBehaviour
         }
         // Initialize audio
         SetMixerVolumes(gameplayMixer, activeVolume, menuMixer, inactiveVolume);
+
+        if (enemyModel != null)
+        {
+            originalEnemyPosition = enemyModel.transform.position;
+        }
+        else
+        {
+            Debug.LogWarning("Enemy model reference is not set in the inspector");
+        }
     }
 
     private void Destroy()
@@ -83,6 +96,7 @@ public class MenuUI : MonoBehaviour
         {
             PositionMenuInFrontOfPlayer();
             StartCoroutine(TransitionAudio(gameplayMixer, inactiveVolume, menuMixer, activeVolume));
+            MoveEnemyBack();
         }
         else
         {
@@ -96,6 +110,7 @@ public class MenuUI : MonoBehaviour
             accessibleMenu.OnPauseStateChanged(isPaused);
         }
     }
+
 
     private System.Collections.IEnumerator TransitionAudio(AudioMixer fromMixer, float fromVolume, AudioMixer toMixer, float toVolume)
     {
@@ -147,6 +162,26 @@ public class MenuUI : MonoBehaviour
             default:
                 Debug.Log("Device change: " + device);
                 break;
+        }
+    }
+
+    private void MoveEnemyBack()
+    {
+        if (enemyModel != null && playerCamera != null)
+        {
+            Vector3 directionToEnemy = enemyModel.transform.position - playerCamera.position;
+            directionToEnemy.y = 0; // Keep the enemy at the same height
+            directionToEnemy = directionToEnemy.normalized;
+
+            enemyModel.transform.position += directionToEnemy * enemyMoveDistance;
+        }
+    }
+
+    private void RestoreEnemyPosition()
+    {
+        if (enemyModel != null)
+        {
+            enemyModel.transform.position = originalEnemyPosition;
         }
     }
 }

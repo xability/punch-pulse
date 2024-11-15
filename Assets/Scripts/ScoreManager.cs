@@ -83,6 +83,17 @@ public class ScoreManager : MonoBehaviour
         yield return new WaitForSeconds(playerScoreIs.length);
 
         string scoreString = Score.ToString();
+        if (Score < 35)
+        {
+            audioSource.PlayOneShot(numberClips[Score]);
+            yield return new WaitForSeconds(numberClips[Score].length);
+        }
+        else
+        {
+            Debug.LogWarning("Number audio clip not found for digit: " + Score);  
+        }
+
+        /*
         foreach (char digitChar in scoreString)
         {
             int digit = digitChar - '0';
@@ -97,7 +108,7 @@ public class ScoreManager : MonoBehaviour
                 Debug.LogWarning("Number audio clip not found for digit: " + digit);
                 break;
             }
-        }
+        }*/
 
         isAnnouncingScore = false;
     }

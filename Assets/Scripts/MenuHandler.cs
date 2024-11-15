@@ -220,6 +220,7 @@ public class AccessibleMenu : MonoBehaviour
     void SelectCurrentButton()
     {
         menuButtons[currentButtonIndex].onClick.Invoke();
+        PlayHoverSound(GetButtonID(menuButtons[currentButtonIndex]));
     }
 
     void PlayHoverSound(string buttonID)

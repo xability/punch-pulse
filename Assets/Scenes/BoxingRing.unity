@@ -1869,12 +1869,14 @@ MonoBehaviour:
   pauseAction: {fileID: -5812838698425806477, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   playerCamera: {fileID: 2036805227}
-  menuDistance: 2
+  menuDistance: 1.5
   gameplayMixer: {fileID: 24100000, guid: 645de0faec08a4d04af361e084948d0a, type: 2}
   menuMixer: {fileID: 24100000, guid: d2781922214594a40881373717e96ee5, type: 2}
   transitionDuration: 0.2
   activeVolume: 0
   inactiveVolume: -80
+  enemyModel: {fileID: 0}
+  enemyMoveDistance: 2.5
 --- !u!1 &256300930
 GameObject:
   m_ObjectHideFlags: 0
@@ -2011,7 +2013,7 @@ MonoBehaviour:
   rotationSpeed: 2
   animationRotationOffset: -3.5
   movementAudioSource: {fileID: 632711893}
-  footsteps: {fileID: 8300000, guid: 6a825f6d55670e149a1fb74bd310b448, type: 3}
+  footsteps: {fileID: 8300000, guid: 2711e1a7ca6f8114fbab2f086462b86f, type: 3}
 --- !u!114 &282555736
 MonoBehaviour:
   m_ObjectHideFlags: 0

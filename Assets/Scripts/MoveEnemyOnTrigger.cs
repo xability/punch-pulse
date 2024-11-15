@@ -29,6 +29,9 @@ public class MoveEnemyInFront : MonoBehaviour
     //rivate bool isMoving = false;
     private static int rightTriggerPressCount = 0;
 
+    private float lastAudioPlayTime = 0f;
+    private float audioCooldown = 0.5f;
+
     // Public static method to get the count
     public static int GetRightTriggerPressCount()
     {
@@ -61,10 +64,8 @@ public class MoveEnemyInFront : MonoBehaviour
 
         if (movementAudioSource != null)
         {
-            movementAudioSource.loop = true;
             movementAudioSource.clip = footsteps;
             movementAudioSource.volume = 1f;
-            movementAudioSource.Play();
         }
 
         // Subscribe to trigger action
@@ -129,6 +130,13 @@ public class MoveEnemyInFront : MonoBehaviour
     public float MoveEnemyTowardsTarget(Vector3 targetPosition)
     {
         if (enemy == null) return 0.0f;
+
+        // Play the audio clip
+        if (movementAudioSource != null && footsteps != null && Time.time - lastAudioPlayTime > audioCooldown)
+        {
+            movementAudioSource.PlayOneShot(footsteps);
+            lastAudioPlayTime = Time.time;
+        }
 
         // Move the enemy towards the target position (only Z and Y)
         Vector3 currentPosition = enemy.position;
