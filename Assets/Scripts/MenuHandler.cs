@@ -61,8 +61,8 @@ public class AccessibleMenu : MonoBehaviour
     private float lastJoystickYValue = 0f;
 
     private static DifficultyLevel currentDifficulty = DifficultyLevel.Easy;
-    private bool isOffensiveMode = true;
-    private bool isLowExerciseLevel = true;
+    private static bool isOffensiveMode = true;
+    private static bool isLowExerciseLevel = true;
     public enum DifficultyLevel
     {
         Easy,
@@ -287,6 +287,16 @@ public class AccessibleMenu : MonoBehaviour
     public static DifficultyLevel CurrentDifficulty
     {
         get { return currentDifficulty; }
+    }
+
+    public static bool IsOffensiveMode
+    {
+        get { return isOffensiveMode; }
+    }
+
+    public static bool IsLowExerciseLevel
+    {
+        get { return isLowExerciseLevel; }
     }
 
     void ToggleDifficulty()

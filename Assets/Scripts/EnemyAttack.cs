@@ -36,17 +36,43 @@ public class EnemyAttackBehavior : MonoBehaviour
     public float hard_difficulty_duration;
     public float easy_difficulty_duration;
 
+    private AccessibleMenu.DifficultyLevel currentDifficulty;
+    private bool currentExerciseLevel; 
+
 
     void Start()
     {
         StartCoroutine(AttackRoutine());
         audioSource = GetComponent<AudioSource>();
+        UpdateDifficultySettings();
+        currentExerciseLevel = AccessibleMenu.IsLowExerciseLevel;
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
     }
 
+    void UpdateDifficultySettings()
+    {
+        currentDifficulty = AccessibleMenu.CurrentDifficulty;
+
+        // currentExerciseLevel --> true = low, false = high
+        switch (currentDifficulty)
+        {
+            case AccessibleMenu.DifficultyLevel.Easy:
+                minAttackInterval = currentExerciseLevel ? 3f : 2.5f;
+                maxAttackInterval = currentExerciseLevel ? 12f : 8f;
+                break;
+            case AccessibleMenu.DifficultyLevel.Medium:
+                minAttackInterval = currentExerciseLevel ? 2f : 1.8f;
+                maxAttackInterval = currentExerciseLevel ? 8f : 6f;
+                break;
+            case AccessibleMenu.DifficultyLevel.Hard:
+                minAttackInterval = currentExerciseLevel ? 1.5f : 1.3f;
+                maxAttackInterval = currentExerciseLevel ? 6f : 4.5f;
+                break;
+        }
+    }
 
     IEnumerator AttackRoutine()
     {
@@ -55,21 +81,31 @@ public class EnemyAttackBehavior : MonoBehaviour
             if (canAttack)
             {
 
-                // ADD CHECK HERE FOR PLAYER DIFFICULTY LEVEL
-                // Easy : min - 3s, max - 12
-                // Medium : min - 2s, max - 8
-                // Hard : min - 1.5s, max - 6
-                // Exercise Set to High - min- - 2 , max - 5
+                bool isLowExercise = AccessibleMenu.IsLowExerciseLevel; // true = low, false = high
+
+                // Check if difficulty has changed
+                if (currentDifficulty != AccessibleMenu.CurrentDifficulty || currentExerciseLevel != isLowExercise)
+                {
+                    currentExerciseLevel = isLowExercise;
+                    UpdateDifficultySettings();
+                }
+
                 float randomDelay = Random.Range(minAttackInterval, maxAttackInterval);
                 yield return new WaitForSeconds(randomDelay);
 
-
-                // If mode is set to defensive , do not attack
-                yield return StartCoroutine(PerformAttack());
-
-                canAttack = false;
-                yield return new WaitForSeconds(cooldownAfterAttack);
-                canAttack = true;
+                // Check if the mode is offensive before attacking
+                if (AccessibleMenu.IsOffensiveMode)
+                {
+                    yield return StartCoroutine(PerformAttack());
+                    canAttack = false;
+                    yield return new WaitForSeconds(cooldownAfterAttack);
+                    canAttack = true;
+                }
+                else
+                {
+                    // If in defensive mode, skip the attack
+                    Debug.Log("In defensive mode, skipping attack.");
+                }
             }
             else
             {
@@ -132,19 +168,21 @@ public class EnemyAttackBehavior : MonoBehaviour
         }
         TriggerPunchAnimation();
 
-        // Debug.Log("diffuculty level : " + difficultyLevel);
-        if (difficultyLevel == 0)
-        {
-             attackIncomingSound = attackIncomingSoundEasy;
-        }
-        else
-        {
-            attackIncomingSound = attackIncomingSoundHard;
-        }
+        // Set the attack sound based on the current difficulty
+        attackIncomingSound = currentDifficulty == AccessibleMenu.DifficultyLevel.Easy ?
+            attackIncomingSoundEasy : attackIncomingSoundHard;
 
         audioSource.PlayOneShot(attackIncomingSound);
 
-        // Wait for 1s before checking if player is safe after the warning sound
+        // Wait for the appropriate duration based on difficulty
+        float waitDuration = currentDifficulty switch
+        {
+            AccessibleMenu.DifficultyLevel.Easy => easy_difficulty_duration,
+            AccessibleMenu.DifficultyLevel.Medium => medium_difficulty_duration,
+            AccessibleMenu.DifficultyLevel.Hard => hard_difficulty_duration,
+            _ => 1.7f // Default to medium if somehow an invalid difficulty is set
+        };
+
         yield return new WaitForSeconds(1.7f);
 
         // Check if player is safe (ducking or far enough away)
