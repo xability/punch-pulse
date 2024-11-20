@@ -205,6 +205,9 @@ public class AccessibleMenu : MonoBehaviour
             if (isFirstActivation)
             {
                 audioSource.PlayOneShot(pauseMenuActive);
+                // yield return new WaitForSeconds(pauseMenuActive.length);
+                // Wait for pausemenuactive to finish playing before
+                // setting isFirstActivation
                 isFirstActivation = false;
             }
             currentButtonIndex = 0;
@@ -216,6 +219,7 @@ public class AccessibleMenu : MonoBehaviour
             isFirstActivation = true;
         }
     }
+
 
     void SelectCurrentButton()
     {
