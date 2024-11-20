@@ -7,17 +7,20 @@ using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
-    public TextMeshProUGUI instructionText;
-    public Button nextButton;
-    public Button previousButton;
-    public Button exitTutorialButton;
+    public TextMeshProUGUI instructionText; // --> title
+    public TextMeshProUGUI stepcount; // Tutorial Step count
+    public Button nextButton; // go to next step
+    public Button previousButton; // go to previous step
+    public Button exitTutorialButton; // start the game
     public AudioSource audioSource;
+    public bool isTutorial = true;
 
     [System.Serializable]
     public class TutorialStep
     {
         public string instruction;
-        public AudioClip narration;
+        public AudioClip[] narration;
+        public int StepNum;
         public GameObject[] objectsToActivate;
         public GameObject[] objectsToDeactivate;
         public UnityEngine.Events.UnityEvent customAction;
@@ -32,19 +35,11 @@ public class TutorialManager : MonoBehaviour
         UpdateTutorialStep();
         nextButton.onClick.AddListener(NextStep);
         previousButton.onClick.AddListener(PreviousStep);
-        exitTutorialButton.onClick.AddListener(ExitTutorial);
+        // exitTutorialButton.onClick.AddListener(ExitTutorial);
     }
 
     void UpdateTutorialStep()
     {
-        // Deactivate all objects from the previous step
-        if (currentStep > 0)
-        {
-            foreach (var obj in tutorialSteps[currentStep - 1].objectsToDeactivate)
-            {
-                obj.SetActive(false);
-            }
-        }
 
         var step = tutorialSteps[currentStep];
 
@@ -54,19 +49,12 @@ public class TutorialManager : MonoBehaviour
         // Play narration
         if (step.narration != null)
         {
-            audioSource.clip = step.narration;
+            //audioSource.clip = step.narration;
+            // add for loop to loop through audio clip array
+
             audioSource.Play();
         }
 
-        // Activate/deactivate objects
-        foreach (var obj in step.objectsToActivate)
-        {
-            obj.SetActive(true);
-        }
-        foreach (var obj in step.objectsToDeactivate)
-        {
-            obj.SetActive(false);
-        }
 
         // Invoke custom action
         step.customAction?.Invoke();
