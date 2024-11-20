@@ -21,7 +21,7 @@ public class MenuUI : MonoBehaviour
     public float inactiveVolume = -80f; // -80 dB, effectively muted
 
     public GameObject enemyModel;
-    public float enemyMoveDistance = 2.5f; // Distance to move the enemy back
+    public float enemyMoveDistance = 2f; // Distance to move the enemy back
     private Vector3 originalEnemyPosition;
 
     private void Awake()
@@ -171,9 +171,15 @@ public class MenuUI : MonoBehaviour
         {
             Vector3 directionToEnemy = enemyModel.transform.position - playerCamera.position;
             directionToEnemy.y = 0; // Keep the enemy at the same height
-            directionToEnemy = directionToEnemy.normalized;
+            float currentDistance = directionToEnemy.magnitude;
 
-            enemyModel.transform.position += directionToEnemy * enemyMoveDistance;
+            // Only move the enemy if it's closer than enemyMoveDistance
+            if (currentDistance < enemyMoveDistance)
+            {
+                directionToEnemy = directionToEnemy.normalized;
+                float distanceToMove = Mathf.Min(enemyMoveDistance - currentDistance, enemyMoveDistance);
+                enemyModel.transform.position += directionToEnemy * distanceToMove;
+            }
         }
     }
 

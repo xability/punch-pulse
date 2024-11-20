@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -106,6 +108,7 @@ public class AccessibleMenu : MonoBehaviour
                 Debug.LogError($"CustomButtonHighlight component missing on button {i}");
             }
         }
+        isFirstActivation = true;
     }
 
     void OnDisable()
@@ -183,6 +186,7 @@ public class AccessibleMenu : MonoBehaviour
         if (currentButtonIndex >= menuButtons.Length) currentButtonIndex = 0;
 
         UpdateButtonHighlights();
+        Debug.Log("Navigating menu...");
         PlayHoverSound(GetButtonID(menuButtons[currentButtonIndex]));
     }
 
@@ -202,16 +206,14 @@ public class AccessibleMenu : MonoBehaviour
     {
         if (isPaused)
         {
-            if (isFirstActivation)
-            {
-                audioSource.PlayOneShot(pauseMenuActive);
-                // yield return new WaitForSeconds(pauseMenuActive.length);
-                // Wait for pausemenuactive to finish playing before
-                // setting isFirstActivation
-                isFirstActivation = false;
-            }
             currentButtonIndex = 0;
             UpdateButtonHighlights();
+
+            if (isFirstActivation)
+            {
+                StartCoroutine(PlayPauseMenuActiveSound());
+                isFirstActivation = false;
+            }
         }
         else
         {
@@ -220,10 +222,17 @@ public class AccessibleMenu : MonoBehaviour
         }
     }
 
+    private IEnumerator PlayPauseMenuActiveSound()
+    {
+        audioSource.PlayOneShot(pauseMenuActive);
+        yield return new WaitForSeconds(pauseMenuActive.length);
+
+    }
 
     void SelectCurrentButton()
     {
         menuButtons[currentButtonIndex].onClick.Invoke();
+        Debug.Log("Selecting current button...");
         PlayHoverSound(GetButtonID(menuButtons[currentButtonIndex]));
     }
 
@@ -233,7 +242,7 @@ public class AccessibleMenu : MonoBehaviour
         switch (buttonID)
         {
             case "difficulty":
-                Debug.Log("Hovering over difficulty button");
+                Debug.Log("Hovering over difficulty button, : " + isFirstActivation);
                 if (!isFirstActivation)
                 {
                     switch (currentDifficulty)
