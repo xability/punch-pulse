@@ -263,7 +263,7 @@ public class AccessibleMenu : MonoBehaviour
 
     void PlayClickSound()
     {
-        audioSource.PlayOneShot(clickSound);
+        //audioSource.PlayOneShot(clickSound);
     }
 
     void SendHapticImpulse(XRBaseController controller, float amplitude, float duration)
