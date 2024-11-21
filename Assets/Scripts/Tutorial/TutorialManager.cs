@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class TutorialManager : MonoBehaviour
 {
-    public TextMeshProUGUI instructionText; // --> title
-    public TextMeshProUGUI stepcount; // Tutorial Step count
-    public Button nextButton; // go to next step
-    public Button previousButton; // go to previous step
-    public Button exitTutorialButton; // start the game
+    public TextMeshProUGUI instructionText;
+    public TextMeshProUGUI stepcount;
+    public InputActionReference nextButtonAction;
+    public InputActionReference exitTutorialAction;
     public AudioSource audioSource;
     public bool isTutorial = true;
 
@@ -29,39 +31,49 @@ public class TutorialManager : MonoBehaviour
     public TutorialStep[] tutorialSteps;
 
     private int currentStep = 0;
+    private bool canProceed = true;
 
     void Start()
     {
         UpdateTutorialStep();
-        nextButton.onClick.AddListener(NextStep);
-        previousButton.onClick.AddListener(PreviousStep);
-        // exitTutorialButton.onClick.AddListener(ExitTutorial);
+        nextButtonAction.action.performed += OnNextButtonPressed;
+        exitTutorialAction.action.performed += ExitTutorial;
     }
 
     void UpdateTutorialStep()
     {
-
         var step = tutorialSteps[currentStep];
-
-        // Update instruction text
         instructionText.text = step.instruction;
+        stepcount.text = $"{step.StepNum} of {tutorialSteps.Length}";
 
-        // Play narration
-        if (step.narration != null)
-        {
-            //audioSource.clip = step.narration;
-            // add for loop to loop through audio clip array
+        foreach (var obj in step.objectsToActivate)
+            obj.SetActive(true);
+        foreach (var obj in step.objectsToDeactivate)
+            obj.SetActive(false);
 
-            audioSource.Play();
-        }
-
-
-        // Invoke custom action
         step.customAction?.Invoke();
 
-        // Update button interactability
-        previousButton.interactable = (currentStep > 0);
-        nextButton.interactable = (currentStep < tutorialSteps.Length - 1);
+        StartCoroutine(PlayNarrationClips(step.narration));
+    }
+
+    private IEnumerator PlayNarrationClips(AudioClip[] clips)
+    {
+        canProceed = false;
+
+        foreach (var clip in clips)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+            yield return new WaitForSeconds(clip.length);
+        }
+
+        canProceed = true;
+    }
+
+    private void OnNextButtonPressed(InputAction.CallbackContext context)
+    {
+        if (canProceed)
+            NextStep();
     }
 
     void NextStep()
@@ -71,20 +83,25 @@ public class TutorialManager : MonoBehaviour
             currentStep++;
             UpdateTutorialStep();
         }
-    }
-
-    void PreviousStep()
-    {
-        if (currentStep > 0)
+        else if (currentStep == tutorialSteps.Length - 1)
         {
-            currentStep--;
-            UpdateTutorialStep();
+            ExitTutorial(new InputAction.CallbackContext());
         }
     }
 
-    void ExitTutorial()
+    private void ExitTutorial(InputAction.CallbackContext context)
     {
-        SceneManager.LoadScene("BoxingRing"); // Replace with your main scene name
+        if (isTutorial)
+        {
+            isTutorial = false;
+            SceneManager.LoadScene("BoxingRing");
+        }
+    }
+
+    void OnDisable()
+    {
+        nextButtonAction.action.performed -= OnNextButtonPressed;
+        exitTutorialAction.action.performed -= ExitTutorial;
     }
 }
 
