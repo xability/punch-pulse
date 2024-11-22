@@ -39,8 +39,6 @@ public class AccessibleMenu : MonoBehaviour
     public AudioClip tutorialHoverSound;
     public AudioClip boxingOffensiveHoverSound;
     public AudioClip boxingDefensiveHoverSound;
-    public AudioClip exerciseLowHoverSound;
-    public AudioClip exerciseHighHoverSound;
     public AudioClip resumeHoverSound;
     public AudioClip pauseMenuActive;
     public AudioClip difficultyMediumHoverSound;
@@ -64,7 +62,7 @@ public class AccessibleMenu : MonoBehaviour
 
     private static DifficultyLevel currentDifficulty = DifficultyLevel.Easy;
     private static bool isOffensiveMode = true;
-    private static bool isLowExerciseLevel = true;
+
     public enum DifficultyLevel
     {
         Easy,
@@ -87,7 +85,7 @@ public class AccessibleMenu : MonoBehaviour
             Debug.LogError("MenuUI reference is not set in the Inspector.");
         }
 
-        menuButtons = new Button[] { difficultyButton, tutorialButton, boxingModeButton, exerciseLevelButton };
+        menuButtons = new Button[] { difficultyButton, tutorialButton, boxingModeButton };
 
         if (joystickAction == null)
         {
@@ -122,7 +120,6 @@ public class AccessibleMenu : MonoBehaviour
         SetupButton(difficultyButton, ToggleDifficulty, "difficulty");
         SetupButton(tutorialButton, PlayTutorial, "tutorial");
         SetupButton(boxingModeButton, ToggleBoxingMode, "boxing");
-        SetupButton(exerciseLevelButton, ToggleExerciseLevel, "exercise");
     }
 
     void SetupButton(Button button, UnityEngine.Events.UnityAction action, string buttonID)
@@ -239,6 +236,10 @@ public class AccessibleMenu : MonoBehaviour
     void PlayHoverSound(string buttonID)
     {
         SendHapticImpulse(leftController, 0.6f, 0.1f);
+
+        // Stop any currently playing sound
+        audioSource.Stop();
+
         switch (buttonID)
         {
             case "difficulty":
@@ -265,9 +266,6 @@ public class AccessibleMenu : MonoBehaviour
             case "boxing":
                 audioSource.PlayOneShot(isOffensiveMode ? boxingOffensiveHoverSound : boxingDefensiveHoverSound);
                 break;
-            case "exercise":
-                audioSource.PlayOneShot(isLowExerciseLevel ? exerciseLowHoverSound : exerciseHighHoverSound);
-                break;
             default:
                 audioSource.PlayOneShot(hoverSound);
                 break;
@@ -292,7 +290,6 @@ public class AccessibleMenu : MonoBehaviour
         if (button == difficultyButton) return "difficulty";
         if (button == tutorialButton) return "tutorial";
         if (button == boxingModeButton) return "boxing";
-        if (button == exerciseLevelButton) return "exercise";
         return "";
     }
 
@@ -307,10 +304,6 @@ public class AccessibleMenu : MonoBehaviour
         get { return isOffensiveMode; }
     }
 
-    public static bool IsLowExerciseLevel
-    {
-        get { return isLowExerciseLevel; }
-    }
 
     void ToggleDifficulty()
     {
@@ -343,14 +336,6 @@ public class AccessibleMenu : MonoBehaviour
         PlayClickSound();
     }
 
-    void ToggleExerciseLevel()
-    {
-        isLowExerciseLevel = !isLowExerciseLevel;
-        UpdateButtonTexts();
-        PlayClickSound();
-    }
-
-
     void UpdateButtonTexts()
     {
         switch (currentDifficulty)
@@ -365,8 +350,7 @@ public class AccessibleMenu : MonoBehaviour
                 difficultyText.text = "Difficulty: Hard";
                 break;
         }
-        boxingModeText.text = isOffensiveMode ? "Mode: Offensive" : "Mode: Defensive";
-        exerciseLevelText.text = isLowExerciseLevel ? "Exercise: Low" : "Exercise: High";
+        boxingModeText.text = isOffensiveMode ? "Ducking: On" : "Ducking: Off";
     }
 
     void ResumeGame()
@@ -393,3 +377,73 @@ public class AccessibleMenu : MonoBehaviour
         Debug.Log("Right trigger has been pressed " + currentCount + " times.");
     }
 }
+
+/*
+ * 
+ *    private Coroutine currentAudioCoroutine;
+
+    void PlayHoverSound(string buttonID)
+    {
+        SendHapticImpulse(leftController, 0.6f, 0.1f);
+
+        // Stop the current audio coroutine if it's running
+        if (currentAudioCoroutine != null)
+        {
+            StopCoroutine(currentAudioCoroutine);
+        }
+
+        // Start a new audio coroutine
+        currentAudioCoroutine = StartCoroutine(PlayHoverSoundCoroutine(buttonID));
+    }
+
+    IEnumerator PlayHoverSoundCoroutine(string buttonID)
+    {
+        // Stop any currently playing sound
+        audioSource.Stop();
+
+        // Wait for a frame to ensure the audio has stopped
+        yield return null;
+
+        AudioClip clipToPlay = null;
+
+        switch (buttonID)
+        {
+            case "difficulty":
+                Debug.Log("Hovering over difficulty button, : " + isFirstActivation);
+                if (!isFirstActivation)
+                {
+                    switch (currentDifficulty)
+                    {
+                        case DifficultyLevel.Easy:
+                            clipToPlay = difficultyEasyHoverSound;
+                            break;
+                        case DifficultyLevel.Medium:
+                            clipToPlay = difficultyMediumHoverSound;
+                            break;
+                        case DifficultyLevel.Hard:
+                            clipToPlay = difficultyHardHoverSound;
+                            break;
+                    }
+                }
+                break;
+            case "tutorial":
+                clipToPlay = tutorialHoverSound;
+                break;
+            case "boxing":
+                clipToPlay = isOffensiveMode ? boxingOffensiveHoverSound : boxingDefensiveHoverSound;
+                break;
+            default:
+                clipToPlay = hoverSound;
+                break;
+        }
+
+        if (clipToPlay != null)
+        {
+            audioSource.PlayOneShot(clipToPlay);
+            yield return new WaitForSeconds(clipToPlay.length);
+        }
+
+        currentAudioCoroutine = null;
+    }
+
+*/

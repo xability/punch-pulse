@@ -5,9 +5,10 @@ using UnityEngine.XR;
 
 public class EnemyAttackBehavior : MonoBehaviour
 {
-    public float minAttackInterval = 2f;
-    public float maxAttackInterval = 10f;
-    public float cooldownAfterAttack = 5f;
+    public float minAttackInterval;
+    public float maxAttackInterval;
+    public float cooldownAfterAttack;
+    public float reflex_time_duration;
     private AudioClip attackIncomingSound;
     public AudioClip attackIncomingSoundEasy;
     public AudioClip attackIncomingSoundHard;
@@ -32,12 +33,8 @@ public class EnemyAttackBehavior : MonoBehaviour
     public float safeDistance; // The distance at which the player is considered safe
     public Animator modelAnimator;
 
-    public float medium_difficulty_duration;
-    public float hard_difficulty_duration;
-    public float easy_difficulty_duration;
 
     private AccessibleMenu.DifficultyLevel currentDifficulty;
-    private bool currentExerciseLevel; 
 
 
     void Start()
@@ -45,7 +42,6 @@ public class EnemyAttackBehavior : MonoBehaviour
         StartCoroutine(AttackRoutine());
         audioSource = GetComponent<AudioSource>();
         UpdateDifficultySettings();
-        currentExerciseLevel = AccessibleMenu.IsLowExerciseLevel;
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -56,20 +52,25 @@ public class EnemyAttackBehavior : MonoBehaviour
     {
         currentDifficulty = AccessibleMenu.CurrentDifficulty;
 
-        // currentExerciseLevel --> true = low, false = high
         switch (currentDifficulty)
         {
             case AccessibleMenu.DifficultyLevel.Easy:
-                minAttackInterval = currentExerciseLevel ? 3f : 2.5f;
-                maxAttackInterval = currentExerciseLevel ? 12f : 8f;
+                minAttackInterval =  3f;
+                maxAttackInterval =  10f;
+                cooldownAfterAttack = 5f;
+                reflex_time_duration = 2f;
                 break;
             case AccessibleMenu.DifficultyLevel.Medium:
-                minAttackInterval = currentExerciseLevel ? 2f : 1.8f;
-                maxAttackInterval = currentExerciseLevel ? 8f : 6f;
+                minAttackInterval =  2f;
+                maxAttackInterval =  7f;
+                cooldownAfterAttack = 3f;
+                reflex_time_duration = 1.7f;
                 break;
             case AccessibleMenu.DifficultyLevel.Hard:
-                minAttackInterval = currentExerciseLevel ? 1.5f : 1.3f;
-                maxAttackInterval = currentExerciseLevel ? 6f : 4.5f;
+                minAttackInterval =  1.5f;
+                maxAttackInterval =  4f;
+                cooldownAfterAttack = 1.5f;
+                reflex_time_duration = 1.3f;
                 break;
         }
     }
@@ -80,13 +81,9 @@ public class EnemyAttackBehavior : MonoBehaviour
         {
             if (canAttack)
             {
-
-                bool isLowExercise = AccessibleMenu.IsLowExerciseLevel; // true = low, false = high
-
                 // Check if difficulty has changed
-                if (currentDifficulty != AccessibleMenu.CurrentDifficulty || currentExerciseLevel != isLowExercise)
+                if (currentDifficulty != AccessibleMenu.CurrentDifficulty)
                 {
-                    currentExerciseLevel = isLowExercise;
                     UpdateDifficultySettings();
                 }
 
@@ -133,11 +130,6 @@ public class EnemyAttackBehavior : MonoBehaviour
         duckingThresholdPercentage = 0.75f; // Set to 75% of initial height
         duckingThreshold = duckingThresholdPercentage * initialHeadsetHeight;
 
-        // Set the attack sound based on the difficulty level
-        int difficultyLevel = DifficultyManager.Instance.GetDifficultyLevel();
-        medium_difficulty_duration = 1.7f;
-        hard_difficulty_duration = 1.3f;
-        easy_difficulty_duration = 2f;
 
         // Flash red lights
         if (warningLight != null)
@@ -174,16 +166,7 @@ public class EnemyAttackBehavior : MonoBehaviour
 
         audioSource.PlayOneShot(attackIncomingSound);
 
-        // Wait for the appropriate duration based on difficulty
-        float waitDuration = currentDifficulty switch
-        {
-            AccessibleMenu.DifficultyLevel.Easy => easy_difficulty_duration,
-            AccessibleMenu.DifficultyLevel.Medium => medium_difficulty_duration,
-            AccessibleMenu.DifficultyLevel.Hard => hard_difficulty_duration,
-            _ => 1.7f // Default to medium if somehow an invalid difficulty is set
-        };
-
-        yield return new WaitForSeconds(1.7f);
+        yield return new WaitForSeconds(reflex_time_duration);
 
         // Check if player is safe (ducking or far enough away)
         if (!IsPlayerSafe())
