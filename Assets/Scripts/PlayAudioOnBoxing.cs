@@ -49,6 +49,19 @@ public class PlayAudioOnBoxing : MonoBehaviour
     public string bodyColliderTag = "Torso_Collider";
     public string component;
 
+    private static int playerHeadPunchCount = 0;
+    private static int playerBodyPunchCount = 0;
+
+    public static int GetPlayerHeadPunchCount()
+    {
+        return playerHeadPunchCount;
+    }
+
+    public static int GetPlayerBodyPunchCount()
+    {
+        return playerBodyPunchCount;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -154,11 +167,13 @@ public class PlayAudioOnBoxing : MonoBehaviour
                 {
                     TriggerHeadHitAnimation();
                     ScoreManager.AddScore(2);
+                    playerHeadPunchCount++; 
                 }
                 else
                 {
                     TriggerBodyHitAnimation();
                     ScoreManager.AddScore(1);
+                    playerBodyPunchCount++;
                 }
                 
             }

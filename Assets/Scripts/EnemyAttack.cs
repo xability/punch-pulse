@@ -36,6 +36,18 @@ public class EnemyAttackBehavior : MonoBehaviour
 
     private AccessibleMenu.DifficultyLevel currentDifficulty;
 
+    private static int playerDuckCount = 0;
+    private static int playerHitCount = 0;
+
+    public static int GetPlayerHitCount()
+    {
+        return playerHitCount;
+    }
+
+    public static int GetPlayerDuckCount()
+    {
+        return playerDuckCount;
+    }
 
     void Start()
     {
@@ -174,11 +186,13 @@ public class EnemyAttackBehavior : MonoBehaviour
             // If the player is not safe, reduce score
             audioSource.PlayOneShot(attackHitSound);
             ScoreManager.DecrementScore(5);
+            playerHitCount++;
         }
         else
         {
             // Debug.Log("Player is safe! No score penalty.");
             audioSource.PlayOneShot(attackMissSound);
+            playerDuckCount++;
             // Implement your actual attack logic here
         }
 

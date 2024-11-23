@@ -27,6 +27,13 @@ public class AccessibleMenu : MonoBehaviour
     public TextMeshProUGUI difficultyText;
     public TextMeshProUGUI boxingModeText;
     public TextMeshProUGUI exerciseLevelText;
+    public TextMeshProUGUI LTCount;
+    public TextMeshProUGUI RTCount;
+    public TextMeshProUGUI duckCount;
+    public TextMeshProUGUI playerHitCount;
+    public TextMeshProUGUI playerHeadPunchCount;
+    public TextMeshProUGUI playerBodyPunchCount;
+    public TextMeshProUGUI TotalPunchesThrown;
 
     [Header("Audio")]
     public AudioSource audioSource;
@@ -70,6 +77,12 @@ public class AccessibleMenu : MonoBehaviour
         Hard
     }
 
+    public int currentLTCount;
+    public int currentRTCount;
+    public int currentDuckCount;
+    public int currentPlayerHitCount;
+    public int currentPlayerHeadPunchCount;
+    public int currentPlayerBodyPunchCount;
 
     private bool isFirstActivation = true;
 
@@ -359,10 +372,26 @@ public class AccessibleMenu : MonoBehaviour
         Debug.Log("Resuming game...");
     }
 
-    void GetLeftTriggerCount()
+    void GetGameStats()
     {
-        int currentCount = DirectionHelper.GetLeftTriggerPressCount();
-        Debug.Log("Left trigger has been pressed " + currentCount + " times.");
+        currentLTCount = DirectionHelper.GetLeftTriggerPressCount();
+        Debug.Log("Left trigger has been pressed " + currentLTCount + " times.");
+
+        currentRTCount = MoveEnemyInFront.GetRightTriggerPressCount();
+        Debug.Log("Right trigger has been pressed " + currentRTCount + " times.");
+
+        currentDuckCount = EnemyAttackBehavior.GetPlayerDuckCount();
+        Debug.Log("Player has ducked " + currentDuckCount + " times.");
+
+        currentPlayerHitCount = EnemyAttackBehavior.GetPlayerHitCount();
+        Debug.Log("Enemy has hit the player " + currentPlayerHitCount + " times.");
+
+        currentPlayerHeadPunchCount = PlayAudioOnBoxing.GetPlayerHeadPunchCount();
+        Debug.Log("Player has punched the enemy's head " + currentPlayerHeadPunchCount + " times.");
+
+        currentPlayerBodyPunchCount = PlayAudioOnBoxing.GetPlayerBodyPunchCount();
+        Debug.Log("Player has punched the enemy's body " + currentPlayerBodyPunchCount + " times.");
+
     }
 
     void ResetLeftTriggerCount()
@@ -371,11 +400,6 @@ public class AccessibleMenu : MonoBehaviour
         MoveEnemyInFront.ResetTriggerPressCount();
     }
 
-    void GetRightTriggerCount()
-    {
-        int currentCount = MoveEnemyInFront.GetRightTriggerPressCount();
-        Debug.Log("Right trigger has been pressed " + currentCount + " times.");
-    }
 }
 
 /*
