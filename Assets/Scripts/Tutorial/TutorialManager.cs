@@ -22,22 +22,42 @@ public class TutorialManager : MonoBehaviour
     {
         public string instruction;
         public AudioClip[] narration;
+        public InputActionReference[] requiredActions;
         public int StepNum;
         public GameObject[] objectsToActivate;
         public GameObject[] objectsToDeactivate;
-        public UnityEngine.Events.UnityEvent customAction;
     }
 
     public TutorialStep[] tutorialSteps;
 
     private int currentStep = 0;
-    private bool canProceed = true;
+    private int currentClip = 0;
+    private bool waitingForAction = false;
+    private bool buttonPressed = false;
+    private bool tutorialStarted = false;
+    private bool isAudioPlaying = false;
+
 
     void Start()
     {
-        UpdateTutorialStep();
+        instructionText.text = "Press right select button to start";
+        stepcount.text = "0";
         nextButtonAction.action.performed += OnNextButtonPressed;
         exitTutorialAction.action.performed += ExitTutorial;
+    }
+
+    void StartTutorial()
+    {
+        tutorialStarted = true;
+        UpdateTutorialStep();
+    }
+
+    void Update()
+    {
+        if (waitingForAction)
+        {
+            CheckRequiredAction();
+        }
     }
 
     void UpdateTutorialStep()
@@ -51,29 +71,64 @@ public class TutorialManager : MonoBehaviour
         foreach (var obj in step.objectsToDeactivate)
             obj.SetActive(false);
 
-        step.customAction?.Invoke();
-
-        StartCoroutine(PlayNarrationClips(step.narration));
+        currentClip = 0;
+        PlayNextClip();
     }
 
-    private IEnumerator PlayNarrationClips(AudioClip[] clips)
+    void PlayNextClip()
     {
-        canProceed = false;
-
-        foreach (var clip in clips)
+        var step = tutorialSteps[currentStep];
+        if (currentClip < step.narration.Length)
         {
-            audioSource.clip = clip;
+            audioSource.clip = step.narration[currentClip];
             audioSource.Play();
-            yield return new WaitForSeconds(clip.length);
+            isAudioPlaying = true;
+            StartCoroutine(WaitForClipEnd());
         }
+        else
+        {
+            NextStep();
+        }
+    }
 
-        canProceed = true;
+    IEnumerator WaitForClipEnd()
+    {
+        yield return new WaitForSeconds(audioSource.clip.length);
+        isAudioPlaying = false;
+        waitingForAction = true;
+    }
+
+    void CheckRequiredAction()
+    {
+        var step = tutorialSteps[currentStep];
+        if (step.requiredActions[currentClip].action.triggered)
+        {
+            waitingForAction = false;
+            buttonPressed = false;
+            Debug.Log("Tutorial Step number " + currentClip + " completed");
+            currentClip++;
+            PlayNextClip();
+        }
     }
 
     private void OnNextButtonPressed(InputAction.CallbackContext context)
     {
-        if (canProceed)
+        // This method is now only used for debugging or skipping steps if needed
+        if (isAudioPlaying)
+        {
+            // Ignore button press while audio is playing
+            return;
+        }
+
+        buttonPressed = true;
+        if (!tutorialStarted)
+        {
+            StartTutorial();
+        }
+        else if (!waitingForAction)
+        {
             NextStep();
+        }
     }
 
     void NextStep()

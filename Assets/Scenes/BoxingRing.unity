@@ -1676,6 +1676,13 @@ MonoBehaviour:
   difficultyText: {fileID: 965201329}
   boxingModeText: {fileID: 1899942797}
   exerciseLevelText: {fileID: 0}
+  LTCount: {fileID: 0}
+  RTCount: {fileID: 0}
+  duckCount: {fileID: 0}
+  playerHitCount: {fileID: 0}
+  playerHeadPunchCount: {fileID: 0}
+  playerBodyPunchCount: {fileID: 0}
+  TotalPunchesThrown: {fileID: 0}
   audioSource: {fileID: 390697174}
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
@@ -1700,6 +1707,12 @@ MonoBehaviour:
     type: 3}
   triggerAction: {fileID: -1979991170543050200, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
+  currentLTCount: 0
+  currentRTCount: 0
+  currentDuckCount: 0
+  currentPlayerHitCount: 0
+  currentPlayerHeadPunchCount: 0
+  currentPlayerBodyPunchCount: 0
 --- !u!4 &252214665
 Transform:
   m_ObjectHideFlags: 0
@@ -1983,6 +1996,7 @@ MonoBehaviour:
   minAttackInterval: 3
   maxAttackInterval: 10
   cooldownAfterAttack: 4
+  reflex_time_duration: 0
   attackIncomingSoundEasy: {fileID: 8300000, guid: d77c69e78cf80f845a7af1da332213b3,
     type: 3}
   attackIncomingSoundHard: {fileID: 8300000, guid: 5feacde8b4fa7dc4badf063b5ec9fff9,
@@ -2000,9 +2014,6 @@ MonoBehaviour:
   enemyObject: {fileID: 1848126064}
   safeDistance: 2
   modelAnimator: {fileID: 1848126072}
-  medium_difficulty_duration: 0
-  hard_difficulty_duration: 0
-  easy_difficulty_duration: 0
 --- !u!1 &301230425
 GameObject:
   m_ObjectHideFlags: 0
@@ -8767,7 +8778,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.945
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
@@ -9626,6 +9637,7 @@ MonoBehaviour:
   minAttackInterval: 3
   maxAttackInterval: 10
   cooldownAfterAttack: 4
+  reflex_time_duration: 0
   attackIncomingSoundEasy: {fileID: 8300000, guid: d77c69e78cf80f845a7af1da332213b3,
     type: 3}
   attackIncomingSoundHard: {fileID: 8300000, guid: 5feacde8b4fa7dc4badf063b5ec9fff9,
@@ -9643,9 +9655,6 @@ MonoBehaviour:
   enemyObject: {fileID: 1953239092}
   safeDistance: 1.2
   modelAnimator: {fileID: 1848126072}
-  medium_difficulty_duration: 0
-  hard_difficulty_duration: 0
-  easy_difficulty_duration: 0
 --- !u!4 &1848126075 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
