@@ -33,7 +33,6 @@ public class TutorialManager : MonoBehaviour
     private int currentStep = 0;
     private int currentClip = 0;
     private bool waitingForAction = false;
-    private bool buttonPressed = false;
     private bool tutorialStarted = false;
     private bool isAudioPlaying = false;
 
@@ -84,6 +83,7 @@ public class TutorialManager : MonoBehaviour
             audioSource.Play();
             isAudioPlaying = true;
             StartCoroutine(WaitForClipEnd());
+            // yield return StartCoroutine(PerformAttack());
         }
         else
         {
@@ -104,7 +104,6 @@ public class TutorialManager : MonoBehaviour
         if (step.requiredActions[currentClip].action.triggered)
         {
             waitingForAction = false;
-            buttonPressed = false;
             Debug.Log("Tutorial Step number " + currentClip + " completed");
             currentClip++;
             PlayNextClip();
@@ -120,7 +119,6 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-        buttonPressed = true;
         if (!tutorialStarted)
         {
             StartTutorial();

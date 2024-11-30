@@ -1993,7 +1993,7 @@ MonoBehaviour:
     StepNum: 1
     objectsToActivate: []
     objectsToDeactivate: []
-  - instruction: Controls - Navigation
+  - instruction: Controls
     narration:
     - {fileID: 8300000, guid: 1903110a158ecce478a808fffc2704cb, type: 3}
     - {fileID: 8300000, guid: a0f5e8c49d947304bb0007de6764e2a3, type: 3}
@@ -2018,10 +2018,9 @@ MonoBehaviour:
     narration:
     - {fileID: 8300000, guid: 7f8f7313087df7f4ba93a4f16c60887f, type: 3}
     - {fileID: 8300000, guid: ecb0dfee33c1a7542abe98f324c68b47, type: 3}
-    - {fileID: 8300000, guid: c6a332a3c05b4c0439a6dd457fd8f38f, type: 3}
     requiredActions:
     - {fileID: 1625246124897866415, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-    - {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    - {fileID: 1625246124897866415, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     StepNum: 3
     objectsToActivate: []
     objectsToDeactivate: []
@@ -2033,6 +2032,14 @@ MonoBehaviour:
     - {fileID: -5812838698425806477, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     - {fileID: 1625246124897866415, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     StepNum: 4
+    objectsToActivate: []
+    objectsToDeactivate: []
+  - instruction: Tutorial Completed
+    narration:
+    - {fileID: 8300000, guid: f2279f9d82e9fa6478e0856b5fbd7b4d, type: 3}
+    requiredActions:
+    - {fileID: 1625246124897866415, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    StepNum: 5
     objectsToActivate: []
     objectsToDeactivate: []
 --- !u!4 &328072003
