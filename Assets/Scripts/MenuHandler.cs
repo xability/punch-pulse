@@ -212,13 +212,35 @@ public class AccessibleMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(menuButtons[currentButtonIndex].gameObject);
     }
 
+    void UpdateStats(int leftTrigCount, int rightTrigCount, int duckCount, int playerHitCount, int headPunchCount, int bodyPunchCount)
+    {
+        
+        if (LTCount != null)
+            LTCount.text = "# Left Trigger: " + leftTrigCount.ToString();
+
+        if (RTCount != null)
+            RTCount.text = "# Right Trigger: " + rightTrigCount.ToString();
+
+        if (this.duckCount != null)
+            this.duckCount.text = "# Ducks: " + duckCount.ToString();
+
+        if (this.playerHitCount != null)
+            this.playerHitCount.text = "# Hits By Enemy: " + playerHitCount.ToString();
+
+        if (playerHeadPunchCount != null)
+            playerHeadPunchCount.text = "# Head punches: " + headPunchCount.ToString();
+
+        if (playerBodyPunchCount != null)
+            playerBodyPunchCount.text = "# Body punches: " + bodyPunchCount.ToString();
+    }
+
     public void OnPauseStateChanged(bool isPaused)
     {
         if (isPaused)
         {
             currentButtonIndex = 0;
             UpdateButtonHighlights();
-
+            UpdateStats(currentLTCount, currentRTCount, currentDuckCount, currentPlayerHitCount, currentPlayerHeadPunchCount, currentPlayerBodyPunchCount);
             if (isFirstActivation)
             {
                 StartCoroutine(PlayPauseMenuActiveSound());
