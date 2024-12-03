@@ -36,6 +36,7 @@ public class TutorialManager : MonoBehaviour
     private bool tutorialStarted = false;
     private bool isAudioPlaying = false;
 
+    public EnemyAttackBehavior enemyAttackBehavior;
 
     void Start()
     {
@@ -83,12 +84,23 @@ public class TutorialManager : MonoBehaviour
             audioSource.Play();
             isAudioPlaying = true;
             StartCoroutine(WaitForClipEnd());
-            // yield return StartCoroutine(PerformAttack());
+
+            // Check if it's step 3 and the specific clips are about to play
+            if (step.StepNum == 3 && (step.narration[currentClip].name == "08_duck_1" || step.narration[currentClip].name == "09_duck_2"))
+            {
+                StartCoroutine(SimulateEnemyAttack());
+            }
         }
         else
         {
             NextStep();
         }
+    }
+
+    IEnumerator SimulateEnemyAttack()
+    {
+        yield return new WaitForSeconds(audioSource.clip.length); // Wait for the audio to finish
+        yield return StartCoroutine(enemyAttackBehavior.PerformAttack());
     }
 
     IEnumerator WaitForClipEnd()

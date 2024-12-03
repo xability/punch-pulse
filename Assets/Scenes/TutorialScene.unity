@@ -194,7 +194,7 @@ MonoBehaviour:
   leftControllerTransform: {fileID: 927432952}
   rightControllerTransform: {fileID: 693073}
   minForwardDistance: 0.3
-  modelAnimator: {fileID: 0}
+  modelAnimator: {fileID: 380132021}
   headColliderTag: Head_Collider
   bodyColliderTag: Torso_Collider
   component: right glove
@@ -1187,7 +1187,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 188872090}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 622b412cb6c9f9c46826c50f559f4ca0, type: 3}
   m_Name: 
@@ -1206,13 +1206,14 @@ MonoBehaviour:
   flashDuration: 0.5
   flashCount: 5
   duckingThresholdPercentage: 0.75
-  playerCamera: {fileID: 0}
+  playerCamera: {fileID: 1791989602}
   distanceInFront: 1
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 308473785}
   MoveEnemyInFront: {fileID: 188872094}
   enemyObject: {fileID: 380132023}
   safeDistance: 2
   modelAnimator: {fileID: 380132021}
+  tutorialActivate: 0
 --- !u!114 &188872092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1997,7 +1998,7 @@ MonoBehaviour:
     narration:
     - {fileID: 8300000, guid: 1903110a158ecce478a808fffc2704cb, type: 3}
     - {fileID: 8300000, guid: a0f5e8c49d947304bb0007de6764e2a3, type: 3}
-    - {fileID: 8300000, guid: 2bb98da0bf298334bbd8a239daf5a823, type: 3}
+    - {fileID: 8300000, guid: bfa666612903ac749b207af2ce4815db, type: 3}
     - {fileID: 8300000, guid: 6aa8a7ae25b983e469d1b897b60a16c1, type: 3}
     - {fileID: 8300000, guid: 548d32dd26e7fed4a955aba023804e17, type: 3}
     - {fileID: 8300000, guid: 85bef4893be98234e8d499bd949b4577, type: 3}
@@ -2042,6 +2043,7 @@ MonoBehaviour:
     StepNum: 5
     objectsToActivate: []
     objectsToDeactivate: []
+  enemyAttackBehavior: {fileID: 0}
 --- !u!4 &328072003
 Transform:
   m_ObjectHideFlags: 0
@@ -2235,6 +2237,7 @@ MonoBehaviour:
   enemyObject: {fileID: 0}
   safeDistance: 1.2
   modelAnimator: {fileID: 380132021}
+  tutorialActivate: 0
 --- !u!114 &380132025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3269,7 +3272,7 @@ MonoBehaviour:
   leftControllerTransform: {fileID: 927432952}
   rightControllerTransform: {fileID: 693073}
   minForwardDistance: 0.3
-  modelAnimator: {fileID: 0}
+  modelAnimator: {fileID: 380132021}
   headColliderTag: Head_Collider
   bodyColliderTag: Torso_Collider
   component: left glove

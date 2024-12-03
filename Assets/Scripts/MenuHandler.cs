@@ -240,6 +240,12 @@ public class AccessibleMenu : MonoBehaviour
         {
             currentButtonIndex = 0;
             UpdateButtonHighlights();
+            currentLTCount = DirectionHelper.GetLeftTriggerPressCount();
+            currentRTCount = MoveEnemyInFront.GetRightTriggerPressCount();
+            currentDuckCount = EnemyAttackBehavior.GetPlayerDuckCount();
+            currentPlayerHitCount = EnemyAttackBehavior.GetPlayerHitCount();
+            currentPlayerHeadPunchCount = PlayAudioOnBoxing.GetPlayerHeadPunchCount();
+            currentPlayerBodyPunchCount = PlayAudioOnBoxing.GetPlayerBodyPunchCount();
             UpdateStats(currentLTCount, currentRTCount, currentDuckCount, currentPlayerHitCount, currentPlayerHeadPunchCount, currentPlayerBodyPunchCount);
             if (isFirstActivation)
             {
