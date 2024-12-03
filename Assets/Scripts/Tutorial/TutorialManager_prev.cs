@@ -8,16 +8,14 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
-public class TutorialManager : MonoBehaviour
+public class TutorialManagerPrev : MonoBehaviour
 {
     public TextMeshProUGUI instructionText;
     public TextMeshProUGUI stepcount;
     public InputActionReference nextButtonAction;
     public InputActionReference exitTutorialAction;
     public AudioSource audioSource;
-    public GameObject objectToToggle0;
-    public GameObject objectToToggle1;
-    public AudioClip boxingbell;
+    public bool isTutorial = true;
 
     [System.Serializable]
     public class TutorialStep
@@ -39,20 +37,6 @@ public class TutorialManager : MonoBehaviour
     private bool isAudioPlaying = false;
 
     public EnemyAttackBehavior enemyAttackBehavior;
-    public static bool TutorialCompleted = false;
-
-    public static bool TutorialAttackFlag = false;
-
-    public static bool GetTutorialStatus()
-    {
-        return TutorialCompleted;
-    }
-
-    public static bool GetTutorialAttackFlagStatus()
-    {
-        return TutorialAttackFlag;
-    }
-
 
     void Start()
     {
@@ -73,19 +57,6 @@ public class TutorialManager : MonoBehaviour
         if (waitingForAction)
         {
             CheckRequiredAction();
-        }
-        UpdateScoreVisibility();
-    }
-
-    private void UpdateScoreVisibility()
-    {
-        if (objectToToggle0 != null)
-        {
-            objectToToggle0.SetActive(TutorialCompleted);
-        }
-        if (objectToToggle1 != null)
-        {
-            objectToToggle1.SetActive(!TutorialCompleted);
         }
     }
 
@@ -114,11 +85,22 @@ public class TutorialManager : MonoBehaviour
             isAudioPlaying = true;
             StartCoroutine(WaitForClipEnd());
 
+            // Check if it's step 3 and the specific clips are about to play
+            if (step.StepNum == 3 && (step.narration[currentClip].name == "08_duck_1" || step.narration[currentClip].name == "09_duck_2"))
+            {
+                StartCoroutine(SimulateEnemyAttack());
+            }
         }
         else
         {
             NextStep();
         }
+    }
+
+    IEnumerator SimulateEnemyAttack()
+    {
+        yield return new WaitForSeconds(audioSource.clip.length); // Wait for the audio to finish
+        yield return StartCoroutine(enemyAttackBehavior.PerformAttack());
     }
 
     IEnumerator WaitForClipEnd()
@@ -136,34 +118,8 @@ public class TutorialManager : MonoBehaviour
             waitingForAction = false;
             Debug.Log("Tutorial Step number " + currentClip + " completed");
             currentClip++;
-
-            // Check if the current step requires waiting for audio
-            if (StepRequiresAudioWait(step, currentClip - 1))
-            {
-                StartCoroutine(WaitForAudioAndPlayNext());
-            }
-            else
-            {
-                PlayNextClip();
-            }
+            PlayNextClip();
         }
-    }
-
-    bool StepRequiresAudioWait(TutorialStep step, int clipIndex)
-    {
-        // Define the steps and clips that require waiting for audio
-        
-        return (step.StepNum == 2 && (clipIndex == 0 || clipIndex == 2 || clipIndex == 5));
-            //||
-            // (step.StepNum == 5 && clipIndex == 0);
-    }
-
-    IEnumerator WaitForAudioAndPlayNext()
-    {
-        // Wait for the current audio clip to finish
-        Debug.Log("Waiting for audio to finish");
-        yield return new WaitForSeconds(1);
-        PlayNextClip();
     }
 
     private void OnNextButtonPressed(InputAction.CallbackContext context)
@@ -200,12 +156,10 @@ public class TutorialManager : MonoBehaviour
 
     private void ExitTutorial(InputAction.CallbackContext context)
     {
-        if (!TutorialCompleted)
+        if (isTutorial)
         {
-            TutorialCompleted = true;
-            TutorialAttackFlag = true;
-            audioSource.PlayOneShot(boxingbell);
-            // SceneManager.LoadScene("BoxingRing");
+            isTutorial = false;
+            SceneManager.LoadScene("BoxingRing");
         }
     }
 

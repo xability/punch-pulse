@@ -367,7 +367,7 @@ public class AccessibleMenu : MonoBehaviour
     void PlayTutorial()
     {
         PlayClickSound();
-        SceneManager.LoadScene("TutorialScene");
+         // SceneManager.LoadScene("TutorialScene"); --> commenting this out for now to avoid loading the tutorial scene
     }
 
     void ToggleBoxingMode()

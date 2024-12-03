@@ -21,7 +21,27 @@ public class PlayBackgroundAudio : MonoBehaviour
         {
             audioSource.clip = backgroundMusic;
             audioSource.loop = true; // Loop the background music
-            audioSource.Play(); // Start playing the music
+
+            // Check TutorialCompleted status
+            if (TutorialManager.TutorialCompleted)
+            {
+                audioSource.Play();
+            }
+        }
+
+    }
+
+    void Update()
+    {
+        // Continuously check if the tutorial status has changed
+        if (TutorialManager.TutorialCompleted && !audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+        else if (!TutorialManager.TutorialCompleted && audioSource.isPlaying)
+        {
+            audioSource.Stop();
         }
     }
+
 }

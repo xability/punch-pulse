@@ -32,7 +32,6 @@ public class EnemyAttackBehavior : MonoBehaviour
     public GameObject enemyObject;
     public float safeDistance; // The distance at which the player is considered safe
     public Animator modelAnimator;
-    public bool tutorialActivate;
 
 
     private AccessibleMenu.DifficultyLevel currentDifficulty;
@@ -104,7 +103,7 @@ public class EnemyAttackBehavior : MonoBehaviour
                 yield return new WaitForSeconds(randomDelay);
 
                 // Check if the mode is offensive before attacking
-                if (AccessibleMenu.IsOffensiveMode && tutorialActivate)
+                if (AccessibleMenu.IsOffensiveMode && TutorialManager.TutorialAttackFlag)
                 {
                     yield return StartCoroutine(PerformAttack());
                     canAttack = false;
