@@ -1847,7 +1847,7 @@ MonoBehaviour:
   audioSource: {fileID: 1874303075}
   objectToToggle0: {fileID: 2125929131}
   objectToToggle1: {fileID: 864913198}
-  boxingbell: {fileID: 0}
+  boxingbell: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
   tutorialSteps:
   - instruction: Introduction
     narration:
@@ -1877,8 +1877,7 @@ MonoBehaviour:
     - {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     - {fileID: 1625246124897866415, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     StepNum: 2
-    objectsToActivate:
-    - {fileID: 0}
+    objectsToActivate: []
     objectsToDeactivate: []
   - instruction: Enemy Attacks
     narration:
@@ -1893,9 +1892,7 @@ MonoBehaviour:
   - instruction: Menu
     narration:
     - {fileID: 8300000, guid: 0ac5a0e0613d581489064cf00fe35f37, type: 3}
-    - {fileID: 8300000, guid: 08ece2064441ebb419e78e9e7ae5f7ed, type: 3}
     requiredActions:
-    - {fileID: -5812838698425806477, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     - {fileID: 1625246124897866415, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     StepNum: 4
     objectsToActivate: []
@@ -1908,7 +1905,7 @@ MonoBehaviour:
     StepNum: 5
     objectsToActivate: []
     objectsToDeactivate: []
-  enemyAttackBehavior: {fileID: 0}
+  enemyAttackBehavior: {fileID: 282555738}
 --- !u!4 &246717563
 Transform:
   m_ObjectHideFlags: 0
@@ -2396,11 +2393,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fa2ccb6a107844e80aa86751f0a7d74d, type: 3}
   - {fileID: 8300000, guid: 3d52d07ca6ab34d58b3faee6cf9bf322, type: 3}
   - {fileID: 8300000, guid: 3fb9a0b01cef0489bb36e0b8d4c9db8c, type: 3}
-  audioSource: {fileID: 231266947}
+  audioSource: {fileID: 0}
   playerScoreIs: {fileID: 8300000, guid: bf1b16fb25f505441966313253989e64, type: 3}
   scoreText: {fileID: 743237385}
   rightButtonAction: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
+  difficultyIncreaseSound: {fileID: 0}
+  difficultyDecreaseSound: {fileID: 0}
 --- !u!114 &282555738
 MonoBehaviour:
   m_ObjectHideFlags: 0

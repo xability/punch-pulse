@@ -63,6 +63,11 @@ public class AccessibleMenu : MonoBehaviour
     public InputActionReference joystickAction;
     public InputActionReference triggerAction;
 
+    public AudioClip difficultyIncreaseSound;
+    public AudioClip difficultyDecreaseSound;
+
+    public static AccessibleMenu Instance { get; private set; }
+
     private Button[] menuButtons;
     private int currentButtonIndex = 0;
     private float lastJoystickYValue = 0f;
@@ -120,6 +125,18 @@ public class AccessibleMenu : MonoBehaviour
             }
         }
         isFirstActivation = true;
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnDisable()
@@ -338,7 +355,33 @@ public class AccessibleMenu : MonoBehaviour
     public static DifficultyLevel CurrentDifficulty
     {
         get { return currentDifficulty; }
+        private set { currentDifficulty = value; }
     }
+
+    public static void SetDifficulty(DifficultyLevel newDifficulty)
+    {
+        DifficultyLevel oldDifficulty = CurrentDifficulty;
+        CurrentDifficulty = newDifficulty;
+        Instance.UpdateButtonTexts();
+        
+        Debug.Log("Difficulty changed to: " + newDifficulty);
+
+        // You might want to add additional logic here, like playing a sound or showing a notification
+        if (Instance.audioSource != null)
+        {
+            if (newDifficulty > oldDifficulty)
+            {
+                Instance.audioSource.PlayOneShot(Instance.difficultyIncreaseSound);
+            }
+            else
+            {
+                Instance.audioSource.PlayOneShot(Instance.difficultyDecreaseSound);
+            }
+        }
+
+    }
+
+
 
     public static bool IsOffensiveMode
     {

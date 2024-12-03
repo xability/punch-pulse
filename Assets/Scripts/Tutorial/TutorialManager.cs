@@ -140,7 +140,7 @@ public class TutorialManager : MonoBehaviour
             // Check if the current step requires waiting for audio
             if (StepRequiresAudioWait(step, currentClip - 1))
             {
-                StartCoroutine(WaitForAudioAndPlayNext());
+                StartCoroutine(WaitForAudioAndPlayNext(step, currentClip - 1));
             }
             else
             {
@@ -153,16 +153,42 @@ public class TutorialManager : MonoBehaviour
     {
         // Define the steps and clips that require waiting for audio
         
-        return (step.StepNum == 2 && (clipIndex == 0 || clipIndex == 2 || clipIndex == 5));
+        return (step.StepNum == 2 && (clipIndex == 0 || clipIndex == 2 || clipIndex == 5)) || (step.StepNum == 3);
             //||
             // (step.StepNum == 5 && clipIndex == 0);
     }
 
-    IEnumerator WaitForAudioAndPlayNext()
+    IEnumerator WaitForAudioAndPlayNext(TutorialStep step, int clipIndex)
     {
         // Wait for the current audio clip to finish
+        if (step.StepNum == 2)
+        {
+            if (clipIndex == 0 || clipIndex == 5)
+            {
+                yield return new WaitForSeconds(3);
+            }
+            else if (clipIndex == 2)
+            {
+                yield return new WaitForSeconds(1);
+            }
+        }
+        else if (step.StepNum == 3)
+        {
+            if (clipIndex == 0) { 
+                TutorialAttackFlag = true;
+                yield return StartCoroutine(enemyAttackBehavior.PerformAttack());
+                TutorialAttackFlag = false;
+                yield return new WaitForSeconds(2);
+            }
+            if (clipIndex == 1)
+            {
+                TutorialAttackFlag = true;
+                yield return StartCoroutine(enemyAttackBehavior.PerformAttack());
+                TutorialAttackFlag = false;
+                yield return new WaitForSeconds(2);
+            }
+        }
         Debug.Log("Waiting for audio to finish");
-        yield return new WaitForSeconds(1);
         PlayNextClip();
     }
 

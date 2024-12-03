@@ -15,6 +15,7 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public InputActionReference rightButtonAction;
 
+
     private bool isAnnouncingScore = false; // New flag to track if score is being announced
 
     private void OnEnable()
@@ -53,16 +54,42 @@ public class ScoreManager : MonoBehaviour
         UpdateScoreDisplay();
     }
 
+    private static void CheckAndUpdateDifficulty()
+    {
+        if (Score >= 40 && AccessibleMenu.CurrentDifficulty != AccessibleMenu.DifficultyLevel.Hard)
+        {
+            AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Hard);
+            //audioSource.PlayOneShot(difficultyIncreaseSound);
+        }
+        else if (Score >= 20 && AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Easy)
+        {
+            AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Medium);
+            //audioSource.PlayOneShot(difficultyIncreaseSound);
+        }
+        else if (Score <= 5 && AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Medium)
+        {
+            AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Easy);
+            //audioSource.PlayOneShot(difficultyDecreaseSound);
+        }
+        else if (Score <= 20 && AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Hard)
+        {
+            AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Medium);
+            //audioSource.PlayOneShot(difficultyDecreaseSound);
+        }
+    }
+
     public static void AddScore(int amount)
     {
         Score += amount;
         Instance.UpdateScoreDisplay();
+        CheckAndUpdateDifficulty();
     }
 
     public static void DecrementScore(int amount)
     {
         Score = Mathf.Max(0, Score - amount);
         Instance.UpdateScoreDisplay();
+        CheckAndUpdateDifficulty();
     }
 
     private void UpdateScoreDisplay()
