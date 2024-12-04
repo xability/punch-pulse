@@ -32,8 +32,8 @@ public class TutorialManager : MonoBehaviour
 
     public TutorialStep[] tutorialSteps;
 
-    private int currentStep = 0;
-    private int currentClip = 0;
+    public int currentStep = 0;
+    public int currentClip = 0;
     private bool waitingForAction = false;
     private bool tutorialStarted = false;
     private bool isAudioPlaying = false;

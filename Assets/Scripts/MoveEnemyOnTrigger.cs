@@ -72,6 +72,7 @@ public class MoveEnemyInFront : MonoBehaviour
         rightTriggerAction.action.performed += OnRightTriggerPressed;
     }
 
+    private bool postTutorialFlag = false;
     private void OnDestroy()
     {
         // Unsubscribe to avoid memory leaks
@@ -124,6 +125,12 @@ public class MoveEnemyInFront : MonoBehaviour
         if (movementAudioSource != null)
         {
             //movementAudioSource.volume = shouldMove ? 1f : 0f;
+        }
+        // Continuously check if the tutorial status has changed
+        if (TutorialManager.TutorialCompleted && !postTutorialFlag)
+        {
+            rightTriggerPressCount = 0;
+            postTutorialFlag = true;
         }
     }
 

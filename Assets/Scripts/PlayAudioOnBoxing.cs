@@ -80,7 +80,7 @@ public class PlayAudioOnBoxing : MonoBehaviour
             cheeringSource.loop = true;
         }
     }
-
+    private bool postTutorialFlag = false;
     // Update is called once per frame
     void Update()
     {
@@ -94,6 +94,13 @@ public class PlayAudioOnBoxing : MonoBehaviour
             {
                 StopCheerSound();
             }
+        }
+
+        if (TutorialManager.TutorialCompleted && !postTutorialFlag)
+        {
+            playerHeadPunchCount = 0;
+            playerBodyPunchCount = 0;
+            postTutorialFlag = true;
         }
     }
 

@@ -572,7 +572,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000013411045, y: 0.4059946, z: 0.00000016391277}
+  m_ConnectedAnchor: {x: 0.00000014901161, y: 0.40599453, z: 0.0000001937151}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
@@ -946,7 +946,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.1829987, y: 0.20797615, z: -0.022903081}
+  m_ConnectedAnchor: {x: -0.18299858, y: 0.20797612, z: -0.022903074}
   serializedVersion: 3
   m_SecondaryAxis: {x: -1, y: 0, z: 0}
   m_XMotion: 0
@@ -1232,7 +1232,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.09123886, y: -0.066571884, z: -0.0005540177}
+  m_ConnectedAnchor: {x: -0.09123887, y: -0.066571884, z: -0.0005539935}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
@@ -1384,7 +1384,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -0, y: -0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000016763806, y: 0.27404734, z: -0.0000002533198}
+  m_ConnectedAnchor: {x: -0.00000009033829, y: 0.27404714, z: -0.00000010430816}
   serializedVersion: 3
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
@@ -1536,7 +1536,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000007450582, y: 0.27404705, z: 0.0000000745058}
+  m_ConnectedAnchor: {x: 0.00000019371514, y: 0.27404693, z: 0.00000012665986}
   serializedVersion: 3
   m_SecondaryAxis: {x: -1, y: 0, z: 0}
   m_XMotion: 0
@@ -1990,6 +1990,8 @@ MonoBehaviour:
     type: 3}
   triggerAction: {fileID: -1979991170543050200, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
+  difficultyIncreaseSound: {fileID: 0}
+  difficultyDecreaseSound: {fileID: 0}
   currentLTCount: 0
   currentRTCount: 0
   currentDuckCount: 0
@@ -2393,13 +2395,36 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fa2ccb6a107844e80aa86751f0a7d74d, type: 3}
   - {fileID: 8300000, guid: 3d52d07ca6ab34d58b3faee6cf9bf322, type: 3}
   - {fileID: 8300000, guid: 3fb9a0b01cef0489bb36e0b8d4c9db8c, type: 3}
-  audioSource: {fileID: 0}
+  - {fileID: 8300000, guid: 6bde74a84c2ed4301b986caaa9d57965, type: 3}
+  - {fileID: 8300000, guid: f0ba6508a8843496087d8ef592fe7bd5, type: 3}
+  - {fileID: 8300000, guid: f86a47b6242c143e5996e87e918af7bf, type: 3}
+  - {fileID: 8300000, guid: 7713800124e9641a98afba049d004cc6, type: 3}
+  - {fileID: 8300000, guid: 19220b2d654d142bea5561df0a3d3298, type: 3}
+  - {fileID: 8300000, guid: 4014c8c34d2f24ef58f31c2ed32686cb, type: 3}
+  - {fileID: 8300000, guid: 416af769b32634eff847a934ceb1b1ac, type: 3}
+  - {fileID: 8300000, guid: 9ab1c687418b84505b8be0192caa68f9, type: 3}
+  - {fileID: 8300000, guid: d5844e9e2a8be48688feab66f2bef318, type: 3}
+  - {fileID: 8300000, guid: 5fe1bacab74b748899cd4ea39d92aae0, type: 3}
+  - {fileID: 8300000, guid: 0b97a87a413e24b50818081da8852dc4, type: 3}
+  - {fileID: 8300000, guid: 70acedaa6dfad41fb98d69fcb8b744b8, type: 3}
+  - {fileID: 8300000, guid: 26079f55aa30c43ce8c9b077e766535f, type: 3}
+  - {fileID: 8300000, guid: 21abe1e06f39b445098d98040e1cc7d5, type: 3}
+  - {fileID: 8300000, guid: 9a15ebddcc9a24384ab7d855c4e4d9e9, type: 3}
+  - {fileID: 8300000, guid: 063895712a309405f82abd838f353da5, type: 3}
+  - {fileID: 8300000, guid: 47f684d12a81f4f40ad913a845e55f27, type: 3}
+  - {fileID: 8300000, guid: 80f7a06e043d444a0bcbe7d960bd42f5, type: 3}
+  - {fileID: 8300000, guid: e49f94cd39b1a4d5f859280243f37a7f, type: 3}
+  - {fileID: 8300000, guid: 7d001f85c3b67474a8e1c1c1ab4603ff, type: 3}
+  - {fileID: 8300000, guid: 760728db63cfe459c9a576a2b3c6d5f7, type: 3}
+  - {fileID: 8300000, guid: 33522e89996d9441fa68229d0763176b, type: 3}
+  - {fileID: 8300000, guid: 2d3857fed98604c81acf73506754a680, type: 3}
+  - {fileID: 8300000, guid: aa23e4605bdb9499d8da45da360c0997, type: 3}
+  - {fileID: 8300000, guid: 34005faf4cb1e4c49964980d657e8350, type: 3}
+  audioSource: {fileID: 2042691871}
   playerScoreIs: {fileID: 8300000, guid: bf1b16fb25f505441966313253989e64, type: 3}
   scoreText: {fileID: 743237385}
   rightButtonAction: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  difficultyIncreaseSound: {fileID: 0}
-  difficultyDecreaseSound: {fileID: 0}
 --- !u!114 &282555738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5570,7 +5595,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000016763806, y: 0.4209903, z: -0.00000011920929}
+  m_ConnectedAnchor: {x: 0.00000004284084, y: 0.4209902, z: 0.000000029802322}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -6018,7 +6043,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000002719462, y: 0.42099047, z: 0.00000035762787}
+  m_ConnectedAnchor: {x: -0.00000008940697, y: 0.4209903, z: -0.00000035762787}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -6402,7 +6427,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.009700294, y: 0.37524924, z: 0.08201652}
+  m_ConnectedAnchor: {x: -0.0097002685, y: 0.37524918, z: 0.082016446}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
@@ -6735,7 +6760,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000009685755, y: 0.27614492, z: -0.00000011343291}
+  m_ConnectedAnchor: {x: -0.00000018626451, y: 0.27614486, z: -0.00000006872943}
   serializedVersion: 3
   m_SecondaryAxis: {x: -1, y: 0, z: 0}
   m_XMotion: 0
@@ -7067,7 +7092,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &884327786
 Transform:
   m_ObjectHideFlags: 0
@@ -7245,7 +7270,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.001896576, y: 0.21653156, z: -0.010961365}
+  m_ConnectedAnchor: {x: 0.0018965402, y: 0.21653154, z: -0.010961302}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
@@ -8019,7 +8044,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000008940697, y: 0.40599436, z: 0.000000044703484}
+  m_ConnectedAnchor: {x: 0, y: 0.4059943, z: -0.000000014901161}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
@@ -8466,6 +8491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
 --- !u!4 &1167029021
 Transform:
   m_ObjectHideFlags: 0
@@ -8627,7 +8654,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -1.1010453, y: 1.774371, z: 0.19227952}
+  m_ConnectedAnchor: {x: -4.9650455, y: 0.859371, z: -0.8687205}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 2
@@ -8798,7 +8825,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -0, y: -0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000230968, y: 0.27614462, z: -0.000000067572856}
+  m_ConnectedAnchor: {x: 0.00000008940697, y: 0.27614468, z: 0.00000000693289}
   serializedVersion: 3
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
@@ -10064,7 +10091,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -0, y: -0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.18951863, y: 0.23288114, z: 0.024585929}
+  m_ConnectedAnchor: {x: 0.1895185, y: 0.23288123, z: 0.024585882}
   serializedVersion: 3
   m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
@@ -11660,7 +11687,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0912503, y: -0.06655608, z: -0.0005535558}
+  m_ConnectedAnchor: {x: 0.091250286, y: -0.06655602, z: -0.0005535269}
   serializedVersion: 3
   m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
@@ -11882,6 +11909,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: training_dummy
+      objectReference: {fileID: 0}
+    - target: {fileID: -5609321221556402741, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5609321221556402741, guid: bdc969b8b44c3b849a7d8f9b63a6c885,
         type: 3}

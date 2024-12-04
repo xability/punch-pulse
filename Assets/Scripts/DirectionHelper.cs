@@ -41,6 +41,18 @@ public class DirectionHelper : MonoBehaviour
         // Debug.Log("Left Trigger Action Performed");
     }
 
+    private bool postTutorialFlag = false;
+    void Update()
+    {
+        // Continuously check if the tutorial status has changed
+        if (TutorialManager.TutorialCompleted && !postTutorialFlag)
+        {
+            triggerPressCount = 0;
+            postTutorialFlag = true;
+        }
+    }
+
+
     private void OnDestroy()
     {
         // Unsubscribe to avoid memory leaks

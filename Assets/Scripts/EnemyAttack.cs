@@ -32,7 +32,7 @@ public class EnemyAttackBehavior : MonoBehaviour
     public GameObject enemyObject;
     public float safeDistance; // The distance at which the player is considered safe
     public Animator modelAnimator;
-
+    private bool postTutorialFlag = false;
 
     private AccessibleMenu.DifficultyLevel currentDifficulty;
 
@@ -47,6 +47,17 @@ public class EnemyAttackBehavior : MonoBehaviour
     public static int GetPlayerDuckCount()
     {
         return playerDuckCount;
+    }
+
+    void Update()
+    {
+        // Continuously check if the tutorial status has changed
+        if (TutorialManager.TutorialCompleted && !postTutorialFlag)
+        {
+            playerDuckCount = 0;
+            playerHitCount = 0;
+            postTutorialFlag = true;
+        }
     }
 
     void Start()
