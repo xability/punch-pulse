@@ -91,6 +91,8 @@ public class AccessibleMenu : MonoBehaviour
 
     private bool isFirstActivation = true;
 
+    public TutorialManager tutorialManager;
+
     private CustomButtonHighlight[] buttonHighlights;
 
     void Start()
@@ -410,7 +412,16 @@ public class AccessibleMenu : MonoBehaviour
     void PlayTutorial()
     {
         PlayClickSound();
-         // SceneManager.LoadScene("TutorialScene"); --> commenting this out for now to avoid loading the tutorial scene
+
+        if (tutorialManager != null)
+        {
+            tutorialManager.RestartTutorial();
+        }
+        else
+        {
+            Debug.LogError("TutorialManager reference is not set!");
+        }
+        // SceneManager.LoadScene("TutorialScene"); --> commenting this out for now to avoid loading the tutorial scene
     }
 
     void ToggleBoxingMode()

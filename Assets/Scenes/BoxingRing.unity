@@ -1905,6 +1905,8 @@ MonoBehaviour:
     StepNum: 5
     objectsToActivate: []
     objectsToDeactivate: []
+  currentStep: 0
+  currentClip: 0
   enemyAttackBehavior: {fileID: 282555738}
 --- !u!4 &246717563
 Transform:
@@ -1998,6 +2000,7 @@ MonoBehaviour:
   currentPlayerHitCount: 0
   currentPlayerHeadPunchCount: 0
   currentPlayerBodyPunchCount: 0
+  tutorialManager: {fileID: 246717562}
 --- !u!4 &252214665
 Transform:
   m_ObjectHideFlags: 0

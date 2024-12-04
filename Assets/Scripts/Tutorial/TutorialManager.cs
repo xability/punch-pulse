@@ -240,5 +240,24 @@ public class TutorialManager : MonoBehaviour
         nextButtonAction.action.performed -= OnNextButtonPressed;
         exitTutorialAction.action.performed -= ExitTutorial;
     }
+
+    public void RestartTutorial()
+    {
+        currentStep = 0;
+        currentClip = 0;
+        waitingForAction = false;
+        tutorialStarted = false;
+        isAudioPlaying = false;
+        TutorialCompleted = false;
+        TutorialAttackFlag = false;
+
+        // Reset any other necessary variables
+
+        instructionText.text = "Press right select button to start";
+        stepcount.text = "0";
+
+        StartTutorial();
+    }
+
 }
 
