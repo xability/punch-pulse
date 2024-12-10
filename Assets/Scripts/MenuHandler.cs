@@ -21,11 +21,15 @@ public class AccessibleMenu : MonoBehaviour
     public Button difficultyButton;
     public Button tutorialButton;
     public Button boxingModeButton;
+    public Button scoreNarrationButton;
+    public Button enemyAudioCueButton;
     public Button exerciseLevelButton;
 
     [Header("Text Components")]
     public TextMeshProUGUI difficultyText;
     public TextMeshProUGUI boxingModeText;
+    public TextMeshProUGUI scoreNarrationText;
+    public TextMeshProUGUI enemyAudioCueText;
     public TextMeshProUGUI exerciseLevelText;
     public TextMeshProUGUI LTCount;
     public TextMeshProUGUI RTCount;
@@ -74,6 +78,8 @@ public class AccessibleMenu : MonoBehaviour
 
     private static DifficultyLevel currentDifficulty = DifficultyLevel.Easy;
     private static bool isOffensiveMode = true;
+    private static bool scoreNarration = false;
+    private static bool enemyAudioCue = false;
 
     public enum DifficultyLevel
     {
@@ -105,7 +111,7 @@ public class AccessibleMenu : MonoBehaviour
             Debug.LogError("MenuUI reference is not set in the Inspector.");
         }
 
-        menuButtons = new Button[] { difficultyButton, tutorialButton, boxingModeButton };
+        menuButtons = new Button[] { difficultyButton, tutorialButton, boxingModeButton, scoreNarrationButton, enemyAudioCueButton};
 
         if (joystickAction == null)
         {
@@ -152,6 +158,8 @@ public class AccessibleMenu : MonoBehaviour
         SetupButton(difficultyButton, ToggleDifficulty, "difficulty");
         SetupButton(tutorialButton, PlayTutorial, "tutorial");
         SetupButton(boxingModeButton, ToggleBoxingMode, "boxing");
+        SetupButton(boxingModeButton, ToggleScoreNarration, "score");
+        SetupButton(boxingModeButton, ToggleEnemyAudioCue, "enemy");
     }
 
     void SetupButton(Button button, UnityEngine.Events.UnityAction action, string buttonID)
@@ -350,6 +358,8 @@ public class AccessibleMenu : MonoBehaviour
         if (button == difficultyButton) return "difficulty";
         if (button == tutorialButton) return "tutorial";
         if (button == boxingModeButton) return "boxing";
+        if (button == scoreNarrationButton) return "score";
+        if (button == enemyAudioCueButton) return "enemy";
         return "";
     }
 
@@ -431,6 +441,18 @@ public class AccessibleMenu : MonoBehaviour
         PlayClickSound();
     }
 
+    void ToggleScoreNarration()
+    {
+        // Toggle score narration
+        PlayClickSound();
+    }
+
+    void ToggleEnemyAudioCue()
+    {
+        // Toggle enemy audio cue
+        PlayClickSound();
+    }
+
     void UpdateButtonTexts()
     {
         switch (currentDifficulty)
@@ -446,6 +468,8 @@ public class AccessibleMenu : MonoBehaviour
                 break;
         }
         boxingModeText.text = isOffensiveMode ? "Ducking: On" : "Ducking: Off";
+        scoreNarrationText.text = "Score Narration: " + (scoreNarration ? "On" : "Off");
+        enemyAudioCueText.text = "Enemy Audio Cue: " + (enemyAudioCue ? "On" : "Off");
     }
 
     void ResumeGame()
