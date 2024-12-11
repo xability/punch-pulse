@@ -100,7 +100,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    private IEnumerator AnnounceScore()
+    public IEnumerator AnnounceScore()
     {
         if (isAnnouncingScore) yield break; // Safety check
 

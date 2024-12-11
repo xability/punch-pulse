@@ -43,6 +43,7 @@ public class AccessibleMenu : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip hoverSound;
     public AudioClip clickSound;
+    public AudioClip beepSound;
 
     [Header("Button Hover Sounds")]
     public AudioClip difficultyEasyHoverSound;
@@ -50,6 +51,10 @@ public class AccessibleMenu : MonoBehaviour
     public AudioClip tutorialHoverSound;
     public AudioClip boxingOffensiveHoverSound;
     public AudioClip boxingDefensiveHoverSound;
+    public AudioClip scoreNarrationOnSound;
+    public AudioClip scoreNarrationOffSound;
+    public AudioClip enemyAudioCueOnSound;
+    public AudioClip enemyAudioCueOffSound;
     public AudioClip resumeHoverSound;
     public AudioClip pauseMenuActive;
     public AudioClip difficultyMediumHoverSound;
@@ -77,6 +82,11 @@ public class AccessibleMenu : MonoBehaviour
     private float lastJoystickYValue = 0f;
 
     private static DifficultyLevel currentDifficulty = DifficultyLevel.Easy;
+    private Coroutine scoreNarrationCoroutine;
+    private Coroutine enemyAudioCueCoroutine;
+    public GameObject enemy;
+    public GameObject player;
+
     private static bool isOffensiveMode = true;
     private static bool scoreNarration = false;
     private static bool enemyAudioCue = false;
@@ -334,6 +344,12 @@ public class AccessibleMenu : MonoBehaviour
             case "boxing":
                 audioSource.PlayOneShot(isOffensiveMode ? boxingOffensiveHoverSound : boxingDefensiveHoverSound);
                 break;
+            case "score":
+                audioSource.PlayOneShot(scoreNarration ? scoreNarrationOnSound : scoreNarrationOffSound);
+                break;
+            case "enemy":
+                audioSource.PlayOneShot(enemyAudioCue ? enemyAudioCueOnSound : enemyAudioCueOffSound);
+                break;
             default:
                 audioSource.PlayOneShot(hoverSound);
                 break;
@@ -441,16 +457,65 @@ public class AccessibleMenu : MonoBehaviour
         PlayClickSound();
     }
 
+
     void ToggleScoreNarration()
     {
-        // Toggle score narration
-        PlayClickSound();
+
+        if (scoreNarration)
+        {
+            scoreNarrationCoroutine = StartCoroutine(ScoreNarrationLoop());
+        }
+        else
+        {
+            if (scoreNarrationCoroutine != null)
+            {
+                StopCoroutine(scoreNarrationCoroutine);
+            }
+        }
     }
+
+    IEnumerator ScoreNarrationLoop()
+    {
+        while (scoreNarration)
+        {
+            yield return StartCoroutine(ScoreManager.Instance.AnnounceScore());
+            yield return new WaitForSeconds(12f);
+        }
+    }
+
 
     void ToggleEnemyAudioCue()
     {
-        // Toggle enemy audio cue
-        PlayClickSound();
+        if (enemyAudioCue)
+        {
+            if (enemyAudioCueCoroutine != null)
+            {
+                StopCoroutine(enemyAudioCueCoroutine);
+            }
+            enemyAudioCueCoroutine = StartCoroutine(EnemyAudioCueLoop());
+        }
+        else
+        {
+            if (enemyAudioCueCoroutine != null)
+            {
+                StopCoroutine(enemyAudioCueCoroutine);
+            }
+        }
+    }
+
+    IEnumerator EnemyAudioCueLoop()
+    {
+        while (enemyAudioCue)
+        {
+            float distanceToEnemy = Vector3.Distance(player.transform.position, enemy.transform.position);
+
+            if (distanceToEnemy <= 3f)
+            {
+                audioSource.PlayOneShot(beepSound);
+            }
+
+            yield return new WaitForSeconds(5f);
+        }
     }
 
     void UpdateButtonTexts()
@@ -509,71 +574,4 @@ public class AccessibleMenu : MonoBehaviour
 }
 
 /*
- * 
- *    private Coroutine currentAudioCoroutine;
-
-    void PlayHoverSound(string buttonID)
-    {
-        SendHapticImpulse(leftController, 0.6f, 0.1f);
-
-        // Stop the current audio coroutine if it's running
-        if (currentAudioCoroutine != null)
-        {
-            StopCoroutine(currentAudioCoroutine);
-        }
-
-        // Start a new audio coroutine
-        currentAudioCoroutine = StartCoroutine(PlayHoverSoundCoroutine(buttonID));
-    }
-
-    IEnumerator PlayHoverSoundCoroutine(string buttonID)
-    {
-        // Stop any currently playing sound
-        audioSource.Stop();
-
-        // Wait for a frame to ensure the audio has stopped
-        yield return null;
-
-        AudioClip clipToPlay = null;
-
-        switch (buttonID)
-        {
-            case "difficulty":
-                Debug.Log("Hovering over difficulty button, : " + isFirstActivation);
-                if (!isFirstActivation)
-                {
-                    switch (currentDifficulty)
-                    {
-                        case DifficultyLevel.Easy:
-                            clipToPlay = difficultyEasyHoverSound;
-                            break;
-                        case DifficultyLevel.Medium:
-                            clipToPlay = difficultyMediumHoverSound;
-                            break;
-                        case DifficultyLevel.Hard:
-                            clipToPlay = difficultyHardHoverSound;
-                            break;
-                    }
-                }
-                break;
-            case "tutorial":
-                clipToPlay = tutorialHoverSound;
-                break;
-            case "boxing":
-                clipToPlay = isOffensiveMode ? boxingOffensiveHoverSound : boxingDefensiveHoverSound;
-                break;
-            default:
-                clipToPlay = hoverSound;
-                break;
-        }
-
-        if (clipToPlay != null)
-        {
-            audioSource.PlayOneShot(clipToPlay);
-            yield return new WaitForSeconds(clipToPlay.length);
-        }
-
-        currentAudioCoroutine = null;
-    }
-
 */

@@ -2300,9 +2300,13 @@ MonoBehaviour:
   difficultyButton: {fileID: 45560451}
   tutorialButton: {fileID: 1050866560}
   boxingModeButton: {fileID: 538141463}
+  scoreNarrationButton: {fileID: 0}
+  enemyAudioCueButton: {fileID: 0}
   exerciseLevelButton: {fileID: 0}
   difficultyText: {fileID: 965201329}
   boxingModeText: {fileID: 1899942797}
+  scoreNarrationText: {fileID: 0}
+  enemyAudioCueText: {fileID: 0}
   exerciseLevelText: {fileID: 0}
   LTCount: {fileID: 138126570}
   RTCount: {fileID: 1302676386}
@@ -2314,6 +2318,7 @@ MonoBehaviour:
   audioSource: {fileID: 390697174}
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
+  beepSound: {fileID: 0}
   difficultyEasyHoverSound: {fileID: 8300000, guid: d40bf6788856b9e4bad72f602d56ee71,
     type: 3}
   difficultyHardHoverSound: {fileID: 8300000, guid: 21980392ecaafba4b84c746ff399ffb3,
@@ -2322,6 +2327,14 @@ MonoBehaviour:
   boxingOffensiveHoverSound: {fileID: 8300000, guid: fa2a544e21b53694ba75952af977c986,
     type: 3}
   boxingDefensiveHoverSound: {fileID: 8300000, guid: 43b7ff822104d5e47902396d41d45839,
+    type: 3}
+  scoreNarrationOnSound: {fileID: 8300000, guid: af2df0ecc3750e74b8fcfb8ff5e6b9b1,
+    type: 3}
+  scoreNarrationOffSound: {fileID: 8300000, guid: 8557915035adfc444b1205ce50d2223e,
+    type: 3}
+  enemyAudioCueOnSound: {fileID: 8300000, guid: ee61e3655cfb67c42a80f7d93048096c,
+    type: 3}
+  enemyAudioCueOffSound: {fileID: 8300000, guid: 915b6651b6e736c49b1cd1d6ad2beb98,
     type: 3}
   resumeHoverSound: {fileID: 8300000, guid: 75e008418dc9fc445a73607950c6ce2a, type: 3}
   pauseMenuActive: {fileID: 8300000, guid: 324afcccc73eeb4419b189ee8382f408, type: 3}
@@ -2337,6 +2350,8 @@ MonoBehaviour:
     type: 3}
   difficultyIncreaseSound: {fileID: 0}
   difficultyDecreaseSound: {fileID: 0}
+  enemy: {fileID: 1848126064}
+  player: {fileID: 2036805226}
   currentLTCount: 0
   currentRTCount: 0
   currentDuckCount: 0
