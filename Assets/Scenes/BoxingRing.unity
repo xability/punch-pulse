@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
+    m_SelectOnUp: {fileID: 644753010}
     m_SelectOnDown: {fileID: 1050866560}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -886,7 +886,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 210, y: 50}
+  m_SizeDelta: {x: 220, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &104033140
 MonoBehaviour:
@@ -2300,13 +2300,13 @@ MonoBehaviour:
   difficultyButton: {fileID: 45560451}
   tutorialButton: {fileID: 1050866560}
   boxingModeButton: {fileID: 538141463}
-  scoreNarrationButton: {fileID: 0}
-  enemyAudioCueButton: {fileID: 0}
+  scoreNarrationButton: {fileID: 643650789}
+  enemyAudioCueButton: {fileID: 644753010}
   exerciseLevelButton: {fileID: 0}
   difficultyText: {fileID: 965201329}
   boxingModeText: {fileID: 1899942797}
-  scoreNarrationText: {fileID: 0}
-  enemyAudioCueText: {fileID: 0}
+  scoreNarrationText: {fileID: 198244941}
+  enemyAudioCueText: {fileID: 85010779}
   exerciseLevelText: {fileID: 0}
   LTCount: {fileID: 138126570}
   RTCount: {fileID: 1302676386}
@@ -2318,7 +2318,7 @@ MonoBehaviour:
   audioSource: {fileID: 390697174}
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
-  beepSound: {fileID: 0}
+  beepSound: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
   difficultyEasyHoverSound: {fileID: 8300000, guid: d40bf6788856b9e4bad72f602d56ee71,
     type: 3}
   difficultyHardHoverSound: {fileID: 8300000, guid: 21980392ecaafba4b84c746ff399ffb3,
@@ -2669,6 +2669,7 @@ MonoBehaviour:
   animationRotationOffset: -3.5
   movementAudioSource: {fileID: 632711893}
   footsteps: {fileID: 8300000, guid: 2711e1a7ca6f8114fbab2f086462b86f, type: 3}
+  randomMoveInterval: 10
 --- !u!114 &282555736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5671,7 +5672,7 @@ MonoBehaviour:
     m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 1050866560}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 643650789}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -6299,8 +6300,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1050866560}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 538141463}
+    m_SelectOnDown: {fileID: 644753010}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -6440,8 +6441,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1050866560}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 643650789}
+    m_SelectOnDown: {fileID: 45560451}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -9136,8 +9137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
 --- !u!4 &1167029021
 Transform:
   m_ObjectHideFlags: 0
@@ -10251,7 +10250,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 210, y: 50}
+  m_SizeDelta: {x: 210, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1397587562
 MonoBehaviour:
@@ -10732,7 +10731,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 210, y: 50}
+  m_SizeDelta: {x: 210, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1557272426
 MonoBehaviour:
@@ -11627,7 +11626,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 180, y: 50}
+  m_SizeDelta: {x: 180, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1806040990
 MonoBehaviour:
@@ -11988,7 +11987,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 210, y: 50}
+  m_SizeDelta: {x: 210, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1874070898
 MonoBehaviour:

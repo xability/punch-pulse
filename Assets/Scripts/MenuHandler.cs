@@ -139,9 +139,10 @@ public class AccessibleMenu : MonoBehaviour
             buttonHighlights[i] = menuButtons[i].GetComponent<CustomButtonHighlight>();
             if (buttonHighlights[i] == null)
             {
-                Debug.LogError($"CustomButtonHighlight component missing on button {i}");
+                Debug.LogWarning($"CustomButtonHighlight component missing on button {i}");
             }
         }
+
         isFirstActivation = true;
     }
 
@@ -245,8 +246,16 @@ public class AccessibleMenu : MonoBehaviour
             {
                 buttonHighlights[i].SetHighlighted(i == currentButtonIndex);
             }
+            else
+            {
+                Debug.LogWarning($"Button highlight at index {i} is null");
+            }
         }
-        EventSystem.current.SetSelectedGameObject(menuButtons[currentButtonIndex].gameObject);
+
+        if (EventSystem.current != null && currentButtonIndex >= 0 && currentButtonIndex < menuButtons.Length)
+        {
+            EventSystem.current.SetSelectedGameObject(menuButtons[currentButtonIndex].gameObject);
+        }
     }
 
     void UpdateStats(int leftTrigCount, int rightTrigCount, int duckCount, int playerHitCount, int headPunchCount, int bodyPunchCount)
@@ -472,6 +481,7 @@ public class AccessibleMenu : MonoBehaviour
                 StopCoroutine(scoreNarrationCoroutine);
             }
         }
+        UpdateButtonTexts();
     }
 
     IEnumerator ScoreNarrationLoop()
@@ -501,6 +511,7 @@ public class AccessibleMenu : MonoBehaviour
                 StopCoroutine(enemyAudioCueCoroutine);
             }
         }
+        UpdateButtonTexts();
     }
 
     IEnumerator EnemyAudioCueLoop()
@@ -533,8 +544,8 @@ public class AccessibleMenu : MonoBehaviour
                 break;
         }
         boxingModeText.text = isOffensiveMode ? "Ducking: On" : "Ducking: Off";
-        scoreNarrationText.text = "Score Narration: " + (scoreNarration ? "On" : "Off");
-        enemyAudioCueText.text = "Enemy Audio Cue: " + (enemyAudioCue ? "On" : "Off");
+        scoreNarrationText.text = scoreNarration ? "Score Narration: On" : "Score Narration: Off";
+        enemyAudioCueText.text = enemyAudioCue ? "Enemy Audio Cue: On" : "Enemy Audio Cue: Off";
     }
 
     void ResumeGame()

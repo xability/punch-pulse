@@ -127,13 +127,6 @@ public class MoveEnemyInFront : MonoBehaviour
             }
         }
 
-        // Check for random movement
-        if (Time.time - lastRandomMoveTime >= randomMoveInterval)
-        {
-            RandomlyMoveEnemyClose();
-            lastRandomMoveTime = Time.time;
-        }
-
         // Adjust volume based on movement
         if (movementAudioSource != null)
         {
@@ -144,6 +137,12 @@ public class MoveEnemyInFront : MonoBehaviour
         {
             rightTriggerPressCount = 0;
             postTutorialFlag = true;
+            // Check for random movement
+            if (Time.time - lastRandomMoveTime >= randomMoveInterval)
+            {
+                RandomlyMoveEnemyClose();
+                lastRandomMoveTime = Time.time;
+            }
         }
     }
 
