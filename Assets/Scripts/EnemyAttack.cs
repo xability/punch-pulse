@@ -196,6 +196,8 @@ public class EnemyAttackBehavior : MonoBehaviour
         {
             // If the player is not safe, reduce score
             audioSource.PlayOneShot(attackHitSound);
+
+            ScoreManager.AddEnemyScore(1);
             ScoreManager.DecrementScore(5);
             playerHitCount++;
         }

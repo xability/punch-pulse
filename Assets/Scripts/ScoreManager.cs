@@ -13,6 +13,8 @@ public class ScoreManager : MonoBehaviour
 
     public static int Score { get; private set; }
     public TextMeshProUGUI scoreText;
+    public static int EnemyScore { get; private set; }
+    public TextMeshProUGUI enemyScoreText;
     public InputActionReference rightButtonAction;
 
 
@@ -52,6 +54,7 @@ public class ScoreManager : MonoBehaviour
     private void Start()
     {
         UpdateScoreDisplay();
+        UpdateEnemyScoreDisplay();
     }
 
     private static void CheckAndUpdateDifficulty()
@@ -97,6 +100,21 @@ public class ScoreManager : MonoBehaviour
         if (scoreText != null)
         {
             scoreText.text = Score.ToString();
+        }
+    }
+
+    public static void AddEnemyScore(int amount)
+    {
+        EnemyScore += amount;
+        Instance.UpdateEnemyScoreDisplay();
+    }
+
+
+    private void UpdateEnemyScoreDisplay()
+    {
+        if (enemyScoreText != null)
+        {
+            enemyScoreText.text = EnemyScore.ToString();
         }
     }
 
