@@ -15,6 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/BoxingRing.unity
     guid: f23f4eed710de444292e4a91eba5eb80
   m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: c2f0d81a77888db4fb2569dbd4a8a085,
+      type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2228ce2b025195140b63b5316361deec,
       type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: bf87b2937fe4cab49af25d9f8875d144,

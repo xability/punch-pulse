@@ -41,6 +41,7 @@ public class AccessibleMenu : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource audioSource;
+    public AudioSource enemyAudioCueSource;
     public AudioClip hoverSound;
     public AudioClip clickSound;
     public AudioClip beepSound;
@@ -169,8 +170,8 @@ public class AccessibleMenu : MonoBehaviour
         SetupButton(difficultyButton, ToggleDifficulty, "difficulty");
         SetupButton(tutorialButton, PlayTutorial, "tutorial");
         SetupButton(boxingModeButton, ToggleBoxingMode, "boxing");
-        SetupButton(boxingModeButton, ToggleScoreNarration, "score");
-        SetupButton(boxingModeButton, ToggleEnemyAudioCue, "enemy");
+        SetupButton(scoreNarrationButton, ToggleScoreNarration, "score");
+        SetupButton(enemyAudioCueButton, ToggleEnemyAudioCue, "enemy");
     }
 
     void SetupButton(Button button, UnityEngine.Events.UnityAction action, string buttonID)
@@ -469,7 +470,7 @@ public class AccessibleMenu : MonoBehaviour
 
     void ToggleScoreNarration()
     {
-
+        scoreNarration = !scoreNarration;
         if (scoreNarration)
         {
             scoreNarrationCoroutine = StartCoroutine(ScoreNarrationLoop());
@@ -496,6 +497,7 @@ public class AccessibleMenu : MonoBehaviour
 
     void ToggleEnemyAudioCue()
     {
+        enemyAudioCue = !enemyAudioCue;
         if (enemyAudioCue)
         {
             if (enemyAudioCueCoroutine != null)

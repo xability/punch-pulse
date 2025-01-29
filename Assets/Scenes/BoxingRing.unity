@@ -2316,6 +2316,7 @@ MonoBehaviour:
   playerBodyPunchCount: {fileID: 280201933}
   TotalPunchesThrown: {fileID: 0}
   audioSource: {fileID: 390697174}
+  enemyAudioCueSource: {fileID: 0}
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   beepSound: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
@@ -2785,7 +2786,7 @@ MonoBehaviour:
   audioSource: {fileID: 2042691871}
   playerScoreIs: {fileID: 8300000, guid: bf1b16fb25f505441966313253989e64, type: 3}
   scoreText: {fileID: 743237385}
-  enemyScoreText: {fileID: 0}
+  enemyScoreText: {fileID: 579523295}
   rightButtonAction: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
 --- !u!114 &282555738
@@ -5615,6 +5616,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2047914138}
+    - targetCorrespondingSourceObject: {fileID: -5609321221556402741, guid: 9cd11cdea3d389b4d992cdfda0324790,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2047914139}
   m_SourcePrefab: {fileID: 9199261849990390558, guid: 9cd11cdea3d389b4d992cdfda0324790,
     type: 3}
 --- !u!1 &530069781
@@ -10624,7 +10629,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 210, y: 40}
+  m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1397587562
 MonoBehaviour:
@@ -14150,6 +14155,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2047914139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047914131}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2645dfafd94574aa6f77d6d6700a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToScale: {fileID: 0}
 --- !u!1 &2056665194
 GameObject:
   m_ObjectHideFlags: 0
