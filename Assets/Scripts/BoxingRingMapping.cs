@@ -8,6 +8,7 @@ public class BoxingRingMapping : MonoBehaviour
 {
     public GameObject objectToScale; // The object you want to scale based on boundary dimensions
 
+    /*
     void Start()
     {
         bool isConfigured = Unity.XR.Oculus.Boundary.GetBoundaryConfigured();
@@ -31,7 +32,26 @@ public class BoxingRingMapping : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Boundary is not configured.");
+            Debug.LogWarning("Oculus Boundary is not configured.");
+        }
+    }*/
+
+    void Start()
+    {
+        // Check if boundary is configured
+        bool isConfigured = Boundary.GetBoundaryConfigured();
+
+        if (isConfigured)
+        {
+            // Get boundary dimensions (PlayArea is the default boundary type)
+            if (Boundary.TryGetBoundaryDimensions(out Vector3 dimensions))
+            {
+                Debug.Log($"Boundary Dimensions: {dimensions}");
+            }
+        }
+        else
+        {
+            Debug.LogError("Boundary not configured. Check Guardian setup on the device.");
         }
     }
 

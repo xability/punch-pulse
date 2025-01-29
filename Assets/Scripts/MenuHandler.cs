@@ -524,10 +524,10 @@ public class AccessibleMenu : MonoBehaviour
 
             if (distanceToEnemy <= 3f)
             {
-                audioSource.PlayOneShot(beepSound);
+                enemyAudioCueSource.PlayOneShot(beepSound);
             }
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(10f);
         }
     }
 

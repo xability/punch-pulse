@@ -2316,7 +2316,7 @@ MonoBehaviour:
   playerBodyPunchCount: {fileID: 280201933}
   TotalPunchesThrown: {fileID: 0}
   audioSource: {fileID: 390697174}
-  enemyAudioCueSource: {fileID: 0}
+  enemyAudioCueSource: {fileID: 1874303075}
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
   beepSound: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
@@ -14162,7 +14162,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047914131}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f2645dfafd94574aa6f77d6d6700a36, type: 3}
   m_Name: 
