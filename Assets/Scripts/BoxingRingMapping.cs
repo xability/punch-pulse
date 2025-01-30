@@ -35,7 +35,7 @@ public class BoxingRingMapping : MonoBehaviour
             Debug.LogWarning("Oculus Boundary is not configured.");
         }
     }*/
-
+    /*
     void Start()
     {
         // Check if boundary is configured
@@ -69,5 +69,6 @@ public class BoxingRingMapping : MonoBehaviour
         {
             Debug.LogWarning("Object to scale is not assigned.");
         }
-    }
+    }*/
+
 }
