@@ -11426,7 +11426,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.38268325
+      value: -0.25881898
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
@@ -11436,7 +11436,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9238796
+      value: 0.9659259
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
@@ -11451,7 +11451,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 225
+      value: 210
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,
         type: 3}
@@ -14167,7 +14167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2645dfafd94574aa6f77d6d6700a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToScale: {fileID: 0}
+  ringObject: {fileID: 2047914131}
+  xLong: 10
+  yWide: 10
 --- !u!1 &2056665194
 GameObject:
   m_ObjectHideFlags: 0

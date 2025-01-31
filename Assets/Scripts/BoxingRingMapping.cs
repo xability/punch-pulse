@@ -1,74 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
-using Unity.XR.Oculus;
 
 public class BoxingRingMapping : MonoBehaviour
 {
-    public GameObject objectToScale; // The object you want to scale based on boundary dimensions
+    public GameObject ringObject;
+    public float xLong = 1.2f;
+    public float yWide = 1.2f;
 
-    /*
     void Start()
     {
-        bool isConfigured = Unity.XR.Oculus.Boundary.GetBoundaryConfigured();
-        // Check if the boundary is configured
-        if (isConfigured)
-        {
-            Vector3 dimensions;
-            bool success = Unity.XR.Oculus.Boundary.GetBoundaryDimensions(Unity.XR.Oculus.Boundary.BoundaryType.PlayArea, out dimensions);
-            if (success)
-            {
-                float width = dimensions.x;
-                float depth = dimensions.z;
-                float height = dimensions.y;
+        // Approx. length of one step in meters:
+        // float oneStepLength = 0.75f;
 
-                Debug.Log($"Play Area Dimensions: Width = {width}, Depth = {depth}, Height = {height}");
-            }
-            else
-            {
-                Debug.Log("Failed to get boundary dimensions");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Oculus Boundary is not configured.");
-        }
-    }*/
-    /*
-    void Start()
-    {
-        // Check if boundary is configured
-        bool isConfigured = Boundary.GetBoundaryConfigured();
+        // Calculate total length in meters:
+        float ringLength = xLong;
+        float ringWidth = yWide;
 
-        if (isConfigured)
+        if (ringObject != null)
         {
-            // Get boundary dimensions (PlayArea is the default boundary type)
-            if (Boundary.TryGetBoundaryDimensions(out Vector3 dimensions))
-            {
-                Debug.Log($"Boundary Dimensions: {dimensions}");
-            }
-        }
-        else
-        {
-            Debug.LogError("Boundary not configured. Check Guardian setup on the device.");
+            // Scale the ring in the X and Z dimensions (Y stays the same, for example)
+            ringObject.transform.localScale = new Vector3(ringLength, ringWidth, ringObject.transform.localScale.z);
         }
     }
-
-    void ScaleObjectBasedOnBoundary(Vector3 boundaryDimensions)
-    {
-        if (objectToScale != null)
-        {
-            // Example: Scale the object proportionally to the boundary dimensions
-            float scaleFactor = boundaryDimensions.x / 10f; // Adjust scaling logic as needed
-            objectToScale.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-
-            Debug.Log("Object scaled based on boundary dimensions.");
-        }
-        else
-        {
-            Debug.LogWarning("Object to scale is not assigned.");
-        }
-    }*/
-
 }
