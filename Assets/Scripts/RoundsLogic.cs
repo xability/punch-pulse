@@ -14,12 +14,13 @@ public class RoundsManager : MonoBehaviour
     [Tooltip("Number of full rounds (excluding warm-up).")]
     public int totalRounds = 6;
 
-    [Header("Audio Clips")]
-    [Tooltip("Audio clip to play at the start of any round.")]
-    public AudioClip roundStartAudio;
+    [Header("Round Start Audio Clips")]
+    public AudioClip warmUpStartAudio;
+    public AudioClip[] roundStartAudios; // Array for round 1 to 6 start audios
 
-    [Tooltip("Audio clip to play at the end of any round.")]
+    [Header("Round End Audio Clips")]
     public AudioClip roundEndAudio;
+    public AudioClip[] endOfRoundAudios; // Array for additional end-of-round audios
 
     [Header("References")]
     [Tooltip("Audio source to play the clips from (attach an AudioSource component to this GameObject or another).")]
@@ -27,7 +28,9 @@ public class RoundsManager : MonoBehaviour
 
     [Tooltip("Game Over UI Canvas or Panel.")]
     public GameObject gameOverUI;
+    public ScoreManager scoreManager;
 
+    //  audioSource.PlayOneShot(boxingbell);
     // Call this method from the script controlling the tutorial once it is finished
     public void BeginRounds()
     {
@@ -54,39 +57,6 @@ public class RoundsManager : MonoBehaviour
         ShowGameOver();
     }
 
-    private System.Collections.IEnumerator HandleOneRound(string roundName, int roundNumber)
-    {
-        // Play round start audio
-        if (audioSource != null && roundStartAudio != null)
-        {
-            audioSource.PlayOneShot(roundStartAudio);
-        }
-
-        // Optionally, display or announce the round name if you have UI or TTS
-        Debug.Log(roundName + " has started.");
-
-        // Wait for the round duration
-        yield return new WaitForSeconds(roundDuration);
-
-        // Round is over
-        Debug.Log(roundName + " ended.");
-
-        // Play round end audio
-        if (audioSource != null && roundEndAudio != null)
-        {
-            audioSource.PlayOneShot(roundEndAudio);
-        }
-
-        // Wait for the break ONLY if this isn't the last round overall
-        // If you want a break after the last round too, remove this check
-        bool isLastRound = (roundNumber != 0 && roundNumber == totalRounds);
-        if (!isLastRound)
-        {
-            Debug.Log("Break between rounds. Duration: " + roundBreakDuration + " seconds.");
-            yield return new WaitForSeconds(roundBreakDuration);
-        }
-    }
-
     private void ShowGameOver()
     {
         // Display Game Over UI
@@ -104,4 +74,68 @@ public class RoundsManager : MonoBehaviour
         // Example: Reload the active scene
 
     }
+
+    private System.Collections.IEnumerator HandleOneRound(string roundName, int roundNumber)
+    {
+        // Play round start audio
+        PlayRoundStartAudio(roundNumber);
+
+        Debug.Log(roundName + " has started.");
+
+        // Wait for the round duration
+        yield return new WaitForSeconds(roundDuration);
+
+        Debug.Log(roundName + " ended.");
+
+        // Play round end audio
+        if (audioSource != null && roundEndAudio != null)
+        {
+            audioSource.PlayOneShot(roundEndAudio);
+        }
+
+        // Play additional end-of-round audio clips
+        yield return StartCoroutine(PlayEndOfRoundAudios());
+
+        bool isLastRound = (roundNumber != 0 && roundNumber == totalRounds);
+        if (!isLastRound)
+        {
+            Debug.Log("Break between rounds. Duration: " + roundBreakDuration + " seconds.");
+            yield return new WaitForSeconds(roundBreakDuration);
+        }
+    }
+
+    private void PlayRoundStartAudio(int roundNumber)
+    {
+        if (audioSource != null)
+        {
+            if (roundNumber == 0 && warmUpStartAudio != null)
+            {
+                audioSource.PlayOneShot(warmUpStartAudio);
+            }
+            else if (roundNumber > 0 && roundNumber <= roundStartAudios.Length)
+            {
+                AudioClip clip = roundStartAudios[roundNumber - 1];
+                if (clip != null)
+                {
+                    audioSource.PlayOneShot(clip);
+                }
+            }
+        }
+    }
+
+    private System.Collections.IEnumerator PlayEndOfRoundAudios()
+    {
+        // Announce player score
+        if (scoreManager != null)
+        {
+            yield return StartCoroutine(scoreManager.AnnounceScore());
+        }
+
+        // Announce enemy score
+        if (scoreManager != null)
+        {
+            yield return StartCoroutine(scoreManager.AnnounceEnemyScore());
+        }
+    }
 }
+

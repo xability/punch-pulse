@@ -39,6 +39,7 @@ public class TutorialManager : MonoBehaviour
     private bool isAudioPlaying = false;
 
     public EnemyAttackBehavior enemyAttackBehavior;
+    public RoundsManager roundsManager;
     public static bool TutorialCompleted = false;
 
     public static bool TutorialAttackFlag = false;
@@ -230,7 +231,14 @@ public class TutorialManager : MonoBehaviour
         {
             TutorialCompleted = true;
             TutorialAttackFlag = true;
-            audioSource.PlayOneShot(boxingbell);
+            if (roundsManager != null)
+            {
+                roundsManager.BeginRounds();
+            }
+            else
+            {
+                Debug.LogError("RoundsManager reference is missing!");
+            }
             // SceneManager.LoadScene("BoxingRing");
         }
     }

@@ -69,6 +69,7 @@ public class ScoreManager : MonoBehaviour
             AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Medium);
             //audioSource.PlayOneShot(difficultyIncreaseSound);
         }
+        /*        
         else if (Score <= 5 && AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Medium)
         {
             AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Easy);
@@ -78,7 +79,7 @@ public class ScoreManager : MonoBehaviour
         {
             AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Medium);
             //audioSource.PlayOneShot(difficultyDecreaseSound);
-        }
+        }*/
     }
 
     public static void AddScore(int amount)
@@ -156,6 +157,28 @@ public class ScoreManager : MonoBehaviour
             }
         }*/
 
+        isAnnouncingScore = false;
+    }
+    public IEnumerator AnnounceEnemyScore()
+    {
+        if (isAnnouncingScore) yield break; // Safety check
+
+        isAnnouncingScore = true;
+
+        audioSource.PlayOneShot(playerScoreIs);
+        yield return new WaitForSeconds(playerScoreIs.length);
+
+        string scoreString = EnemyScore.ToString();
+        if (Score < 61)
+        {
+            Debug.Log("Score: " + Score);
+            audioSource.PlayOneShot(numberClips[Score]);
+            yield return new WaitForSeconds(numberClips[Score].length);
+        }
+        else
+        {
+            Debug.LogWarning("Number audio clip not found for digit: " + Score);
+        }
         isAnnouncingScore = false;
     }
 }
