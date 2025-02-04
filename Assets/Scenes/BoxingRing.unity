@@ -2672,7 +2672,6 @@ MonoBehaviour:
   animationRotationOffset: -3.5
   movementAudioSource: {fileID: 632711893}
   footsteps: {fileID: 8300000, guid: 2711e1a7ca6f8114fbab2f086462b86f, type: 3}
-  randomMoveInterval: 10
 --- !u!114 &282555736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2822,8 +2821,10 @@ MonoBehaviour:
   audioSource: {fileID: 1672657542}
   MoveEnemyInFront: {fileID: 282555735}
   enemyObject: {fileID: 1848126064}
-  safeDistance: 2
+  safeDistance: 1.5
   modelAnimator: {fileID: 1848126072}
+  minDistanceFromPlayer: 1.5
+  maxDistanceFromPlayer: 3
 --- !u!1 &301230425
 GameObject:
   m_ObjectHideFlags: 0
@@ -12355,6 +12356,8 @@ MonoBehaviour:
   enemyObject: {fileID: 1953239092}
   safeDistance: 1.2
   modelAnimator: {fileID: 1848126072}
+  minDistanceFromPlayer: 3
+  maxDistanceFromPlayer: 5
 --- !u!4 &1848126075 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9a4dbdba5ad1e4f6b90d9bb06d24d354,

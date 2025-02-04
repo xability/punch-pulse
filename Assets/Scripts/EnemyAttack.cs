@@ -39,6 +39,9 @@ public class EnemyAttackBehavior : MonoBehaviour
     private static int playerDuckCount = 0;
     private static int playerHitCount = 0;
 
+    public float minDistanceFromPlayer;
+    public float maxDistanceFromPlayer;
+
     public static int GetPlayerHitCount()
     {
         return playerHitCount;
@@ -124,7 +127,7 @@ public class EnemyAttackBehavior : MonoBehaviour
                 else
                 {
                     // If in defensive mode, skip the attack
-                    Debug.Log("In defensive mode, skipping attack.");
+                    // Debug.Log("In defensive mode, skipping attack.");
                 }
             }
             else
@@ -208,6 +211,20 @@ public class EnemyAttackBehavior : MonoBehaviour
             playerDuckCount++;
             // Implement your actual attack logic here
         }
+
+        // Move enemy to new location right after punch animation is done.
+        // Move the enemy to a random position after the attack
+        Vector3 newPosition = GetRandomPositionInFrontOfPlayer();
+
+        // Use the existing MoveEnemyInFront script to move the enemy
+        float distanceToTarget1;
+        do
+        {
+            distanceToTarget1 = MoveEnemyInFront.MoveEnemyTowardsTarget(newPosition);
+            yield return null;
+        } while (distanceToTarget1 > 0.1f);
+
+        Debug.Log("Enemy moved to new position after attack");
 
     }
 
@@ -296,4 +313,33 @@ public class EnemyAttackBehavior : MonoBehaviour
         targetPosition.y = initialYPosition;  // Keep the enemy's y-coordinate fixed
     }
 
+    private Vector3 GetRandomPositionInFrontOfPlayer()
+    {
+        if (playerCamera == null)
+        {
+            Debug.LogWarning("Player Camera is not assigned!");
+            return transform.position;
+        }
+        
+        Debug.Log("Attack done, finding new position to move to");
+        // Get a random distance within the specified range
+        float randomDistance = Random.Range(minDistanceFromPlayer, maxDistanceFromPlayer);
+
+        // Calculate a random angle within a 180-degree arc in front of the player
+        float randomAngle = Random.Range(-90f, 90f);
+
+        // Calculate the forward direction of the player, ignoring vertical rotation
+        Vector3 playerForward = playerCamera.transform.forward;
+        playerForward.y = 0;
+        playerForward.Normalize();
+
+        // Rotate the forward vector by the random angle
+        Vector3 randomDirection = Quaternion.Euler(0, randomAngle, 0) * playerForward;
+
+        // Calculate the new position
+        Vector3 newPosition = playerCamera.transform.position + randomDirection * randomDistance;
+        newPosition.y = initialYPosition; // Keep the enemy's y-coordinate fixed
+
+        return newPosition;
+    }
 }
