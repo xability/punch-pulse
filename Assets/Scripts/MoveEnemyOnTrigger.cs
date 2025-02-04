@@ -32,9 +32,6 @@ public class MoveEnemyInFront : MonoBehaviour
     private float lastAudioPlayTime = 0f;
     private float audioCooldown = 0.5f;
 
-    public float randomMoveInterval = 10f;  // Time interval for random movement
-    private float lastRandomMoveTime;  // To track when the last random move occurred
-
     // Public static method to get the count
     public static int GetRightTriggerPressCount()
     {
@@ -74,7 +71,6 @@ public class MoveEnemyInFront : MonoBehaviour
         // Subscribe to trigger action
         rightTriggerAction.action.performed += OnRightTriggerPressed;
 
-        lastRandomMoveTime = Time.time;  // Initialize the last random move time
     }
 
     private bool postTutorialFlag = false;
@@ -137,24 +133,10 @@ public class MoveEnemyInFront : MonoBehaviour
         {
             rightTriggerPressCount = 0;
             postTutorialFlag = true;
-            // Check for random movement
-            if (Time.time - lastRandomMoveTime >= randomMoveInterval)
-            {
-                RandomlyMoveEnemyClose();
-                lastRandomMoveTime = Time.time;
-            }
+
         }
     }
 
-    void RandomlyMoveEnemyClose()
-    {
-        if (Random.value < 0.8f)  // 80% chance to move
-        {
-            SetTargetPositionInFrontOfPlayer();
-            Debug.Log("Randomly moving enemy close");
-            shouldMove = true;
-        }
-    }
 
     public float MoveEnemyTowardsTarget(Vector3 targetPosition)
     {

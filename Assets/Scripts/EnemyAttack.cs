@@ -153,7 +153,7 @@ public class EnemyAttackBehavior : MonoBehaviour
         duckingThresholdPercentage = 0.75f; // Set to 75% of initial height
         duckingThreshold = duckingThresholdPercentage * initialHeadsetHeight;
 
-
+        Debug.Log("Initial headset height: " + initialHeadsetHeight + ". Ducking threshold set to: " + duckingThreshold);
         // Flash red lights
         if (warningLight != null)
         {
