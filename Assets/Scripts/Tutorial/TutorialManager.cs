@@ -18,6 +18,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject objectToToggle0;
     public GameObject objectToToggle1;
     public AudioClip boxingbell;
+    public bool skipToLastStep = false;
 
     [System.Serializable]
     public class TutorialStep
@@ -57,8 +58,15 @@ public class TutorialManager : MonoBehaviour
 
     void Start()
     {
-        instructionText.text = "Press right select button to start";
-        stepcount.text = "0";
+        if (skipToLastStep)
+        {
+            SkipToLastStep();
+        }
+        else
+        {
+            instructionText.text = "Press right select button to start";
+            stepcount.text = "0";
+        }
         nextButtonAction.action.performed += OnNextButtonPressed;
         exitTutorialAction.action.performed += ExitTutorial;
     }
@@ -101,8 +109,18 @@ public class TutorialManager : MonoBehaviour
         foreach (var obj in step.objectsToDeactivate)
             obj.SetActive(false);
 
-        currentClip = 0;
-        PlayNextClip();
+        /*if (skipToLastStep)
+        {
+            // If we've skipped to the last step, we might want to handle this differently
+            // For example, we might not want to play any audio
+            waitingForAction = false;
+        }
+        else
+        {*/
+
+            currentClip = 0;
+            PlayNextClip();
+        
     }
 
     void PlayNextClip()
@@ -120,6 +138,15 @@ public class TutorialManager : MonoBehaviour
         {
             NextStep();
         }
+    }
+
+    private void SkipToLastStep()
+    {
+        currentStep = tutorialSteps.Length - 1;
+        tutorialStarted = true;
+        UpdateTutorialStep();
+        // Optionally, you might want to call ExitTutorial here if you want to immediately end the tutorial
+        // ExitTutorial(new InputAction.CallbackContext());
     }
 
     IEnumerator WaitForClipEnd()

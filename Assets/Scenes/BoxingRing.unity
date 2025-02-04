@@ -2191,6 +2191,7 @@ MonoBehaviour:
   objectToToggle0: {fileID: 2125929131}
   objectToToggle1: {fileID: 864913198}
   boxingbell: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
+  skipToLastStep: 1
   tutorialSteps:
   - instruction: Introduction
     narration:
@@ -2251,7 +2252,7 @@ MonoBehaviour:
   currentStep: 0
   currentClip: 0
   enemyAttackBehavior: {fileID: 282555738}
-  roundsManager: {fileID: 0}
+  roundsManager: {fileID: 1414789647}
 --- !u!4 &246717563
 Transform:
   m_ObjectHideFlags: 0
@@ -10101,7 +10102,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.9339623, g: 0.3127893, b: 0.3127893, a: 1}
-  m_Intensity: 10
+  m_Intensity: 20
   m_Range: 15
   m_SpotAngle: 84.2062
   m_InnerSpotAngle: 54.48523
@@ -14229,8 +14230,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ringObject: {fileID: 2047914131}
-  xLong: 10
-  yWide: 10
+  xLong: 1
+  yWide: 1
 --- !u!1 &2056665194
 GameObject:
   m_ObjectHideFlags: 0
