@@ -222,7 +222,7 @@ public class EnemyAttackBehavior : MonoBehaviour
         {
             distanceToTarget1 = MoveEnemyInFront.MoveEnemyTowardsTarget(newPosition);
             yield return null;
-        } while (distanceToTarget1 > 0.1f);
+        } while (distanceToTarget1 > 1f);
 
         Debug.Log("Enemy moved to new position after attack");
 

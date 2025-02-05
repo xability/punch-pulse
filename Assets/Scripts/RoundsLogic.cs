@@ -30,6 +30,27 @@ public class RoundsManager : MonoBehaviour
     public GameObject gameOverUI;
     public ScoreManager scoreManager;
 
+
+    public Transform enemyTransform; // Reference to the enemy's transform
+    private Vector3 initialEnemyPosition; // To store the initial position
+    private Quaternion initialEnemyRotation; // To store the initial rotation
+
+
+    void Start()
+    {
+
+        // Store the initial enemy position and rotation
+        if (enemyTransform != null)
+        {
+            initialEnemyPosition = enemyTransform.position;
+            initialEnemyRotation = enemyTransform.rotation;
+        }
+        else
+        {
+            Debug.LogWarning("Enemy transform not assigned in RoundsManager!");
+        }
+    }
+
     //  audioSource.PlayOneShot(boxingbell);
     // Call this method from the script controlling the tutorial once it is finished
     public void BeginRounds()
@@ -77,6 +98,9 @@ public class RoundsManager : MonoBehaviour
 
     private System.Collections.IEnumerator HandleOneRound(string roundName, int roundNumber)
     {
+
+        AccessibleMenu.IsOffensiveMode = true;
+
         // Play round start audio
         PlayRoundStartAudio(roundNumber);
 
@@ -87,20 +111,32 @@ public class RoundsManager : MonoBehaviour
 
         Debug.Log(roundName + " ended.");
 
+        AccessibleMenu.IsOffensiveMode = false;
+
         // Play round end audio
         if (audioSource != null && roundEndAudio != null)
         {
             audioSource.PlayOneShot(roundEndAudio);
-        }
 
-        // Play additional end-of-round audio clips
-        yield return StartCoroutine(PlayEndOfRoundAudios());
+            yield return new WaitForSeconds(roundEndAudio.length);
+        }
 
         bool isLastRound = (roundNumber != 0 && roundNumber == totalRounds);
         if (!isLastRound)
         {
             Debug.Log("Break between rounds. Duration: " + roundBreakDuration + " seconds.");
+
+            ResetEnemyPosition();
+
+            // Play additional end-of-round audio clips during the break
+            StartCoroutine(PlayEndOfRoundAudiosWithTimeout(roundBreakDuration));
+
             yield return new WaitForSeconds(roundBreakDuration);
+        }
+        else
+        {
+            // For the last round, play end-of-round audios without a time limit
+            yield return StartCoroutine(PlayEndOfRoundAudios());
         }
     }
 
@@ -135,6 +171,39 @@ public class RoundsManager : MonoBehaviour
         if (scoreManager != null)
         {
             yield return StartCoroutine(scoreManager.AnnounceEnemyScore());
+        }
+    }
+
+    private System.Collections.IEnumerator PlayEndOfRoundAudiosWithTimeout(float timeout)
+    {
+        float elapsedTime = 0f;
+
+        foreach (AudioClip clip in endOfRoundAudios)
+        {
+            if (clip != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(clip);
+                float clipDuration = Mathf.Min(clip.length, timeout - elapsedTime);
+                yield return new WaitForSeconds(clipDuration);
+
+                elapsedTime += clipDuration;
+                if (elapsedTime >= timeout)
+                    break;
+            }
+        }
+    }
+
+    private void ResetEnemyPosition()
+    {
+        if (enemyTransform != null)
+        {
+            enemyTransform.position = initialEnemyPosition;
+            enemyTransform.rotation = initialEnemyRotation;
+            Debug.Log("Enemy position reset to initial position");
+        }
+        else
+        {
+            Debug.LogWarning("Cannot reset enemy position: Enemy transform not assigned!");
         }
     }
 }

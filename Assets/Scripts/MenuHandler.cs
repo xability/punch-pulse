@@ -424,6 +424,14 @@ public class AccessibleMenu : MonoBehaviour
     public static bool IsOffensiveMode
     {
         get { return isOffensiveMode; }
+        set
+        {
+            isOffensiveMode = value;
+            if (Instance != null)
+            {
+                Instance.UpdateButtonTexts();
+            }
+        }
     }
 
 
@@ -584,6 +592,14 @@ public class AccessibleMenu : MonoBehaviour
         MoveEnemyInFront.ResetTriggerPressCount();
     }
 
+    public static void SetOffensiveMode(bool mode)
+    {
+        isOffensiveMode = mode;
+        if (Instance != null)
+        {
+            Instance.UpdateButtonTexts();
+        }
+    }
 }
 
 /*
