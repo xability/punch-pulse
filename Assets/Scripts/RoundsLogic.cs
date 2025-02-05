@@ -131,7 +131,7 @@ public class RoundsManager : MonoBehaviour
             // Play additional end-of-round audio clips during the break
             StartCoroutine(PlayEndOfRoundAudiosWithTimeout(roundBreakDuration));
 
-            yield return new WaitForSeconds(roundBreakDuration);
+            yield return StartCoroutine(PlayEndOfRoundAudios());
         }
         else
         {
