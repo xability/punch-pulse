@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;    // If you need UI functionality
 using UnityEngine.SceneManagement; // If you want to reload the scene at the end
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 
 public class RoundsManager : MonoBehaviour
 {
@@ -29,11 +32,13 @@ public class RoundsManager : MonoBehaviour
     [Tooltip("Game Over UI Canvas or Panel.")]
     public GameObject gameOverUI;
     public ScoreManager scoreManager;
-
+    public GameModuleManager gameModuleManager;
 
     public Transform enemyTransform; // Reference to the enemy's transform
     private Vector3 initialEnemyPosition; // To store the initial position
     private Quaternion initialEnemyRotation; // To store the initial rotation
+    public AudioClip difficultIncreased;
+    public AudioClip boxingBellStart;
 
 
     void Start()
@@ -49,6 +54,11 @@ public class RoundsManager : MonoBehaviour
         {
             Debug.LogWarning("Enemy transform not assigned in RoundsManager!");
         }
+
+        if (gameModuleManager == null)
+        {
+            Debug.LogError("GameModuleManager reference not set in the Inspector for RoundsManager!");
+        }
     }
 
     //  audioSource.PlayOneShot(boxingbell);
@@ -63,7 +73,7 @@ public class RoundsManager : MonoBehaviour
         StartCoroutine(RoundSequenceRoutine());
     }
 
-    private System.Collections.IEnumerator RoundSequenceRoutine()
+    private IEnumerator RoundSequenceRoutine()
     {
         // Round 0: Warm-up round
         yield return StartCoroutine(HandleOneRound("Warm-Up", 0));
@@ -96,13 +106,34 @@ public class RoundsManager : MonoBehaviour
 
     }
 
-    private System.Collections.IEnumerator HandleOneRound(string roundName, int roundNumber)
+    private IEnumerator HandleOneRound(string roundName, int roundNumber)
     {
 
         AccessibleMenu.IsOffensiveMode = true;
 
+        // Check if the game mode is Level Progression
+        if (gameModuleManager.IsLevelProgressionMode)
+        {
+            // Set difficulty based on round number only in Level Progression mode
+            if (roundNumber == 3) // Third round (index 2 + 1)
+            {
+                AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Medium);
+                Debug.Log("Difficulty set to Medium");
+                audioSource.PlayOneShot(difficultIncreased);
+                yield return new WaitForSeconds(difficultIncreased.length);
+            }
+            else if (roundNumber == 5) // Fifth round (index 4 + 1)
+            {
+                AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Hard);
+                Debug.Log("Difficulty set to Hard");
+                audioSource.PlayOneShot(difficultIncreased);
+                yield return new WaitForSeconds(difficultIncreased.length);
+            }
+        }
+
+
         // Play round start audio
-        PlayRoundStartAudio(roundNumber);
+        yield return StartCoroutine(PlayRoundStartAudio(roundNumber));
 
         Debug.Log(roundName + " has started.");
 
@@ -140,10 +171,13 @@ public class RoundsManager : MonoBehaviour
         }
     }
 
-    private void PlayRoundStartAudio(int roundNumber)
+    private IEnumerator PlayRoundStartAudio(int roundNumber)
     {
         if (audioSource != null)
         {
+            audioSource.PlayOneShot(boxingBellStart);
+            yield return new WaitForSeconds(boxingBellStart.length);
+
             if (roundNumber == 0 && warmUpStartAudio != null)
             {
                 audioSource.PlayOneShot(warmUpStartAudio);
@@ -159,7 +193,7 @@ public class RoundsManager : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator PlayEndOfRoundAudios()
+    private IEnumerator PlayEndOfRoundAudios()
     {
         // Announce player score
         if (scoreManager != null)
@@ -174,7 +208,7 @@ public class RoundsManager : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator PlayEndOfRoundAudiosWithTimeout(float timeout)
+    private IEnumerator PlayEndOfRoundAudiosWithTimeout(float timeout)
     {
         float elapsedTime = 0f;
 

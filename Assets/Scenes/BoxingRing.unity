@@ -2786,6 +2786,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 34005faf4cb1e4c49964980d657e8350, type: 3}
   audioSource: {fileID: 2042691871}
   playerScoreIs: {fileID: 8300000, guid: bf1b16fb25f505441966313253989e64, type: 3}
+  enemyScoreIs: {fileID: 8300000, guid: 21e6ed571738aa14c9dccc3166b6e11c, type: 3}
   scoreText: {fileID: 743237385}
   enemyScoreText: {fileID: 579523295}
   rightButtonAction: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f,
@@ -10714,6 +10715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1414789648}
   - component: {fileID: 1414789647}
+  - component: {fileID: 1414789649}
   m_Layer: 0
   m_Name: RoundsManager
   m_TagString: Untagged
@@ -10765,6 +10767,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1414789649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414789646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a18686620222024ea2e0ab9818580a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMode: 0
 --- !u!1 &1437684781
 GameObject:
   m_ObjectHideFlags: 0
