@@ -10751,7 +10751,10 @@ MonoBehaviour:
   audioSource: {fileID: 1672657542}
   gameOverUI: {fileID: 0}
   scoreManager: {fileID: 282555737}
+  gameModuleManager: {fileID: 1414789649}
   enemyTransform: {fileID: 1848126075}
+  difficultIncreased: {fileID: 8300000, guid: d04c7cd8aa1f56f4a83c56cca192520b, type: 3}
+  boxingBellStart: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
 --- !u!4 &1414789648
 Transform:
   m_ObjectHideFlags: 0
