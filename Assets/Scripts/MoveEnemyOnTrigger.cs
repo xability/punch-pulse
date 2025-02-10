@@ -32,6 +32,8 @@ public class MoveEnemyInFront : MonoBehaviour
     private float lastAudioPlayTime = 0f;
     private float audioCooldown = 0.5f;
 
+    private AccessibleMenu.DifficultyLevel currentDifficulty;
+
     // Public static method to get the count
     public static int GetRightTriggerPressCount()
     {
@@ -103,7 +105,20 @@ public class MoveEnemyInFront : MonoBehaviour
         forwardDirection.x = 0;  // Ignore X-axis direction to keep it horizontal
         forwardDirection.Normalize();  // Normalize the forward vector
 
-        targetPosition = playerCamera.transform.position + forwardDirection * distanceInFront;
+        float distance = distanceInFront;
+        Vector3 offset = Vector3.zero;
+
+        if (currentDifficulty == AccessibleMenu.DifficultyLevel.Hard)
+        {
+            // Increase distance for Hard difficulty
+            distance *= 1.5f;
+
+            // Add a random offset to the sides
+            float sideOffset = Random.Range(-2f, 2f);
+            offset = playerCamera.transform.right * sideOffset;
+        }
+
+        targetPosition = playerCamera.transform.position + (forwardDirection * distance) + offset;
         targetPosition.y = initialYPosition;  // Keep the enemy's y-coordinate fixed
     }
 
@@ -116,8 +131,21 @@ public class MoveEnemyInFront : MonoBehaviour
         //}
         if (shouldMove)
         {
-            float distanceToTarget = MoveEnemyTowardsTarget(targetPosition);
-            if (distanceToTarget < 0.8f)
+            float distanceToTarget;
+            float stopDistance;
+
+            if (currentDifficulty == AccessibleMenu.DifficultyLevel.Hard)
+            {
+                distanceToTarget = MoveEnemyTowardsTargetHardMode(targetPosition);
+                stopDistance = 1.5f;
+            }
+            else
+            {
+                distanceToTarget = MoveEnemyTowardsTarget(targetPosition);
+                stopDistance = 0.8f;
+            }
+
+            if (distanceToTarget < stopDistance)
             {
                 shouldMove = false;
             }
@@ -136,7 +164,6 @@ public class MoveEnemyInFront : MonoBehaviour
 
         }
     }
-
 
     public float MoveEnemyTowardsTarget(Vector3 targetPosition)
     {
@@ -168,6 +195,34 @@ public class MoveEnemyInFront : MonoBehaviour
         RotateEnemyTowardsPlayer();
         return distanceToTarget;
     }
+
+    private float MoveEnemyTowardsTargetHardMode(Vector3 targetPosition)
+    {
+        if (enemy == null) return 0.0f;
+
+        // Play the audio clip
+        if (movementAudioSource != null && footsteps != null && Time.time - lastAudioPlayTime > audioCooldown)
+        {
+            movementAudioSource.PlayOneShot(footsteps);
+            lastAudioPlayTime = Time.time;
+        }
+
+        // Move the enemy towards the target position (only Z and Y) at half speed
+        Vector3 currentPosition = enemy.position;
+        currentPosition = Vector3.MoveTowards(
+            new Vector3(currentPosition.x, initialYPosition, currentPosition.z),
+            targetPosition,
+            moveSpeed * 0.5f * Time.deltaTime // Reduce speed by half for hard mode
+        );
+        enemy.position = currentPosition;
+
+        float distanceToTarget = Vector3.Distance(currentPosition, targetPosition);
+
+        // Rotate the enemy to face the player along the X-axis (vertical rotation)
+        RotateEnemyTowardsPlayer();
+        return distanceToTarget;
+    }
+
 
     public void RotateEnemyTowardsPlayer()
     {

@@ -17,6 +17,7 @@ public class ScoreManager : MonoBehaviour
     public static int EnemyScore { get; private set; }
     public TextMeshProUGUI enemyScoreText;
     public InputActionReference rightButtonAction;
+    public static RoundsManager roundsManager;
 
 
     private bool isAnnouncingScore = false; // New flag to track if score is being announced
@@ -85,15 +86,34 @@ public class ScoreManager : MonoBehaviour
 
     public static void AddScore(int amount)
     {
-        Score += amount;
-        Instance.UpdateScoreDisplay();
+        if (roundsManager.isBreakOngoing)
+        {
+            Debug.Log("Currently in a break between rounds");
+        }
+        else
+        {
+            // Debug.Log("Round is ongoing");
+            // Perform round-specific actions
+            Score += amount;
+            Instance.UpdateScoreDisplay();
+        }
+
         //CheckAndUpdateDifficulty();
     }
 
     public static void DecrementScore(int amount)
     {
-        Score = Mathf.Max(0, Score - amount);
-        Instance.UpdateScoreDisplay();
+        if (roundsManager.isBreakOngoing)
+        {
+            Debug.Log("Currently in a break between rounds");
+        }
+        else
+        {
+            // Debug.Log("Round is ongoing");
+            Score = Mathf.Max(0, Score - amount);
+            Instance.UpdateScoreDisplay();
+        }
+
         //CheckAndUpdateDifficulty();
     }
 
@@ -107,8 +127,16 @@ public class ScoreManager : MonoBehaviour
 
     public static void AddEnemyScore(int amount)
     {
-        EnemyScore += amount;
-        Instance.UpdateEnemyScoreDisplay();
+        if (roundsManager.isBreakOngoing)
+        {
+            Debug.Log("Currently in a break between rounds");
+        }
+        else
+        {
+            // Debug.Log("Round is ongoing");
+            EnemyScore += amount;
+            Instance.UpdateEnemyScoreDisplay();
+        }
     }
 
 

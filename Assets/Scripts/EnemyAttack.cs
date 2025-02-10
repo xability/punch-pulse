@@ -35,6 +35,7 @@ public class EnemyAttackBehavior : MonoBehaviour
     private bool postTutorialFlag = false;
 
     private AccessibleMenu.DifficultyLevel currentDifficulty;
+    public RoundsManager roundsManager;
 
     private static int playerDuckCount = 0;
     private static int playerHitCount = 0;
@@ -117,7 +118,7 @@ public class EnemyAttackBehavior : MonoBehaviour
                 yield return new WaitForSeconds(randomDelay);
 
                 // Check if the mode is offensive before attacking
-                if (AccessibleMenu.IsOffensiveMode && TutorialManager.TutorialAttackFlag)
+                if ( (AccessibleMenu.IsOffensiveMode && TutorialManager.TutorialAttackFlag))
                 {
                     yield return StartCoroutine(PerformAttack());
                     canAttack = false;
@@ -170,6 +171,7 @@ public class EnemyAttackBehavior : MonoBehaviour
             if (MoveEnemyInFront != null)
             {
                 // Move the enemy in front of the player
+
                 SetTargetPositionInFrontOfPlayer();
                 float distanceToTarget;
                 do

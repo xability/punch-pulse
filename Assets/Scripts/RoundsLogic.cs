@@ -33,6 +33,8 @@ public class RoundsManager : MonoBehaviour
     public GameObject gameOverUI;
     public ScoreManager scoreManager;
     public GameModuleManager gameModuleManager;
+    public bool isBreakOngoing = false;
+
 
     public Transform enemyTransform; // Reference to the enemy's transform
     private Vector3 initialEnemyPosition; // To store the initial position
@@ -109,6 +111,7 @@ public class RoundsManager : MonoBehaviour
     private IEnumerator HandleOneRound(string roundName, int roundNumber)
     {
 
+        isBreakOngoing = false;
         AccessibleMenu.IsOffensiveMode = true;
 
         // Check if the game mode is Level Progression
@@ -142,6 +145,7 @@ public class RoundsManager : MonoBehaviour
 
         Debug.Log(roundName + " ended.");
 
+        isBreakOngoing = true;
         AccessibleMenu.IsOffensiveMode = false;
 
         // Play round end audio
@@ -169,18 +173,18 @@ public class RoundsManager : MonoBehaviour
             // For the last round, play end-of-round audios without a time limit
             yield return StartCoroutine(PlayEndOfRoundAudios());
         }
+
+        isBreakOngoing = false;
     }
 
     private IEnumerator PlayRoundStartAudio(int roundNumber)
     {
         if (audioSource != null)
         {
-            audioSource.PlayOneShot(boxingBellStart);
-            yield return new WaitForSeconds(boxingBellStart.length);
-
             if (roundNumber == 0 && warmUpStartAudio != null)
             {
                 audioSource.PlayOneShot(warmUpStartAudio);
+                yield return new WaitForSeconds(warmUpStartAudio.length);
             }
             else if (roundNumber > 0 && roundNumber <= roundStartAudios.Length)
             {
@@ -188,8 +192,12 @@ public class RoundsManager : MonoBehaviour
                 if (clip != null)
                 {
                     audioSource.PlayOneShot(clip);
+                    yield return new WaitForSeconds(clip.length);
                 }
             }
+
+            audioSource.PlayOneShot(boxingBellStart);
+            yield return new WaitForSeconds(boxingBellStart.length);
         }
     }
 

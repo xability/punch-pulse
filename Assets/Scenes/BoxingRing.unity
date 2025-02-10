@@ -2791,6 +2791,7 @@ MonoBehaviour:
   enemyScoreText: {fileID: 579523295}
   rightButtonAction: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
+  roundsManager: {fileID: 1414789647}
 --- !u!114 &282555738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2824,6 +2825,7 @@ MonoBehaviour:
   enemyObject: {fileID: 1848126064}
   safeDistance: 1.5
   modelAnimator: {fileID: 1848126072}
+  roundsManager: {fileID: 0}
   minDistanceFromPlayer: 1.5
   maxDistanceFromPlayer: 3
 --- !u!1 &301230425
@@ -10735,7 +10737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e2c05ac34ac8d4da80b775cf5d97d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundDuration: 120
+  roundDuration: 10
   roundBreakDuration: 30
   totalRounds: 6
   warmUpStartAudio: {fileID: 8300000, guid: 7097f9535a7a24340bf7c2a4bcf3c07a, type: 3}
@@ -10752,6 +10754,7 @@ MonoBehaviour:
   gameOverUI: {fileID: 0}
   scoreManager: {fileID: 282555737}
   gameModuleManager: {fileID: 1414789649}
+  isBreakOngoing: 0
   enemyTransform: {fileID: 1848126075}
   difficultIncreased: {fileID: 8300000, guid: d04c7cd8aa1f56f4a83c56cca192520b, type: 3}
   boxingBellStart: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
@@ -12375,6 +12378,7 @@ MonoBehaviour:
   enemyObject: {fileID: 1953239092}
   safeDistance: 1.2
   modelAnimator: {fileID: 1848126072}
+  roundsManager: {fileID: 0}
   minDistanceFromPlayer: 3
   maxDistanceFromPlayer: 5
 --- !u!4 &1848126075 stripped
