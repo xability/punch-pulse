@@ -2791,7 +2791,6 @@ MonoBehaviour:
   enemyScoreText: {fileID: 579523295}
   rightButtonAction: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  roundsManager: {fileID: 1414789647}
 --- !u!114 &282555738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2826,6 +2825,7 @@ MonoBehaviour:
   safeDistance: 1.5
   modelAnimator: {fileID: 1848126072}
   roundsManager: {fileID: 0}
+  ringMapping: {fileID: 0}
   minDistanceFromPlayer: 1.5
   maxDistanceFromPlayer: 3
 --- !u!1 &301230425
@@ -10755,7 +10755,9 @@ MonoBehaviour:
   scoreManager: {fileID: 282555737}
   gameModuleManager: {fileID: 1414789649}
   isBreakOngoing: 0
+  ringMapping: {fileID: 2047914139}
   enemyTransform: {fileID: 1848126075}
+  playerTransform: {fileID: 2042691868}
   difficultIncreased: {fileID: 8300000, guid: d04c7cd8aa1f56f4a83c56cca192520b, type: 3}
   boxingBellStart: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
 --- !u!4 &1414789648
@@ -12379,6 +12381,7 @@ MonoBehaviour:
   safeDistance: 1.2
   modelAnimator: {fileID: 1848126072}
   roundsManager: {fileID: 0}
+  ringMapping: {fileID: 0}
   minDistanceFromPlayer: 3
   maxDistanceFromPlayer: 5
 --- !u!4 &1848126075 stripped

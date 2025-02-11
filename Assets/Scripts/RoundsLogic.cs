@@ -35,8 +35,9 @@ public class RoundsManager : MonoBehaviour
     public GameModuleManager gameModuleManager;
     public bool isBreakOngoing = false;
 
-
+    public BoxingRingMapping ringMapping;
     public Transform enemyTransform; // Reference to the enemy's transform
+    public Transform playerTransform;
     private Vector3 initialEnemyPosition; // To store the initial position
     private Quaternion initialEnemyRotation; // To store the initial rotation
     public AudioClip difficultIncreased;
@@ -235,7 +236,7 @@ public class RoundsManager : MonoBehaviour
         }
     }
 
-    private void ResetEnemyPosition()
+    public void ResetEnemyPosition()
     {
         if (enemyTransform != null)
         {
@@ -248,5 +249,33 @@ public class RoundsManager : MonoBehaviour
             Debug.LogWarning("Cannot reset enemy position: Enemy transform not assigned!");
         }
     }
+
+    public Vector3 GenerateRandomPositionInRing()
+    {
+        if (ringMapping == null || enemyTransform == null || playerTransform == null)
+        {
+            Debug.LogWarning("RingMapping, EnemyTransform, or PlayerTransform not assigned!");
+            return Vector3.zero;
+        }
+
+        // Generate a random position within the ring
+        float randomX = Random.Range(-ringMapping.xLong / 2f, ringMapping.xLong / 2f);
+        float randomZ = Random.Range(-ringMapping.yWide / 2f, ringMapping.yWide / 2f);
+        Vector3 randomPosition = new Vector3(randomX, enemyTransform.position.y, randomZ);
+
+        // Move the enemy to the random position
+        enemyTransform.position = randomPosition;
+
+        // Make the enemy face the player
+        Vector3 directionToPlayer = playerTransform.position - enemyTransform.position;
+        directionToPlayer.y = 0; // Ignore vertical difference
+        Quaternion rotationToPlayer = Quaternion.LookRotation(directionToPlayer);
+        enemyTransform.rotation = rotationToPlayer;
+
+        Debug.Log("Enemy moved to random position: " + randomPosition);
+
+        return randomPosition;
+    }
+
 }
 

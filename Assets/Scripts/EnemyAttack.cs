@@ -36,6 +36,7 @@ public class EnemyAttackBehavior : MonoBehaviour
 
     private AccessibleMenu.DifficultyLevel currentDifficulty;
     public RoundsManager roundsManager;
+    public BoxingRingMapping ringMapping;
 
     private static int playerDuckCount = 0;
     private static int playerHitCount = 0;
@@ -341,6 +342,14 @@ public class EnemyAttackBehavior : MonoBehaviour
         // Calculate the new position
         Vector3 newPosition = playerCamera.transform.position + randomDirection * randomDistance;
         newPosition.y = initialYPosition; // Keep the enemy's y-coordinate fixed
+
+        // Check if the new position is outside the ring
+        if (Mathf.Abs(newPosition.x) > ringMapping.xLong / 2 || Mathf.Abs(newPosition.z) > ringMapping.yWide / 2)
+        {
+            // If outside the ring, reset the enemy position
+            Debug.Log("New position is outside the ring, resetting enemy to random position");
+            return roundsManager.GenerateRandomPositionInRing();
+        }
 
         return newPosition;
     }

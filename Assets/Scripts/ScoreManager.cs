@@ -198,7 +198,7 @@ public class ScoreManager : MonoBehaviour
         yield return new WaitForSeconds(enemyScoreIs.length);
 
         string scoreString = EnemyScore.ToString();
-        if (EnemyScore < 61)
+        if (EnemyScore < 86)
         {
             Debug.Log("Enemy Score: " + EnemyScore);
             audioSource.PlayOneShot(numberClips[EnemyScore]);
