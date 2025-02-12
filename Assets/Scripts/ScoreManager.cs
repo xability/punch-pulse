@@ -11,7 +11,7 @@ public class ScoreManager : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip playerScoreIs;
     public AudioClip enemyScoreIs;
-
+    public AudioClip moreThan100;
     public static int Score { get; private set; }
     public TextMeshProUGUI scoreText;
     public static int EnemyScore { get; private set; }
@@ -158,7 +158,7 @@ public class ScoreManager : MonoBehaviour
         yield return new WaitForSeconds(playerScoreIs.length);
 
         string scoreString = Score.ToString();
-        if (Score < 86)
+        if (Score < 101)
         {
             Debug.Log("Score: " + Score);
             audioSource.PlayOneShot(numberClips[Score]);
@@ -166,7 +166,8 @@ public class ScoreManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Number audio clip not found for digit: " + Score);  
+            Debug.LogWarning("Number audio clip not found for digit: " + Score);
+            audioSource.PlayOneShot(moreThan100);
         }
 
         /*
@@ -198,7 +199,7 @@ public class ScoreManager : MonoBehaviour
         yield return new WaitForSeconds(enemyScoreIs.length);
 
         string scoreString = EnemyScore.ToString();
-        if (EnemyScore < 86)
+        if (EnemyScore < 101)
         {
             Debug.Log("Enemy Score: " + EnemyScore);
             audioSource.PlayOneShot(numberClips[EnemyScore]);
@@ -207,6 +208,7 @@ public class ScoreManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Number audio clip not found for digit: " + EnemyScore);
+            audioSource.PlayOneShot(moreThan100);
         }
         isAnnouncingScore = false;
     }

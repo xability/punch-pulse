@@ -2787,6 +2787,7 @@ MonoBehaviour:
   audioSource: {fileID: 2042691871}
   playerScoreIs: {fileID: 8300000, guid: bf1b16fb25f505441966313253989e64, type: 3}
   enemyScoreIs: {fileID: 8300000, guid: 21e6ed571738aa14c9dccc3166b6e11c, type: 3}
+  moreThan100: {fileID: 8300000, guid: 2e1580020c30387439257796fa828ff3, type: 3}
   scoreText: {fileID: 743237385}
   enemyScoreText: {fileID: 579523295}
   rightButtonAction: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f,
@@ -2824,8 +2825,9 @@ MonoBehaviour:
   enemyObject: {fileID: 1848126064}
   safeDistance: 1.5
   modelAnimator: {fileID: 1848126072}
-  roundsManager: {fileID: 0}
-  ringMapping: {fileID: 0}
+  roundsManager: {fileID: 1414789647}
+  ringMapping: {fileID: 2047914139}
+  gameModuleManager: {fileID: 1414789649}
   minDistanceFromPlayer: 1.5
   maxDistanceFromPlayer: 3
 --- !u!1 &301230425
@@ -12382,6 +12384,7 @@ MonoBehaviour:
   modelAnimator: {fileID: 1848126072}
   roundsManager: {fileID: 0}
   ringMapping: {fileID: 0}
+  gameModuleManager: {fileID: 0}
   minDistanceFromPlayer: 3
   maxDistanceFromPlayer: 5
 --- !u!4 &1848126075 stripped

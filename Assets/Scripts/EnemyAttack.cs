@@ -37,6 +37,7 @@ public class EnemyAttackBehavior : MonoBehaviour
     private AccessibleMenu.DifficultyLevel currentDifficulty;
     public RoundsManager roundsManager;
     public BoxingRingMapping ringMapping;
+    public GameModuleManager gameModuleManager;
 
     private static int playerDuckCount = 0;
     private static int playerHitCount = 0;
@@ -217,18 +218,26 @@ public class EnemyAttackBehavior : MonoBehaviour
 
         // Move enemy to new location right after punch animation is done.
         // Move the enemy to a random position after the attack
-        Vector3 newPosition = GetRandomPositionInFrontOfPlayer();
-
-        // Use the existing MoveEnemyInFront script to move the enemy
-        float distanceToTarget1;
-        do
+        if (!gameModuleManager.IsHardSurvivalMode)
         {
-            distanceToTarget1 = MoveEnemyInFront.MoveEnemyTowardsTarget(newPosition);
-            yield return null;
-        } while (distanceToTarget1 > 1f);
+            Vector3 newPosition = GetRandomPositionInFrontOfPlayer();
 
-        Debug.Log("Enemy moved to new position after attack");
+            // Use the existing MoveEnemyInFront script to move the enemy
+            float distanceToTarget1;
+            do
+            {
+                distanceToTarget1 = MoveEnemyInFront.MoveEnemyTowardsTarget(newPosition);
+                yield return null;
+            } while (distanceToTarget1 > 1f);
 
+            Debug.Log("Enemy moved to new position after attack");
+        }
+        else
+        {
+            Debug.Log("In survival mode, teleporting enemy after attack");
+            roundsManager.TeleportEnemyPositionSurvivalMode();
+
+        }
     }
 
     void TriggerPunchAnimation()

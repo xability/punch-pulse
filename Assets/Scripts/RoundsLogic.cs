@@ -134,6 +134,12 @@ public class RoundsManager : MonoBehaviour
                 yield return new WaitForSeconds(difficultIncreased.length);
             }
         }
+        else if (gameModuleManager.IsHardSurvivalMode)
+        {
+            // Teleport the enemy to a random position at the start of each survival round
+            AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Hard);
+            Debug.Log("Difficulty set to Hard for Survival mode");
+        }
 
 
         // Play round start audio
@@ -276,6 +282,28 @@ public class RoundsManager : MonoBehaviour
 
         return randomPosition;
     }
+
+    public void TeleportEnemyPositionSurvivalMode()
+    {
+        if (enemyTransform == null)
+        {
+            Debug.LogWarning("Cannot reset enemy position: Enemy transform not assigned!");
+            return;
+        }
+
+        Vector3 newPosition = GenerateRandomPositionInRing();
+
+        // The rotation is already set in GenerateRandomPositionInRing, but we can ensure it here as well
+        Vector3 directionToPlayer = playerTransform.position - newPosition;
+        directionToPlayer.y = 0; // Ignore vertical difference
+        Quaternion newRotation = Quaternion.LookRotation(directionToPlayer);
+
+        enemyTransform.position = newPosition;
+        enemyTransform.rotation = newRotation;
+
+        Debug.Log("Enemy position reset to: " + newPosition);
+    }
+
 
 }
 
