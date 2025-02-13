@@ -9524,6 +9524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
 --- !u!4 &1167029021
 Transform:
   m_ObjectHideFlags: 0
@@ -10739,8 +10741,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e2c05ac34ac8d4da80b775cf5d97d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundDuration: 10
-  roundBreakDuration: 30
+  roundDuration: 30
+  roundBreakDuration: 120
   totalRounds: 6
   warmUpStartAudio: {fileID: 8300000, guid: 7097f9535a7a24340bf7c2a4bcf3c07a, type: 3}
   roundStartAudios:
