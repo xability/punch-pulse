@@ -79,6 +79,7 @@ public class RoundsManager : MonoBehaviour
     private IEnumerator RoundSequenceRoutine()
     {
         // Round 0: Warm-up round
+        isBreakOngoing = false;
         yield return StartCoroutine(HandleOneRound("Warm-Up", 0));
 
         // Full rounds
