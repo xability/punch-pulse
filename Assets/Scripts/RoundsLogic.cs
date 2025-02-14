@@ -33,7 +33,7 @@ public class RoundsManager : MonoBehaviour
     public GameObject gameOverUI;
     public ScoreManager scoreManager;
     public GameModuleManager gameModuleManager;
-    public bool isBreakOngoing = false;
+    public bool isRoundOngoing = true;
 
     public BoxingRingMapping ringMapping;
     public Transform enemyTransform; // Reference to the enemy's transform
@@ -79,7 +79,7 @@ public class RoundsManager : MonoBehaviour
     private IEnumerator RoundSequenceRoutine()
     {
         // Round 0: Warm-up round
-        isBreakOngoing = false;
+        isRoundOngoing = true;
         yield return StartCoroutine(HandleOneRound("Warm-Up", 0));
 
         // Full rounds
@@ -113,7 +113,7 @@ public class RoundsManager : MonoBehaviour
     private IEnumerator HandleOneRound(string roundName, int roundNumber)
     {
 
-        isBreakOngoing = false;
+        isRoundOngoing = true;
         AccessibleMenu.IsOffensiveMode = true;
 
         // Check if the game mode is Level Progression
@@ -153,7 +153,7 @@ public class RoundsManager : MonoBehaviour
 
         Debug.Log(roundName + " ended.");
 
-        isBreakOngoing = true;
+        isRoundOngoing = false;
         AccessibleMenu.IsOffensiveMode = false;
 
         // Play round end audio
@@ -181,8 +181,6 @@ public class RoundsManager : MonoBehaviour
             // For the last round, play end-of-round audios without a time limit
             yield return StartCoroutine(PlayEndOfRoundAudios());
         }
-
-        isBreakOngoing = false;
     }
 
     private IEnumerator PlayRoundStartAudio(int roundNumber)
