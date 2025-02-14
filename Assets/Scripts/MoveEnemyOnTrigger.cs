@@ -87,7 +87,11 @@ public class MoveEnemyInFront : MonoBehaviour
     {
         SetTargetPositionInFrontOfPlayer();
         rightTriggerPressCount++;
-        shouldMove = true;  // Start moving the enemy
+        if (currentDifficulty == AccessibleMenu.DifficultyLevel.Easy || currentDifficulty == AccessibleMenu.DifficultyLevel.Medium)
+        {
+            shouldMove = true;
+        }
+        // Start moving the enemy
 
     }
 

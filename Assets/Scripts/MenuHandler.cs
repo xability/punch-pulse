@@ -96,7 +96,8 @@ public class AccessibleMenu : MonoBehaviour
     {
         Easy,
         Medium,
-        Hard
+        Hard,
+        UltraHard
     }
 
     public int currentLTCount;

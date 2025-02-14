@@ -101,6 +101,12 @@ public class EnemyAttackBehavior : MonoBehaviour
                 cooldownAfterAttack = 1.5f;
                 reflex_time_duration = 1.3f;
                 break;
+            case AccessibleMenu.DifficultyLevel.UltraHard:
+                minAttackInterval = 0.1f;
+                maxAttackInterval = 1.1f;
+                cooldownAfterAttack = 0.5f;
+                reflex_time_duration = 0.5f;
+                break;
         }
     }
 
@@ -203,7 +209,6 @@ public class EnemyAttackBehavior : MonoBehaviour
         {
             // If the player is not safe, reduce score
             audioSource.PlayOneShot(attackHitSound);
-
             ScoreManager.AddEnemyScore(1);
             ScoreManager.DecrementScore(5);
             playerHitCount++;
