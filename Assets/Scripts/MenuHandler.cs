@@ -48,7 +48,9 @@ public class AccessibleMenu : MonoBehaviour
 
     [Header("Button Hover Sounds")]
     public AudioClip difficultyEasyHoverSound;
+    public AudioClip difficultyMediumHoverSound;
     public AudioClip difficultyHardHoverSound;
+    public AudioClip difficultyUltraHardHoverSound;
     public AudioClip tutorialHoverSound;
     public AudioClip boxingOffensiveHoverSound;
     public AudioClip boxingDefensiveHoverSound;
@@ -58,7 +60,6 @@ public class AccessibleMenu : MonoBehaviour
     public AudioClip enemyAudioCueOffSound;
     public AudioClip resumeHoverSound;
     public AudioClip pauseMenuActive;
-    public AudioClip difficultyMediumHoverSound;
 
 
     [Header("UI")]
@@ -178,7 +179,6 @@ public class AccessibleMenu : MonoBehaviour
     void SetupButton(Button button, UnityEngine.Events.UnityAction action, string buttonID)
     {
         button.onClick.AddListener(action);
-        button.onClick.AddListener(PlayClickSound);
 
         // Add EventTrigger component if it doesn't exist
         EventTrigger eventTrigger = button.gameObject.GetComponent<EventTrigger>();
@@ -332,7 +332,6 @@ public class AccessibleMenu : MonoBehaviour
         switch (buttonID)
         {
             case "difficulty":
-                Debug.Log("Hovering over difficulty button, : " + isFirstActivation);
                 if (!isFirstActivation)
                 {
                     switch (currentDifficulty)
@@ -345,6 +344,9 @@ public class AccessibleMenu : MonoBehaviour
                             break;
                         case DifficultyLevel.Hard:
                             audioSource.PlayOneShot(difficultyHardHoverSound);
+                            break;
+                        case DifficultyLevel.UltraHard:
+                            audioSource.PlayOneShot(difficultyUltraHardHoverSound);
                             break;
                     }
                 }
@@ -365,11 +367,6 @@ public class AccessibleMenu : MonoBehaviour
                 audioSource.PlayOneShot(hoverSound);
                 break;
         }
-    }
-
-    void PlayClickSound()
-    {
-        //audioSource.PlayOneShot(clickSound);
     }
 
     void SendHapticImpulse(XRBaseController controller, float amplitude, float duration)
@@ -438,25 +435,31 @@ public class AccessibleMenu : MonoBehaviour
 
     void ToggleDifficulty()
     {
-        switch (currentDifficulty)
+        if (currentDifficulty != DifficultyLevel.UltraHard)
         {
-            case DifficultyLevel.Easy:
-                currentDifficulty = DifficultyLevel.Medium;
-                break;
-            case DifficultyLevel.Medium:
-                currentDifficulty = DifficultyLevel.Hard;
-                break;
-            case DifficultyLevel.Hard:
-                currentDifficulty = DifficultyLevel.Easy;
-                break;
+            switch (currentDifficulty)
+            {
+                case DifficultyLevel.Easy:
+                    currentDifficulty = DifficultyLevel.Medium;
+                    break;
+                case DifficultyLevel.Medium:
+                    currentDifficulty = DifficultyLevel.Hard;
+                    break;
+                case DifficultyLevel.Hard:
+                    currentDifficulty = DifficultyLevel.Easy;
+                    break;
+            }
+            UpdateButtonTexts();
         }
-        UpdateButtonTexts();
-        PlayClickSound();
+        else
+        {
+            audioSource.PlayOneShot(difficultyUltraHardHoverSound);
+            UpdateButtonTexts();
+        }
     }
 
     void PlayTutorial()
     {
-        PlayClickSound();
 
         if (tutorialManager != null)
         {
@@ -473,7 +476,6 @@ public class AccessibleMenu : MonoBehaviour
     {
         isOffensiveMode = !isOffensiveMode;
         UpdateButtonTexts();
-        PlayClickSound();
     }
 
 
@@ -553,6 +555,10 @@ public class AccessibleMenu : MonoBehaviour
             case DifficultyLevel.Hard:
                 difficultyText.text = "Difficulty: Hard";
                 break;
+            case DifficultyLevel.UltraHard:
+                difficultyText.text = "Difficulty: UltraHard";
+
+                break;
         }
         boxingModeText.text = isOffensiveMode ? "Ducking: On" : "Ducking: Off";
         scoreNarrationText.text = scoreNarration ? "Score Narration: On" : "Score Narration: Off";
@@ -600,6 +606,14 @@ public class AccessibleMenu : MonoBehaviour
         {
             Instance.UpdateButtonTexts();
         }
+    }
+
+    void GreyOutDifficultyButton()
+    {
+        difficultyButton.interactable = false;
+        ColorBlock colors = difficultyButton.colors;
+        colors.disabledColor = Color.grey;
+        difficultyButton.colors = colors;
     }
 }
 

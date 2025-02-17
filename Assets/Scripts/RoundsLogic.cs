@@ -138,7 +138,7 @@ public class RoundsManager : MonoBehaviour
         else if (gameModuleManager.IsHardSurvivalMode)
         {
             // Teleport the enemy to a random position at the start of each survival round
-            AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Hard);
+            AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.UltraHard);
             Debug.Log("Difficulty set to Hard for Survival mode");
         }
 

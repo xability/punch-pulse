@@ -17,7 +17,7 @@ public class ScoreManager : MonoBehaviour
     public static int EnemyScore { get; private set; }
     public TextMeshProUGUI enemyScoreText;
     public InputActionReference rightButtonAction;
-    public static RoundsManager roundsManager;
+    public RoundsManager roundsManager;
 
 
     private bool isAnnouncingScore = false; // New flag to track if score is being announced
@@ -57,6 +57,12 @@ public class ScoreManager : MonoBehaviour
     {
         UpdateScoreDisplay();
         UpdateEnemyScoreDisplay();
+
+        if (roundsManager == null)
+        {
+            Debug.LogWarning("RoundsManager not assigned in the inspector!");
+        }
+
     }
 
     private static void CheckAndUpdateDifficulty()
@@ -84,6 +90,7 @@ public class ScoreManager : MonoBehaviour
         }*/
     }
 
+    /*    
     public static void AddScore(int amount)
     {
         
@@ -107,6 +114,54 @@ public class ScoreManager : MonoBehaviour
         //CheckAndUpdateDifficulty();
     }
 
+    public static void AddEnemyScore(int amount)
+    {
+         // Debug.Log("Round is ongoing");
+            EnemyScore += amount;
+            Instance.UpdateEnemyScoreDisplay();
+        
+    }*/
+
+    public static void AddScore(int amount)
+    {
+        if (Instance.roundsManager != null && Instance.roundsManager.isRoundOngoing)
+        {
+            Score += amount;
+            Instance.UpdateScoreDisplay();
+        } 
+        else if (Instance.roundsManager == null)
+        {
+            Debug.LogWarning("RoundsManager not assigned in the inspector!");
+        }
+    }
+
+    public static void DecrementScore(int amount)
+    {
+        if (Instance.roundsManager != null && Instance.roundsManager.isRoundOngoing)
+        {
+            Score = Mathf.Max(0, Score - amount);
+            Instance.UpdateScoreDisplay();
+        }
+        else if(Instance.roundsManager == null)
+        {
+            Debug.LogWarning("RoundsManager not assigned in the inspector!");
+
+        }
+    }
+
+    public static void AddEnemyScore(int amount)
+    {
+        if (Instance.roundsManager != null && Instance.roundsManager.isRoundOngoing)
+        {
+            EnemyScore += amount;
+            Instance.UpdateEnemyScoreDisplay();
+        }
+        else if(Instance.roundsManager == null)
+        {
+            Debug.LogWarning("RoundsManager not assigned in the inspector!");
+        }
+    }
+
     private void UpdateScoreDisplay()
     {
         if (scoreText != null)
@@ -114,15 +169,6 @@ public class ScoreManager : MonoBehaviour
             scoreText.text = Score.ToString();
         }
     }
-
-    public static void AddEnemyScore(int amount)
-    {
-         // Debug.Log("Round is ongoing");
-            EnemyScore += amount;
-            Instance.UpdateEnemyScoreDisplay();
-        
-    }
-
 
     private void UpdateEnemyScoreDisplay()
     {

@@ -34,6 +34,7 @@ public class MoveEnemyInFront : MonoBehaviour
 
     private AccessibleMenu.DifficultyLevel currentDifficulty;
 
+
     // Public static method to get the count
     public static int GetRightTriggerPressCount()
     {
@@ -87,7 +88,7 @@ public class MoveEnemyInFront : MonoBehaviour
     {
         SetTargetPositionInFrontOfPlayer();
         rightTriggerPressCount++;
-        if (currentDifficulty == AccessibleMenu.DifficultyLevel.Easy || currentDifficulty == AccessibleMenu.DifficultyLevel.Medium)
+        if (AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Easy || AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Medium)
         {
             shouldMove = true;
         }
@@ -137,9 +138,11 @@ public class MoveEnemyInFront : MonoBehaviour
         {
             float distanceToTarget;
             float stopDistance;
-
-            if (currentDifficulty == AccessibleMenu.DifficultyLevel.Hard)
+            Debug.Log("Current Difficulty: " + AccessibleMenu.CurrentDifficulty);
+            Debug.Log("Moving the enemy after pressing right trigger");
+            if (AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Hard || AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.UltraHard)
             {
+                // should not be in use after changing right trigger functionality
                 distanceToTarget = MoveEnemyTowardsTargetHardMode(targetPosition);
                 stopDistance = 1.5f;
             }

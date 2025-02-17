@@ -34,7 +34,7 @@ public class PlayAudioOnBoundaryCollision : MonoBehaviour
         // Check if the player has re-entered the collision box
         if (other.CompareTag("Ring"))
         {
-            Debug.Log("Here");
+            // Debug.Log("Here");
             StopExitSound();
         }
     }
