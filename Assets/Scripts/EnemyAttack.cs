@@ -223,26 +223,28 @@ public class EnemyAttackBehavior : MonoBehaviour
 
         // Move enemy to new location right after punch animation is done.
         // Move the enemy to a random position after the attack
-        if (!gameModuleManager.IsHardSurvivalMode)
-        {
-            Vector3 newPosition = GetRandomPositionInFrontOfPlayer();
+        
+        Vector3 newPosition = GetRandomPositionInFrontOfPlayer();
 
-            // Use the existing MoveEnemyInFront script to move the enemy
+        // Use the existing MoveEnemyInFront script to move the enemy
+
+        if (AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.UltraHard)
+        {
+            Debug.Log("Ultra hard survival mode, teleporting enemy after attack");
+            roundsManager.TeleportEnemyPositionSurvivalMode();
+        }
+        else
+        {
             float distanceToTarget1;
             do
             {
                 distanceToTarget1 = MoveEnemyInFront.MoveEnemyTowardsTarget(newPosition);
                 yield return null;
-            } while (distanceToTarget1 > 0.5f);
+            } while (distanceToTarget1 > 1f);
 
             Debug.Log("Enemy moved to new position after attack");
         }
-        else
-        {
-            Debug.Log("In survival mode, teleporting enemy after attack");
-            roundsManager.TeleportEnemyPositionSurvivalMode();
 
-        }
     }
 
     void TriggerPunchAnimation()
@@ -343,7 +345,7 @@ public class EnemyAttackBehavior : MonoBehaviour
         float randomDistance = Random.Range(minDistanceFromPlayer, maxDistanceFromPlayer);
 
         // Calculate a random angle within a 180-degree arc in front of the player
-        float randomAngle = Random.Range(-90f, 90f);
+        float randomAngle = Random.Range(-120f, 120f);
 
         // Calculate the forward direction of the player, ignoring vertical rotation
         Vector3 playerForward = playerCamera.transform.forward;
@@ -357,12 +359,16 @@ public class EnemyAttackBehavior : MonoBehaviour
         Vector3 newPosition = playerCamera.transform.position + randomDirection * randomDistance;
         newPosition.y = initialYPosition; // Keep the enemy's y-coordinate fixed
 
-        // Check if the new position is outside the ring
-        if (Mathf.Abs(newPosition.x) > ringMapping.xLong / 2 || Mathf.Abs(newPosition.z) > ringMapping.yWide / 2)
+        // Check if the new position is within the specified rectangle
+        if (newPosition.x < -3f || newPosition.x > 3f || newPosition.z < -3f || newPosition.z > 3f)
         {
-            // If outside the ring, reset the enemy position
-            Debug.Log("New position is outside the ring, resetting enemy to random position");
-            return roundsManager.GenerateRandomPositionInRing();
+            // If outside the rectangle, reset to the specified position
+            newPosition = new Vector3(0.17f, 0.9f, 1.3f);
+            Debug.Log("Position outside bounds. Reset to: " + newPosition);
+        }
+        else
+        {
+            Debug.Log("New position: " + newPosition);
         }
 
         return newPosition;

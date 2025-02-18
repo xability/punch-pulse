@@ -42,6 +42,7 @@ public class RoundsManager : MonoBehaviour
     private Quaternion initialEnemyRotation; // To store the initial rotation
     public AudioClip difficultIncreased;
     public AudioClip boxingBellStart;
+    public Camera playerCamera; // The player's camera (assign the main VR camera)
 
 
     void Start()
@@ -139,7 +140,7 @@ public class RoundsManager : MonoBehaviour
         {
             // Teleport the enemy to a random position at the start of each survival round
             AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.UltraHard);
-            Debug.Log("Difficulty set to Hard for Survival mode");
+            //Debug.Log("Difficulty set to Hard for Survival mode");
         }
 
 
@@ -255,31 +256,46 @@ public class RoundsManager : MonoBehaviour
         }
     }
 
-    public Vector3 GenerateRandomPositionInRing()
+    private Vector3 GetRandomPositionInRing()
     {
-        if (ringMapping == null || enemyTransform == null || playerTransform == null)
+        if (playerCamera == null)
         {
-            Debug.LogWarning("RingMapping, EnemyTransform, or PlayerTransform not assigned!");
-            return Vector3.zero;
+            Debug.LogWarning("Player Camera is not assigned!");
+            return transform.position;
         }
 
-        // Generate a random position within the ring
-        float randomX = Random.Range(-ringMapping.xLong / 2f, ringMapping.xLong / 2f);
-        float randomZ = Random.Range(-ringMapping.yWide / 2f, ringMapping.yWide / 2f);
-        Vector3 randomPosition = new Vector3(randomX, enemyTransform.position.y, randomZ);
+        Debug.Log("Attack done, finding new position to move to");
+        // Get a random distance within the specified range
+        float randomDistance = 2f;
 
-        // Move the enemy to the random position
-        enemyTransform.position = randomPosition;
+        // Calculate a random angle within a 180-degree arc in front of the player
+        float randomAngle = Random.Range(-180f, 180f);
 
-        // Make the enemy face the player
-        Vector3 directionToPlayer = playerTransform.position - enemyTransform.position;
-        directionToPlayer.y = 0; // Ignore vertical difference
-        Quaternion rotationToPlayer = Quaternion.LookRotation(directionToPlayer);
-        enemyTransform.rotation = rotationToPlayer;
+        // Calculate the forward direction of the player, ignoring vertical rotation
+        Vector3 playerForward = playerCamera.transform.forward;
+        playerForward.y = 0;
+        playerForward.Normalize();
 
-        Debug.Log("Enemy moved to random position: " + randomPosition);
+        // Rotate the forward vector by the random angle
+        Vector3 randomDirection = Quaternion.Euler(0, randomAngle, 0) * playerForward;
 
-        return randomPosition;
+        // Calculate the new position
+        Vector3 newPosition = playerCamera.transform.position + randomDirection * randomDistance;
+        newPosition.y = initialEnemyPosition.y; // Keep the enemy's y-coordinate fixed
+
+        // Check if the new position is within the specified rectangle
+        if (newPosition.x < -3f || newPosition.x > 3f || newPosition.z < -3f || newPosition.z > 3f)
+        {
+            // If outside the rectangle, reset to the specified position
+            newPosition = new Vector3(0.17f, 0.9f, 1.3f);
+            Debug.Log("Position outside bounds. Reset to: " + newPosition);
+        }
+        else
+        {
+            Debug.Log("New position: " + newPosition);
+        }
+
+        return newPosition;
     }
 
     public void TeleportEnemyPositionSurvivalMode()
@@ -290,19 +306,22 @@ public class RoundsManager : MonoBehaviour
             return;
         }
 
-        Vector3 newPosition = GenerateRandomPositionInRing();
+        Vector3 newPosition = GetRandomPositionInRing();
 
-        // The rotation is already set in GenerateRandomPositionInRing, but we can ensure it here as well
-        Vector3 directionToPlayer = playerTransform.position - newPosition;
-        directionToPlayer.y = 0; // Ignore vertical difference
-        Quaternion newRotation = Quaternion.LookRotation(directionToPlayer);
-
+        // Teleport the enemy to the new position
         enemyTransform.position = newPosition;
-        enemyTransform.rotation = newRotation;
 
-        Debug.Log("Enemy position reset to: " + newPosition);
+        // Calculate the direction from the enemy to the player
+        Vector3 directionToPlayer = playerCamera.transform.position - newPosition;
+        directionToPlayer.y = 0; // Ignore vertical difference
+
+        if (directionToPlayer != Vector3.zero)
+        {
+            Quaternion newRotation = Quaternion.LookRotation(directionToPlayer);
+            enemyTransform.rotation = newRotation;
+        }
+
+        Debug.Log("Enemy teleported to: " + newPosition + " and is facing the player.");
     }
-
-
 }
 
