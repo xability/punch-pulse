@@ -153,8 +153,8 @@ public class DirectionHelper : MonoBehaviour
         {
             if (AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Easy || AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Medium)
             {
-                   audioSource.PlayOneShot(EnemyAt);
-                    yield return new WaitForSeconds(EnemyAt.length);
+                audioSource.PlayOneShot(EnemyAt);
+                yield return new WaitForSeconds(EnemyAt.length);
             }
              
             audioSource.PlayOneShot(clockDirectionClips[clockDirectionIndex]);
