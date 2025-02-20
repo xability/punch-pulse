@@ -14,9 +14,11 @@ public class DirectionHelper : MonoBehaviour
 
     // Add Audio Source and Audio Clips
     public AudioSource audioSource;
+    public AudioClip EnemyAt;
     public AudioClip[] clockDirectionClips; // 12 audio clips for each hour direction
     public AudioClip[] stepClips; // Audio clips representing the number of steps away (e.g. 1 step, 2 steps, etc.)
 
+    private AccessibleMenu.DifficultyLevel currentDifficulty;
     private bool isAudioPlaying = false;
 
     // Static variable to count trigger presses
@@ -149,6 +151,12 @@ public class DirectionHelper : MonoBehaviour
         // Play clock direction audio first
         if (clockDirectionClips != null && clockDirectionIndex >= 0 && clockDirectionIndex < clockDirectionClips.Length)
         {
+            if (AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Easy || AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Medium)
+            {
+                   audioSource.PlayOneShot(EnemyAt);
+                    yield return new WaitForSeconds(EnemyAt.length);
+            }
+             
             audioSource.PlayOneShot(clockDirectionClips[clockDirectionIndex]);
 
             // Wait for the clock direction clip to finish playing

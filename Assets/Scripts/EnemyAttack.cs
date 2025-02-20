@@ -105,7 +105,7 @@ public class EnemyAttackBehavior : MonoBehaviour
                 minAttackInterval = 0.1f;
                 maxAttackInterval = 1.1f;
                 cooldownAfterAttack = 0.5f;
-                reflex_time_duration = 0.5f;
+                reflex_time_duration = 1f;
                 break;
         }
     }
