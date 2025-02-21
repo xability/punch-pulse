@@ -30,10 +30,20 @@ public class GameModuleManager : MonoBehaviour
     public GameMode CurrentMode
     {
         get { return currentMode; }
-        set { currentMode = value; }
+        set
+        {
+            currentMode = value;
+            OnGameModeChanged();
+        }
     }
 
     public bool IsLevelProgressionMode => currentMode == GameMode.LevelProgression;
     public bool IsManualMode => currentMode == GameMode.Manual;
     public bool IsHardSurvivalMode => currentMode == GameMode.HardSurvival;
+
+    private void OnGameModeChanged()
+    {
+        // You can add any logic here that needs to be executed when the game mode changes
+        Debug.Log($"Game mode changed to: {currentMode}");
+    }
 }

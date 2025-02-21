@@ -77,43 +77,52 @@ public class RoundsManager : MonoBehaviour
         StartCoroutine(RoundSequenceRoutine());
     }
 
-    private IEnumerator RoundSequenceRoutine()
+    private IEnumerator HandleAllGameModes()
     {
-        // Round 0: Warm-up round
-        isRoundOngoing = true;
-        yield return StartCoroutine(HandleOneRound("Warm-Up", 0));
+        // LevelProgression mode (including warm-up)
+        gameModuleManager.CurrentMode = GameModuleManager.GameMode.LevelProgression;
+        yield return StartCoroutine(RoundSequenceRoutine(true));
 
-        // Full rounds
+        yield return StartCoroutine(GameModeBreak());
+
+        // Manual mode
+        gameModuleManager.CurrentMode = GameModuleManager.GameMode.Manual;
+        yield return StartCoroutine(RoundSequenceRoutine(false));
+
+        yield return StartCoroutine(GameModeBreak());
+
+        // HardSurvival mode
+        gameModuleManager.CurrentMode = GameModuleManager.GameMode.HardSurvival;
+        yield return StartCoroutine(RoundSequenceRoutine(false));
+
+        ShowGameOver();
+    }
+
+    private IEnumerator RoundSequenceRoutine(bool includeWarmUp)
+    {
+        if (includeWarmUp)
+        {
+            isRoundOngoing = false;
+            AccessibleMenu.IsOffensiveMode = false;
+
+            yield return StartCoroutine(HandleOneRound("Warm-Up", 0));
+        }
+
         for (int roundIndex = 1; roundIndex <= totalRounds; roundIndex++)
         {
             yield return StartCoroutine(HandleOneRound("Round " + roundIndex, roundIndex));
         }
-
-        // All rounds (including warm-up) are finished, show Game Over
-        ShowGameOver();
     }
 
-    private void ShowGameOver()
+    private IEnumerator GameModeBreak()
     {
-        // Display Game Over UI
-        if (gameOverUI != null)
-        {
-            gameOverUI.SetActive(true);
-        }
-
-        Debug.Log("All rounds completed. Game Over.");
+        Debug.Log("Game mode break. Duration: 60 seconds.");
+        yield return new WaitForSeconds(60f);
     }
 
-    // Example method to restart the game (attach to a UI button if desired)
-    public void RestartGame()
-    {
-        // Example: Reload the active scene
-
-    }
 
     private IEnumerator HandleOneRound(string roundName, int roundNumber)
     {
-
         isRoundOngoing = true;
         AccessibleMenu.IsOffensiveMode = true;
 
@@ -183,6 +192,53 @@ public class RoundsManager : MonoBehaviour
             yield return StartCoroutine(PlayEndOfRoundAudios());
         }
     }
+
+    private void ShowGameOver()
+    {
+        // Display Game Over UI
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(true);
+        }
+
+        Debug.Log("All rounds completed. Game Over.");
+    }
+
+    // Example method to restart the game (attach to a UI button if desired)
+    public void RestartGame()
+    {
+        // Example: Reload the active scene
+
+    }
+
+    private IEnumerator HandleOneRound(string roundName, int roundNumber)
+    {
+
+
+        if (gameModuleManager.IsLevelProgressionMode)
+        {
+            // Existing level progression logic
+        }
+        else if (gameModuleManager.IsManualMode)
+        {
+            // Manual mode logic (if any)
+        }
+        else if (gameModuleManager.IsHardSurvivalMode)
+        {
+            AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.UltraHard);
+            TeleportEnemyPositionSurvivalMode();
+        }
+
+        // Rest of the existing round logic
+        // ...
+
+        bool isLastRound = (roundNumber == totalRounds);
+        if (!isLastRound)
+        {
+            // Existing break logic
+        }
+    }
+
 
     private IEnumerator PlayRoundStartAudio(int roundNumber)
     {
