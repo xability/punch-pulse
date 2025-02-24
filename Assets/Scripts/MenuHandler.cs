@@ -593,7 +593,7 @@ public class AccessibleMenu : MonoBehaviour
 
     }
 
-    void ResetLeftTriggerCount()
+    public static void ResetLeftTriggerCount()
     {
         DirectionHelper.ResetTriggerPressCount();
         MoveEnemyInFront.ResetTriggerPressCount();

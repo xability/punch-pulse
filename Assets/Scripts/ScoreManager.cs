@@ -162,6 +162,15 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    public static void ResetScores()
+    {
+        // Reset the scores on every game mode break
+        Score = 0;
+        EnemyScore = 0;
+        Instance.UpdateScoreDisplay();
+        Instance.UpdateEnemyScoreDisplay();
+    }
+
     private void UpdateScoreDisplay()
     {
         if (scoreText != null)

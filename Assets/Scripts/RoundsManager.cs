@@ -74,7 +74,7 @@ public class RoundsManager : MonoBehaviour
             gameOverUI.SetActive(false);
 
         // Begin the coroutine that handles round logic
-        StartCoroutine(RoundSequenceRoutine());
+        StartCoroutine(RoundSequenceRoutine(true));
     }
 
     private IEnumerator HandleAllGameModes()
@@ -118,6 +118,9 @@ public class RoundsManager : MonoBehaviour
     {
         Debug.Log("Game mode break. Duration: 60 seconds.");
         yield return new WaitForSeconds(60f);
+        // Save the stats and scores to show later
+        AccessibleMenu.ResetLeftTriggerCount();
+        ScoreManager.ResetScores();
     }
 
 
@@ -144,6 +147,11 @@ public class RoundsManager : MonoBehaviour
                 audioSource.PlayOneShot(difficultIncreased);
                 yield return new WaitForSeconds(difficultIncreased.length);
             }
+        }
+        else if (gameModuleManager.IsManualMode)
+        {
+            // Set difficulty based on the current game mode
+            Debug.Log("Difficulty set to Medium for Manual mode");
         }
         else if (gameModuleManager.IsHardSurvivalMode)
         {
@@ -209,34 +217,6 @@ public class RoundsManager : MonoBehaviour
     {
         // Example: Reload the active scene
 
-    }
-
-    private IEnumerator HandleOneRound(string roundName, int roundNumber)
-    {
-
-
-        if (gameModuleManager.IsLevelProgressionMode)
-        {
-            // Existing level progression logic
-        }
-        else if (gameModuleManager.IsManualMode)
-        {
-            // Manual mode logic (if any)
-        }
-        else if (gameModuleManager.IsHardSurvivalMode)
-        {
-            AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.UltraHard);
-            TeleportEnemyPositionSurvivalMode();
-        }
-
-        // Rest of the existing round logic
-        // ...
-
-        bool isLastRound = (roundNumber == totalRounds);
-        if (!isLastRound)
-        {
-            // Existing break logic
-        }
     }
 
 
