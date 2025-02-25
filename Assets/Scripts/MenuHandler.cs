@@ -615,6 +615,47 @@ public class AccessibleMenu : MonoBehaviour
         colors.disabledColor = Color.grey;
         difficultyButton.colors = colors;
     }
+
+
+    public void ClearCurrentStats()
+    {
+        // Save current stats (you may want to implement a proper saving mechanism)
+        GetGameStats();
+
+        // Clear all current values
+        currentLTCount = 0;
+        currentRTCount = 0;
+        currentDuckCount = 0;
+        currentPlayerHitCount = 0;
+        currentPlayerHeadPunchCount = 0;
+        currentPlayerBodyPunchCount = 0;
+
+        // Reset counters in other scripts
+        DirectionHelper.ResetTriggerPressCount();
+        MoveEnemyInFront.ResetTriggerPressCount();
+
+        // Update UI
+        UpdateStats(currentLTCount, currentRTCount, currentDuckCount, currentPlayerHitCount, currentPlayerHeadPunchCount, currentPlayerBodyPunchCount);
+
+        Debug.Log("All current stats have been cleared.");
+    }
+
+    public void UpdateStats(string currentGameMode, int playerScore, int enemyScore)
+    {
+        GameStats currentStats = GameStatsManager.GetStats(currentGameMode);
+
+        currentStats.leftTriggerCount = currentLTCount;
+        currentStats.rightTriggerCount = currentRTCount;
+        currentStats.duckCount = currentDuckCount;
+        currentStats.playerHitCount = currentPlayerHitCount;
+        currentStats.playerHeadPunchCount = currentPlayerHeadPunchCount;
+        currentStats.playerBodyPunchCount = currentPlayerBodyPunchCount;
+        currentStats.playerScore = playerScore;
+        currentStats.enemyScore = enemyScore;
+
+        GameStatsManager.SaveStats(currentGameMode, currentStats);
+
+    }
 }
 
 /*

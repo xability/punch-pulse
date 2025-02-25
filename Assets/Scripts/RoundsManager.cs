@@ -19,6 +19,7 @@ public class RoundsManager : MonoBehaviour
 
     [Header("Round Start Audio Clips")]
     public AudioClip warmUpStartAudio;
+    public AudioClip warmUpExercises;
     public AudioClip[] roundStartAudios; // Array for round 1 to 6 start audios
 
     [Header("Round End Audio Clips")]
@@ -44,6 +45,16 @@ public class RoundsManager : MonoBehaviour
     public AudioClip boxingBellStart;
     public Camera playerCamera; // The player's camera (assign the main VR camera)
 
+    public AccessibleMenu menu;
+
+    public int currentLTCount;
+    public int currentRTCount;
+    public int currentDuckCount;
+    public int currentPlayerHitCount;
+    public int currentPlayerHeadPunchCount;
+    public int currentPlayerBodyPunchCount;
+    public int gameModePlayerScore;
+    public int gameModeEnemyScore;
 
     void Start()
     {
@@ -84,16 +95,25 @@ public class RoundsManager : MonoBehaviour
         yield return StartCoroutine(RoundSequenceRoutine(true));
 
         yield return StartCoroutine(GameModeBreak());
+        menu.UpdateStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
+        menu.ClearCurrentStats();
 
         // Manual mode
         gameModuleManager.CurrentMode = GameModuleManager.GameMode.Manual;
         yield return StartCoroutine(RoundSequenceRoutine(false));
 
+
         yield return StartCoroutine(GameModeBreak());
+        menu.UpdateStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
+        menu.ClearCurrentStats();
 
         // HardSurvival mode
         gameModuleManager.CurrentMode = GameModuleManager.GameMode.HardSurvival;
         yield return StartCoroutine(RoundSequenceRoutine(false));
+
+        yield return StartCoroutine(GameModeBreak());
+        menu.UpdateStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
+        menu.ClearCurrentStats();
 
         ShowGameOver();
     }
@@ -126,8 +146,18 @@ public class RoundsManager : MonoBehaviour
 
     private IEnumerator HandleOneRound(string roundName, int roundNumber)
     {
-        isRoundOngoing = true;
-        AccessibleMenu.IsOffensiveMode = true;
+
+        if (roundName == "Warm-Up")
+        {
+            isRoundOngoing = false;
+            AccessibleMenu.IsOffensiveMode = false;
+        }
+        else
+        {
+            isRoundOngoing = true;
+            AccessibleMenu.IsOffensiveMode = true;
+        }
+
 
         // Check if the game mode is Level Progression
         if (gameModuleManager.IsLevelProgressionMode)
@@ -165,6 +195,16 @@ public class RoundsManager : MonoBehaviour
         yield return StartCoroutine(PlayRoundStartAudio(roundNumber));
 
         Debug.Log(roundName + " has started.");
+
+        if (roundName == "Warm-Up")
+        {
+            // Play the warm-up audio
+            if (audioSource != null && warmUpExercises != null)
+            {
+                audioSource.PlayOneShot(warmUpExercises);
+                yield return new WaitForSeconds(warmUpExercises.length);
+            }
+        }
 
         // Wait for the round duration
         yield return new WaitForSeconds(roundDuration);
@@ -359,5 +399,26 @@ public class RoundsManager : MonoBehaviour
 
         Debug.Log("Enemy teleported to: " + newPosition + " and is facing the player.");
     }
+
+/*    public void GetGameStats(string currentGameMode)
+    {
+        
+        GameStats stats = GameStatsManager.GetStats(currentGameMode);
+
+        this.currentLTCount = stats.leftTriggerCount;
+        currentRTCount = stats.rightTriggerCount;
+        currentDuckCount = stats.duckCount;
+        currentPlayerHitCount = stats.playerHitCount;
+        currentPlayerHeadPunchCount = stats.playerHeadPunchCount;
+        currentPlayerBodyPunchCount = stats.playerBodyPunchCount;
+        gameModePlayerScore = stats.playerScore;
+        gameModeEnemyScore = stats.enemyScore;
+
+        Debug.Log($"Game Mode: {currentGameMode}");
+        Debug.Log($"Left trigger has been pressed {currentLTCount} times.");
+        // ... (log other stats)
+    }*/
+
+
 }
 
