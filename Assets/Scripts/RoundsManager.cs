@@ -42,6 +42,9 @@ public class RoundsManager : MonoBehaviour
     private Vector3 initialEnemyPosition; // To store the initial position
     private Quaternion initialEnemyRotation; // To store the initial rotation
     public AudioClip difficultIncreased;
+    public AudioClip changingGameModeManual;
+    public AudioClip changingGameModeHard;
+    public AudioClip breakBetweenGameModes;
     public AudioClip boxingBellStart;
     public Camera playerCamera; // The player's camera (assign the main VR camera)
 
@@ -95,24 +98,28 @@ public class RoundsManager : MonoBehaviour
         yield return StartCoroutine(RoundSequenceRoutine(true));
 
         yield return StartCoroutine(GameModeBreak());
-        menu.UpdateStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
+        menu.SaveStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
         menu.ClearCurrentStats();
 
-        // Manual mode
+        // Manual 
+        audioSource.PlayOneShot(changingGameModeManual);
+        yield return new WaitForSeconds(changingGameModeManual.length);
         gameModuleManager.CurrentMode = GameModuleManager.GameMode.Manual;
         yield return StartCoroutine(RoundSequenceRoutine(false));
 
 
         yield return StartCoroutine(GameModeBreak());
-        menu.UpdateStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
+        menu.SaveStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
         menu.ClearCurrentStats();
 
-        // HardSurvival mode
+        // HardSurvival 
+        audioSource.PlayOneShot(changingGameModeHard);
+        yield return new WaitForSeconds(changingGameModeHard.length);
         gameModuleManager.CurrentMode = GameModuleManager.GameMode.HardSurvival;
         yield return StartCoroutine(RoundSequenceRoutine(false));
 
         yield return StartCoroutine(GameModeBreak());
-        menu.UpdateStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
+        menu.SaveStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
         menu.ClearCurrentStats();
 
         ShowGameOver();
@@ -233,6 +240,9 @@ public class RoundsManager : MonoBehaviour
             StartCoroutine(PlayEndOfRoundAudiosWithTimeout(roundBreakDuration));
 
             yield return StartCoroutine(PlayEndOfRoundAudios());
+            audioSource.PlayOneShot(breakBetweenGameModes);
+            yield return new WaitForSeconds(breakBetweenGameModes.length);
+
         }
         else
         {

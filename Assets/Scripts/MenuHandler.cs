@@ -619,7 +619,7 @@ public class AccessibleMenu : MonoBehaviour
 
     public void ClearCurrentStats()
     {
-        // Save current stats (you may want to implement a proper saving mechanism)
+        // Debugging
         GetGameStats();
 
         // Clear all current values
@@ -640,7 +640,7 @@ public class AccessibleMenu : MonoBehaviour
         Debug.Log("All current stats have been cleared.");
     }
 
-    public void UpdateStats(string currentGameMode, int playerScore, int enemyScore)
+    public void SaveStats(string currentGameMode, int playerScore, int enemyScore)
     {
         GameStats currentStats = GameStatsManager.GetStats(currentGameMode);
 

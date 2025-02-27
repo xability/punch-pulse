@@ -9568,6 +9568,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
 --- !u!4 &1167029021
 Transform:
   m_ObjectHideFlags: 0
@@ -10806,6 +10808,12 @@ MonoBehaviour:
   enemyTransform: {fileID: 1848126075}
   playerTransform: {fileID: 2042691868}
   difficultIncreased: {fileID: 8300000, guid: d04c7cd8aa1f56f4a83c56cca192520b, type: 3}
+  changingGameModeManual: {fileID: 8300000, guid: 502ffcbe6d51542f7aa8de25198c2183,
+    type: 3}
+  changingGameModeHard: {fileID: 8300000, guid: 48e367abd196246c2afe0fe3519c5ecf,
+    type: 3}
+  breakBetweenGameModes: {fileID: 8300000, guid: b47121a80bf72450f9142a7e9eab61a2,
+    type: 3}
   boxingBellStart: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
   playerCamera: {fileID: 2036805231}
   menu: {fileID: 252214664}
