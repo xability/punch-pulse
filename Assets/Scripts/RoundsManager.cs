@@ -240,14 +240,15 @@ public class RoundsManager : MonoBehaviour
             StartCoroutine(PlayEndOfRoundAudiosWithTimeout(roundBreakDuration));
 
             yield return StartCoroutine(PlayEndOfRoundAudios());
-            audioSource.PlayOneShot(breakBetweenGameModes);
-            yield return new WaitForSeconds(breakBetweenGameModes.length);
+
 
         }
         else
         {
             // For the last round, play end-of-round audios without a time limit
             yield return StartCoroutine(PlayEndOfRoundAudios());
+            audioSource.PlayOneShot(breakBetweenGameModes);
+            yield return new WaitForSeconds(breakBetweenGameModes.length);
         }
     }
 
