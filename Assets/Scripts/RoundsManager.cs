@@ -85,7 +85,7 @@ public class RoundsManager : MonoBehaviour
             gameOverUI.SetActive(false);
 
         // Begin the coroutine that handles round logic
-        StartCoroutine(RoundSequenceRoutine(true));
+        StartCoroutine(HandleAllGameModes());
     }
 
     private IEnumerator HandleAllGameModes()
@@ -286,6 +286,7 @@ public class RoundsManager : MonoBehaviour
 
     private IEnumerator PlayEndOfRoundAudios()
     {
+        
         // Announce player score
         if (scoreManager != null)
         {
