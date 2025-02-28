@@ -2830,8 +2830,10 @@ MonoBehaviour:
   audioSource: {fileID: 2042691871}
   playerScoreIs: {fileID: 8300000, guid: bf1b16fb25f505441966313253989e64, type: 3}
   enemyScoreIs: {fileID: 8300000, guid: 21e6ed571738aa14c9dccc3166b6e11c, type: 3}
+  Round: {fileID: 8300000, guid: 6ecbc449da9d40644a73a184260f6bb4, type: 3}
   moreThan100: {fileID: 8300000, guid: 2e1580020c30387439257796fa828ff3, type: 3}
   scoreText: {fileID: 743237385}
+  RoundNum: 1
   enemyScoreText: {fileID: 579523295}
   rightButtonAction: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}

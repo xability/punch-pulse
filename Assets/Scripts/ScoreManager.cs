@@ -11,10 +11,12 @@ public class ScoreManager : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip playerScoreIs;
     public AudioClip enemyScoreIs;
+    public AudioClip Round;
     public AudioClip moreThan100;
     public static int Score { get; private set; }
     public TextMeshProUGUI scoreText;
     public static int EnemyScore { get; private set; }
+    public int RoundNum = 1;
     public TextMeshProUGUI enemyScoreText;
     public InputActionReference rightButtonAction;
     public RoundsManager roundsManager;
@@ -37,6 +39,7 @@ public class ScoreManager : MonoBehaviour
         if (!isAnnouncingScore) // Only start if not already announcing
         {
             StartCoroutine(AnnounceScore());
+            StartCoroutine(AnnounceEnemyScore());
         }
     }
 
@@ -196,7 +199,6 @@ public class ScoreManager : MonoBehaviour
         audioSource.PlayOneShot(playerScoreIs);
         yield return new WaitForSeconds(playerScoreIs.length);
 
-        string scoreString = Score.ToString();
         if (Score < 101)
         {
             Debug.Log("Score: " + Score);
@@ -225,7 +227,6 @@ public class ScoreManager : MonoBehaviour
                 break;
             }
         }*/
-
         isAnnouncingScore = false;
     }
     public IEnumerator AnnounceEnemyScore()
@@ -249,6 +250,19 @@ public class ScoreManager : MonoBehaviour
             Debug.LogWarning("Number audio clip not found for digit: " + EnemyScore);
             audioSource.PlayOneShot(moreThan100);
         }
+        isAnnouncingScore = false;
+    }
+
+    public IEnumerator AnnounceRound()
+    {
+        if (isAnnouncingScore) yield break; // Safety check
+
+        isAnnouncingScore = true;
+
+        audioSource.PlayOneShot(Round);
+        yield return new WaitForSeconds(Round.length);
+        audioSource.PlayOneShot(numberClips[RoundNum]);
+        yield return new WaitForSeconds(numberClips[RoundNum].length);
         isAnnouncingScore = false;
     }
 }
