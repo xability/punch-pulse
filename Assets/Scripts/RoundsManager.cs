@@ -1,68 +1,49 @@
 using UnityEngine;
-using UnityEngine.UI;    // If you need UI functionality
-using UnityEngine.SceneManagement; // If you want to reload the scene at the end
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class RoundsManager : MonoBehaviour
 {
     [Header("Round Settings")]
-    [Tooltip("Duration of each round in seconds. For example, 120 = 2 minutes.")]
-    public float roundDuration = 120f;
+    public float warmUpDuration = 300f; // 5 minutes for warm-up
+    public float roundDuration = 600f; // 10 minutes for each main round
+    public int totalRounds = 3; // 3 main rounds after warm-up
 
-    [Tooltip("Duration of the break between rounds in seconds. For example, 30 = 30 seconds.")]
-    public float roundBreakDuration = 30f;
-
-    [Tooltip("Number of full rounds (excluding warm-up).")]
-    public int totalRounds = 6;
-
-    [Header("Round Start Audio Clips")]
+    [Header("Audio Clips")]
     public AudioClip warmUpStartAudio;
-    public AudioClip warmUpExercises;
-    public AudioClip[] roundStartAudios; // Array for round 1 to 6 start audios
-
-    [Header("Round End Audio Clips")]
+    public AudioClip[] warmUpExercises; // Array of warm-up exercise instructions
+    public AudioClip[] roundStartAudios;
     public AudioClip roundEndAudio;
-    public AudioClip[] endOfRoundAudios; // Array for additional end-of-round audios
+    public AudioClip[] endOfRoundAudios;
+    public AudioClip difficultIncreased;
+    public AudioClip gameOverAudio;
+    public AudioClip boxingBellStart;
 
     [Header("References")]
-    [Tooltip("Audio source to play the clips from (attach an AudioSource component to this GameObject or another).")]
     public AudioSource audioSource;
-
-    [Tooltip("Game Over UI Canvas or Panel.")]
     public GameObject gameOverUI;
     public ScoreManager scoreManager;
     public GameModuleManager gameModuleManager;
-    public bool isRoundOngoing = true;
-
+    public bool isRoundOngoing = false;
     public BoxingRingMapping ringMapping;
-    public Transform enemyTransform; // Reference to the enemy's transform
+    public Transform enemyTransform;
     public Transform playerTransform;
-    private Vector3 initialEnemyPosition; // To store the initial position
-    private Quaternion initialEnemyRotation; // To store the initial rotation
-    public AudioClip difficultIncreased;
-    public AudioClip changingGameModeManual;
-    public AudioClip changingGameModeHard;
-    public AudioClip breakBetweenGameModes;
-    public AudioClip boxingBellStart;
-    public Camera playerCamera; // The player's camera (assign the main VR camera)
-
+    public Camera playerCamera;
     public AccessibleMenu menu;
 
-    public int currentLTCount;
-    public int currentRTCount;
-    public int currentDuckCount;
-    public int currentPlayerHitCount;
-    public int currentPlayerHeadPunchCount;
-    public int currentPlayerBodyPunchCount;
-    public int gameModePlayerScore;
-    public int gameModeEnemyScore;
+    [Header("Input")]
+    public InputActionReference nextStepAction;
+
+    private Vector3 initialEnemyPosition;
+    private Quaternion initialEnemyRotation;
 
     void Start()
     {
-
-        // Store the initial enemy position and rotation
         if (enemyTransform != null)
         {
             initialEnemyPosition = enemyTransform.position;
@@ -79,144 +60,90 @@ public class RoundsManager : MonoBehaviour
         }
     }
 
-    //  audioSource.PlayOneShot(boxingbell);
-    // Call this method from the script controlling the tutorial once it is finished
     public void BeginRounds()
     {
-        // Make sure the Game Over UI is hidden at the start
         if (gameOverUI != null)
             gameOverUI.SetActive(false);
 
-        // Begin the coroutine that handles round logic
         StartCoroutine(HandleAllGameModes());
     }
 
     private IEnumerator HandleAllGameModes()
     {
-        // LevelProgression mode (including warm-up)
-        gameModuleManager.CurrentMode = GameModuleManager.GameMode.LevelProgression;
-        yield return StartCoroutine(RoundSequenceRoutine(true));
+        // Warm-up round
+        yield return StartCoroutine(HandleWarmUpRound());
 
-        yield return StartCoroutine(GameModeBreak());
-        menu.SaveStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
-        menu.ClearCurrentStats();
+        // Main rounds
+        for (int roundIndex = 1; roundIndex <= totalRounds; roundIndex++)
+        {
+            yield return StartCoroutine(HandleMainRound(roundIndex));
+            if (roundIndex < totalRounds)
+            {
+                yield return RoundBreak();
+            }
+        }
 
-        // Manual 
-        audioSource.PlayOneShot(changingGameModeManual);
-        yield return new WaitForSeconds(changingGameModeManual.length);
-        gameModuleManager.CurrentMode = GameModuleManager.GameMode.Manual;
-        yield return StartCoroutine(RoundSequenceRoutine(false));
-
-
-        yield return StartCoroutine(GameModeBreak());
-        menu.SaveStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
-        menu.ClearCurrentStats();
-
-        // HardSurvival 
-        audioSource.PlayOneShot(changingGameModeHard);
-        yield return new WaitForSeconds(changingGameModeHard.length);
-        gameModuleManager.CurrentMode = GameModuleManager.GameMode.HardSurvival;
-        yield return StartCoroutine(RoundSequenceRoutine(false));
-
-        yield return StartCoroutine(GameModeBreak());
-        menu.SaveStats(gameModuleManager.CurrentMode.ToString(), ScoreManager.Score, ScoreManager.EnemyScore);
-        menu.ClearCurrentStats();
+        // Play game over audio
+        if (audioSource != null && gameOverAudio != null)
+        {
+            audioSource.PlayOneShot(gameOverAudio);
+            yield return new WaitForSeconds(gameOverAudio.length);
+        }
 
         ShowGameOver();
     }
 
-    private IEnumerator RoundSequenceRoutine(bool includeWarmUp)
+    private IEnumerator HandleWarmUpRound()
     {
-        if (includeWarmUp)
-        {
-            isRoundOngoing = false;
-            AccessibleMenu.IsOffensiveMode = false;
+        Debug.Log("Warm-Up round started.");
+        isRoundOngoing = false;
+        AccessibleMenu.IsOffensiveMode = false;
 
-            yield return StartCoroutine(HandleOneRound("Warm-Up", 0));
+        // Play warm-up start audio
+        if (audioSource != null && warmUpStartAudio != null)
+        {
+            audioSource.PlayOneShot(warmUpStartAudio);
+            yield return new WaitForSeconds(warmUpStartAudio.length);
         }
 
-        for (int roundIndex = 1; roundIndex <= totalRounds; roundIndex++)
+        // Play warm-up exercises
+        for (int i = 0; i < warmUpExercises.Length; i++)
         {
-            yield return StartCoroutine(HandleOneRound("Round " + roundIndex, roundIndex));
-        }
-    }
-
-    private IEnumerator GameModeBreak()
-    {
-        Debug.Log("Game mode break. Duration: 60 seconds.");
-        yield return new WaitForSeconds(60f);
-        // Save the stats and scores to show later
-        AccessibleMenu.ResetLeftTriggerCount();
-        ScoreManager.ResetScores();
-    }
-
-
-    private IEnumerator HandleOneRound(string roundName, int roundNumber)
-    {
-
-        if (roundName == "Warm-Up")
-        {
-            isRoundOngoing = false;
-            AccessibleMenu.IsOffensiveMode = false;
-        }
-        else
-        {
-            isRoundOngoing = true;
-            AccessibleMenu.IsOffensiveMode = true;
-        }
-
-
-        // Check if the game mode is Level Progression
-        if (gameModuleManager.IsLevelProgressionMode)
-        {
-            // Set difficulty based on round number only in Level Progression mode
-            if (roundNumber == 3) // Third round (index 2 + 1)
+            if (audioSource != null && warmUpExercises[i] != null)
             {
-                AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Medium);
-                Debug.Log("Difficulty set to Medium");
-                audioSource.PlayOneShot(difficultIncreased);
-                yield return new WaitForSeconds(difficultIncreased.length);
-            }
-            else if (roundNumber == 5) // Fifth round (index 4 + 1)
-            {
-                AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.Hard);
-                Debug.Log("Difficulty set to Hard");
-                audioSource.PlayOneShot(difficultIncreased);
-                yield return new WaitForSeconds(difficultIncreased.length);
+                audioSource.PlayOneShot(warmUpExercises[i]);
+                yield return new WaitForSeconds(warmUpExercises[i].length);
+
+                // Wait for user input to continue
+                yield return StartCoroutine(WaitForUserInput());
             }
         }
-        else if (gameModuleManager.IsManualMode)
-        {
-            // Set difficulty based on the current game mode
-            Debug.Log("Difficulty set to Medium for Manual mode");
-        }
-        else if (gameModuleManager.IsHardSurvivalMode)
-        {
-            // Teleport the enemy to a random position at the start of each survival round
-            AccessibleMenu.SetDifficulty(AccessibleMenu.DifficultyLevel.UltraHard);
-            //Debug.Log("Difficulty set to Hard for Survival mode");
-        }
 
+        // 2-minute familiarization period
+        Debug.Log("2-minute familiarization period started.");
+        yield return new WaitForSeconds(120f);
+
+        Debug.Log("Warm-Up round ended.");
+    }
+
+
+    private IEnumerator HandleMainRound(int roundNumber)
+    {
+        isRoundOngoing = true;
+        AccessibleMenu.IsOffensiveMode = true;
+
+        // Set difficulty
+        SetDifficultyForRound(roundNumber);
 
         // Play round start audio
         yield return StartCoroutine(PlayRoundStartAudio(roundNumber));
 
-        Debug.Log(roundName + " has started.");
-
-        if (roundName == "Warm-Up")
-        {
-            // Play the warm-up audio
-            if (audioSource != null && warmUpExercises != null)
-            {
-                audioSource.PlayOneShot(warmUpExercises);
-                yield return new WaitForSeconds(warmUpExercises.length);
-            }
-        }
+        Debug.Log($"Round {roundNumber} has started.");
 
         // Wait for the round duration
         yield return new WaitForSeconds(roundDuration);
 
-        Debug.Log(roundName + " ended.");
+        Debug.Log($"Round {roundNumber} ended.");
 
         isRoundOngoing = false;
         AccessibleMenu.IsOffensiveMode = false;
@@ -225,69 +152,87 @@ public class RoundsManager : MonoBehaviour
         if (audioSource != null && roundEndAudio != null)
         {
             audioSource.PlayOneShot(roundEndAudio);
-
             yield return new WaitForSeconds(roundEndAudio.length);
         }
 
-        bool isLastRound = (roundNumber != 0 && roundNumber == totalRounds);
-        if (!isLastRound)
+        yield return StartCoroutine(PlayEndOfRoundAudios());
+    }
+
+    private IEnumerator WaitForUserInput()
+    {
+        if (nextStepAction == null)
         {
-            Debug.Log("Break between rounds. Duration: " + roundBreakDuration + " seconds.");
-
-            ResetEnemyPosition();
-
-            // Play additional end-of-round audio clips during the break
-            StartCoroutine(PlayEndOfRoundAudiosWithTimeout(roundBreakDuration));
-
-            yield return StartCoroutine(PlayEndOfRoundAudios());
-
-
+            Debug.LogError("Next Step Action is not assigned!");
+            yield break;
         }
-        else
+
+        nextStepAction.action.Enable();
+        bool inputReceived = false;
+
+        nextStepAction.action.performed += ctx => inputReceived = true;
+
+        while (!inputReceived)
         {
-            // For the last round, play end-of-round audios without a time limit
-            yield return StartCoroutine(PlayEndOfRoundAudios());
-            audioSource.PlayOneShot(breakBetweenGameModes);
-            yield return new WaitForSeconds(breakBetweenGameModes.length);
+            yield return null;
         }
+
+        nextStepAction.action.performed -= ctx => inputReceived = true;
+        nextStepAction.action.Disable();
+    }
+
+
+    private void SetDifficultyForRound(int roundNumber)
+    {
+        AccessibleMenu.DifficultyLevel difficulty = AccessibleMenu.DifficultyLevel.Easy;
+
+        switch (roundNumber)
+        {
+            case 1:
+                difficulty = AccessibleMenu.DifficultyLevel.Medium;
+                break;
+            case 2:
+                difficulty = AccessibleMenu.DifficultyLevel.Hard;
+                break;
+            case 3:
+                difficulty = AccessibleMenu.DifficultyLevel.UltraHard;
+                break;
+        }
+
+        AccessibleMenu.SetDifficulty(difficulty);
+        Debug.Log($"Difficulty set to {difficulty} for round {roundNumber}");
+
+        if (audioSource != null && difficultIncreased != null)
+        {
+            audioSource.PlayOneShot(difficultIncreased);
+        }
+    }
+
+    private IEnumerator RoundBreak()
+    {
+        Debug.Log("Round break. Duration: 60 seconds.");
+        yield return new WaitForSeconds(60f);
+        AccessibleMenu.ResetLeftTriggerCount();
+        ScoreManager.ResetScores();
     }
 
     private void ShowGameOver()
     {
-        // Display Game Over UI
         if (gameOverUI != null)
         {
             gameOverUI.SetActive(true);
         }
-
         Debug.Log("All rounds completed. Game Over.");
     }
 
-    // Example method to restart the game (attach to a UI button if desired)
-    public void RestartGame()
-    {
-        // Example: Reload the active scene
-
-    }
-
-
     private IEnumerator PlayRoundStartAudio(int roundNumber)
     {
-        if (audioSource != null)
+        if (audioSource != null && roundNumber > 0 && roundNumber <= roundStartAudios.Length)
         {
-            if (roundNumber == 0 && warmUpStartAudio != null)
+            AudioClip clip = roundStartAudios[roundNumber - 1];
+            if (clip != null)
             {
-                audioSource.PlayOneShot(warmUpStartAudio);
-                yield return new WaitForSeconds(warmUpStartAudio.length);
-            }
-            else if (roundNumber > 0 && roundNumber <= roundStartAudios.Length)
-            {
-                AudioClip clip = roundStartAudios[roundNumber - 1];
-                if (clip != null)
-                {
-                    audioSource.PlayOneShot(clip);
-                    yield return new WaitForSeconds(clip.length);
-                }
+                audioSource.PlayOneShot(clip);
+                yield return new WaitForSeconds(clip.length);
             }
 
             audioSource.PlayOneShot(boxingBellStart);
@@ -297,36 +242,10 @@ public class RoundsManager : MonoBehaviour
 
     private IEnumerator PlayEndOfRoundAudios()
     {
-        
-        // Announce player score
         if (scoreManager != null)
         {
             yield return StartCoroutine(scoreManager.AnnounceScore());
-        }
-
-        // Announce enemy score
-        if (scoreManager != null)
-        {
             yield return StartCoroutine(scoreManager.AnnounceEnemyScore());
-        }
-    }
-
-    private IEnumerator PlayEndOfRoundAudiosWithTimeout(float timeout)
-    {
-        float elapsedTime = 0f;
-
-        foreach (AudioClip clip in endOfRoundAudios)
-        {
-            if (clip != null && audioSource != null)
-            {
-                audioSource.PlayOneShot(clip);
-                float clipDuration = Mathf.Min(clip.length, timeout - elapsedTime);
-                yield return new WaitForSeconds(clipDuration);
-
-                elapsedTime += clipDuration;
-                if (elapsedTime >= timeout)
-                    break;
-            }
         }
     }
 
