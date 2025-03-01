@@ -10787,20 +10787,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e2c05ac34ac8d4da80b775cf5d97d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundDuration: 90
-  roundBreakDuration: 30
-  totalRounds: 6
+  warmUpDuration: 300
+  roundDuration: 600
+  totalRounds: 3
   warmUpStartAudio: {fileID: 8300000, guid: 7097f9535a7a24340bf7c2a4bcf3c07a, type: 3}
-  warmUpExercises: {fileID: 8300000, guid: 071cebe60c38df04c803edd7373f00c7, type: 3}
+  warmUpExercises: []
   roundStartAudios:
   - {fileID: 8300000, guid: e2e5dd1572ad87d4d837016da1dc1cb8, type: 3}
   - {fileID: 8300000, guid: 6f3d12f8d56411641b08816e762171c8, type: 3}
   - {fileID: 8300000, guid: 93d34aa737a47c6489f908c8c6bc5d95, type: 3}
-  - {fileID: 8300000, guid: d31627ddce0df244ab1a8df4e087065a, type: 3}
-  - {fileID: 8300000, guid: d6693b83b35a9c84f841040e215ae23e, type: 3}
-  - {fileID: 8300000, guid: cb61b4e25c8857c41aa9265cbe5e1ac1, type: 3}
   roundEndAudio: {fileID: 8300000, guid: 475f139ab34393b43a0cc09160f7f216, type: 3}
   endOfRoundAudios: []
+  difficultIncreased: {fileID: 8300000, guid: d04c7cd8aa1f56f4a83c56cca192520b, type: 3}
+  gameOverAudio: {fileID: 0}
+  boxingBellStart: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
   audioSource: {fileID: 1672657542}
   gameOverUI: {fileID: 0}
   scoreManager: {fileID: 282555737}
@@ -10809,24 +10809,9 @@ MonoBehaviour:
   ringMapping: {fileID: 2047914139}
   enemyTransform: {fileID: 1848126075}
   playerTransform: {fileID: 2042691868}
-  difficultIncreased: {fileID: 8300000, guid: d04c7cd8aa1f56f4a83c56cca192520b, type: 3}
-  changingGameModeManual: {fileID: 8300000, guid: 502ffcbe6d51542f7aa8de25198c2183,
-    type: 3}
-  changingGameModeHard: {fileID: 8300000, guid: 48e367abd196246c2afe0fe3519c5ecf,
-    type: 3}
-  breakBetweenGameModes: {fileID: 8300000, guid: b47121a80bf72450f9142a7e9eab61a2,
-    type: 3}
-  boxingBellStart: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
   playerCamera: {fileID: 2036805231}
   menu: {fileID: 252214664}
-  currentLTCount: 0
-  currentRTCount: 0
-  currentDuckCount: 0
-  currentPlayerHitCount: 0
-  currentPlayerHeadPunchCount: 0
-  currentPlayerBodyPunchCount: 0
-  gameModePlayerScore: 0
-  gameModeEnemyScore: 0
+  nextStepAction: {fileID: 0}
 --- !u!4 &1414789648
 Transform:
   m_ObjectHideFlags: 0
