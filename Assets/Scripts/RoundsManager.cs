@@ -30,6 +30,7 @@ public class RoundsManager : MonoBehaviour
     public ScoreManager scoreManager;
     public GameModuleManager gameModuleManager;
     public bool isRoundOngoing = false;
+    public int RoundNumber { get; private set; } = 0;
     public BoxingRingMapping ringMapping;
     public Transform enemyTransform;
     public Transform playerTransform;
@@ -76,6 +77,7 @@ public class RoundsManager : MonoBehaviour
         // Main rounds
         for (int roundIndex = 1; roundIndex <= totalRounds; roundIndex++)
         {
+            RoundNumber += 1;
             yield return StartCoroutine(HandleMainRound(roundIndex));
             if (roundIndex < totalRounds)
             {
@@ -184,7 +186,7 @@ public class RoundsManager : MonoBehaviour
     }
 
 
-    private void SetDifficultyForRound(int roundNumber)
+    private IEnumerator SetDifficultyForRound(int roundNumber)
     {
         AccessibleMenu.DifficultyLevel difficulty = AccessibleMenu.DifficultyLevel.Easy;
 
@@ -248,7 +250,7 @@ public class RoundsManager : MonoBehaviour
     {
         if (scoreManager != null)
         {
-            yield return StartCoroutine(scoreManager.AnnounceScore());
+            yield return StartCoroutine(scoreManager.AnnouncePlayerScore());
             yield return StartCoroutine(scoreManager.AnnounceEnemyScore());
         }
     }

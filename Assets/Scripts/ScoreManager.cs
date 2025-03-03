@@ -20,9 +20,9 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI enemyScoreText;
     public InputActionReference rightButtonAction;
     public RoundsManager roundsManager;
+    
 
-
-    private bool isAnnouncingScore = false; // New flag to track if score is being announced
+    private bool isAnnouncing = false;
 
     private void OnEnable()
     {
@@ -36,10 +36,9 @@ public class ScoreManager : MonoBehaviour
 
     private void OnRightButtonPressed(InputAction.CallbackContext context)
     {
-        if (!isAnnouncingScore) // Only start if not already announcing
+        if (!isAnnouncing)
         {
-            StartCoroutine(AnnounceScore());
-            StartCoroutine(AnnounceEnemyScore());
+            StartCoroutine(AnnounceAllInfo());
         }
     }
 
@@ -190,12 +189,30 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public IEnumerator AnnounceScore()
+
+    private IEnumerator AnnounceAllInfo()
     {
-        if (isAnnouncingScore) yield break; // Safety check
+        isAnnouncing = true;
 
-        isAnnouncingScore = true;
+        yield return StartCoroutine(AnnounceRound());
+        yield return StartCoroutine(AnnouncePlayerScore());
+        yield return StartCoroutine(AnnounceEnemyScore());
 
+        isAnnouncing = false;
+    }
+
+    public IEnumerator AnnounceRound()
+    {
+        audioSource.PlayOneShot(Round);
+        yield return new WaitForSeconds(Round.length);
+        RoundNum = roundsManager.RoundNumber;
+        audioSource.PlayOneShot(numberClips[RoundNum]);
+        yield return new WaitForSeconds(numberClips[RoundNum].length);
+        
+    }
+
+    public IEnumerator AnnouncePlayerScore()
+    {
         audioSource.PlayOneShot(playerScoreIs);
         yield return new WaitForSeconds(playerScoreIs.length);
 
@@ -209,36 +226,15 @@ public class ScoreManager : MonoBehaviour
         {
             Debug.LogWarning("Number audio clip not found for digit: " + Score);
             audioSource.PlayOneShot(moreThan100);
+            yield return new WaitForSeconds(moreThan100.length);
         }
-
-        /*
-        foreach (char digitChar in scoreString)
-        {
-            int digit = digitChar - '0';
-
-            if (digit >= 0 && digit < numberClips.Length)
-            {
-                audioSource.PlayOneShot(numberClips[digit]);
-                yield return new WaitForSeconds(numberClips[digit].length);
-            }
-            else
-            {
-                Debug.LogWarning("Number audio clip not found for digit: " + digit);
-                break;
-            }
-        }*/
-        isAnnouncingScore = false;
     }
+
     public IEnumerator AnnounceEnemyScore()
     {
-        if (isAnnouncingScore) yield break; // Safety check
-
-        isAnnouncingScore = true;
-
         audioSource.PlayOneShot(enemyScoreIs);
         yield return new WaitForSeconds(enemyScoreIs.length);
 
-        string scoreString = EnemyScore.ToString();
         if (EnemyScore < 101)
         {
             Debug.Log("Enemy Score: " + EnemyScore);
@@ -249,20 +245,8 @@ public class ScoreManager : MonoBehaviour
         {
             Debug.LogWarning("Number audio clip not found for digit: " + EnemyScore);
             audioSource.PlayOneShot(moreThan100);
+            yield return new WaitForSeconds(moreThan100.length);
         }
-        isAnnouncingScore = false;
     }
 
-    public IEnumerator AnnounceRound()
-    {
-        if (isAnnouncingScore) yield break; // Safety check
-
-        isAnnouncingScore = true;
-
-        audioSource.PlayOneShot(Round);
-        yield return new WaitForSeconds(Round.length);
-        audioSource.PlayOneShot(numberClips[RoundNum]);
-        yield return new WaitForSeconds(numberClips[RoundNum].length);
-        isAnnouncingScore = false;
-    }
 }

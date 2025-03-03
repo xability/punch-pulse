@@ -500,7 +500,7 @@ public class AccessibleMenu : MonoBehaviour
     {
         while (scoreNarration)
         {
-            yield return StartCoroutine(ScoreManager.Instance.AnnounceScore());
+            yield return StartCoroutine(ScoreManager.Instance.AnnouncePlayerScore());
             yield return new WaitForSeconds(12f);
         }
     }
