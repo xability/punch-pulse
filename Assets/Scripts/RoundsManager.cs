@@ -121,6 +121,9 @@ public class RoundsManager : MonoBehaviour
 
         // 2-minute familiarization period
         Debug.Log("2-minute familiarization period started.");
+        audioSource.PlayOneShot(boxingBellStart);
+        yield return new WaitForSeconds(boxingBellStart.length);
+
         yield return new WaitForSeconds(120f);
 
         Debug.Log("Warm-Up round ended.");
@@ -204,6 +207,7 @@ public class RoundsManager : MonoBehaviour
         if (audioSource != null && difficultIncreased != null)
         {
             audioSource.PlayOneShot(difficultIncreased);
+            yield return new WaitForSeconds(difficultIncreased.length);
         }
     }
 

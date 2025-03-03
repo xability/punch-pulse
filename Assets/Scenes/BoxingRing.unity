@@ -9570,8 +9570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
 --- !u!4 &1167029021
 Transform:
   m_ObjectHideFlags: 0
@@ -10791,7 +10789,11 @@ MonoBehaviour:
   roundDuration: 600
   totalRounds: 3
   warmUpStartAudio: {fileID: 8300000, guid: 7097f9535a7a24340bf7c2a4bcf3c07a, type: 3}
-  warmUpExercises: []
+  warmUpExercises:
+  - {fileID: 8300000, guid: 3e0f83862951d0e409e209b5cf080c1f, type: 3}
+  - {fileID: 8300000, guid: ec375f57308da684e9bde7cb687397a5, type: 3}
+  - {fileID: 8300000, guid: 13286714970ab8c44ba7292559ef4ed9, type: 3}
+  - {fileID: 8300000, guid: feda8ba51cd2bbe4b818e593213422df, type: 3}
   roundStartAudios:
   - {fileID: 8300000, guid: e2e5dd1572ad87d4d837016da1dc1cb8, type: 3}
   - {fileID: 8300000, guid: 6f3d12f8d56411641b08816e762171c8, type: 3}
@@ -10811,7 +10813,8 @@ MonoBehaviour:
   playerTransform: {fileID: 2042691868}
   playerCamera: {fileID: 2036805231}
   menu: {fileID: 252214664}
-  nextStepAction: {fileID: 0}
+  nextStepAction: {fileID: 1625246124897866415, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
 --- !u!4 &1414789648
 Transform:
   m_ObjectHideFlags: 0
