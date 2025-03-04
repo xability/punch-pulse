@@ -30,6 +30,11 @@ public class DirectionHelper : MonoBehaviour
         return triggerPressCount;
     }
 
+    public static void SetTriggerPressCount(int value)
+    {
+        triggerPressCount = value;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

@@ -50,9 +50,19 @@ public class EnemyAttackBehavior : MonoBehaviour
         return playerHitCount;
     }
 
+    public static void SetPlayerHitCount(int value)
+    {
+        playerHitCount = value;
+    }
+
     public static int GetPlayerDuckCount()
     {
         return playerDuckCount;
+    }
+
+    public static void SetPlayerDuckCount(int value)
+    {
+        playerDuckCount = value;
     }
 
     void Update()

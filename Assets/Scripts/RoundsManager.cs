@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class RoundsManager : MonoBehaviour
 {
@@ -17,8 +18,10 @@ public class RoundsManager : MonoBehaviour
     [Header("Audio Clips")]
     public AudioClip warmUpStartAudio;
     public AudioClip[] warmUpExercises; // Array of warm-up exercise instructions
+    public AudioClip warmUpEndAudio;
     public AudioClip[] roundStartAudios;
     public AudioClip roundEndAudio;
+    public AudioClip roundBreakAudio;
     public AudioClip[] endOfRoundAudios;
     public AudioClip difficultIncreased;
     public AudioClip gameOverAudio;
@@ -36,6 +39,30 @@ public class RoundsManager : MonoBehaviour
     public Transform playerTransform;
     public Camera playerCamera;
     public AccessibleMenu menu;
+
+    [System.Serializable]
+    public struct RoundData
+    {
+        public int roundNumber;
+        public int leftTriggerCount;
+        public int rightTriggerCount;
+        public int duckCount;
+        public int playerHitCount;
+        public int playerHeadPunchCount;
+        public int playerBodyPunchCount;
+        public int playerScore;
+        public int enemyScore;
+    }
+
+    public List<RoundData> roundDataList = new List<RoundData>();
+
+    // Variables to store current stat values for each round, round1, round2 , round3...
+    private int currentLTCount;
+    private int currentRTCount;
+    private int currentDuckCount;
+    private int currentPlayerHitCount;
+    private int currentPlayerHeadPunchCount;
+    private int currentPlayerBodyPunchCount;
 
     [Header("Input")]
     public InputActionReference nextStepAction;
@@ -126,9 +153,11 @@ public class RoundsManager : MonoBehaviour
         audioSource.PlayOneShot(boxingBellStart);
         yield return new WaitForSeconds(boxingBellStart.length);
 
-        yield return new WaitForSeconds(120f);
+        yield return new WaitForSeconds(30f);
 
         Debug.Log("Warm-Up round ended.");
+        audioSource.PlayOneShot(warmUpEndAudio);
+        yield return new WaitForSeconds(warmUpEndAudio.length);
     }
 
 
@@ -213,23 +242,6 @@ public class RoundsManager : MonoBehaviour
         }
     }
 
-    private IEnumerator RoundBreak()
-    {
-        Debug.Log("Round break. Duration: 60 seconds.");
-        yield return new WaitForSeconds(60f);
-        AccessibleMenu.ResetLeftTriggerCount();
-        ScoreManager.ResetScores();
-    }
-
-    private void ShowGameOver()
-    {
-        if (gameOverUI != null)
-        {
-            gameOverUI.SetActive(true);
-        }
-        Debug.Log("All rounds completed. Game Over.");
-    }
-
     private IEnumerator PlayRoundStartAudio(int roundNumber)
     {
         if (audioSource != null && roundNumber > 0 && roundNumber <= roundStartAudios.Length)
@@ -253,6 +265,51 @@ public class RoundsManager : MonoBehaviour
             yield return StartCoroutine(scoreManager.AnnouncePlayerScore());
             yield return StartCoroutine(scoreManager.AnnounceEnemyScore());
         }
+
+        audioSource.PlayOneShot(roundBreakAudio);
+        yield return new WaitForSeconds(roundBreakAudio.length);
+    }
+
+    private IEnumerator RoundBreak()
+    {
+        Debug.Log("Round break. Duration: 60 seconds.");
+        yield return new WaitForSeconds(60f);
+
+        // Fetch the stats
+        RoundData currentRoundData = new RoundData
+        {
+            roundNumber = RoundNumber,
+            leftTriggerCount = DirectionHelper.GetLeftTriggerPressCount(),
+            rightTriggerCount = MoveEnemyInFront.GetRightTriggerPressCount(),
+            duckCount = EnemyAttackBehavior.GetPlayerDuckCount(),
+            playerHitCount = EnemyAttackBehavior.GetPlayerHitCount(),
+            playerHeadPunchCount = PlayAudioOnBoxing.GetPlayerHeadPunchCount(),
+            playerBodyPunchCount = PlayAudioOnBoxing.GetPlayerBodyPunchCount(),
+            playerScore = ScoreManager.Score,
+            enemyScore = ScoreManager.EnemyScore
+        };
+
+        // Save the stats for this round in an object
+        roundDataList.Add(currentRoundData);
+
+        // Reset the stats for the next round
+        ScoreManager.ResetScores();
+        DirectionHelper.SetTriggerPressCount(0);
+        MoveEnemyInFront.SetRightTriggerPressCount(0);
+        EnemyAttackBehavior.SetPlayerDuckCount(0);
+        EnemyAttackBehavior.SetPlayerHitCount(0);
+        PlayAudioOnBoxing.SetPlayerHeadPunchCount(0);
+        PlayAudioOnBoxing.SetPlayerBodyPunchCount(0);
+        ScoreManager.ResetScores();
+    }
+
+    private void ShowGameOver()
+    {
+        if (gameOverUI != null)
+        {
+            gameOverUI.SetActive(true);
+        }
+        Debug.Log("All rounds completed. Game Over.");
     }
 
     public void ResetEnemyPosition()
@@ -337,25 +394,10 @@ public class RoundsManager : MonoBehaviour
         Debug.Log("Enemy teleported to: " + newPosition + " and is facing the player.");
     }
 
-/*    public void GetGameStats(string currentGameMode)
+    public RoundData GetRoundData(int roundNumber)
     {
-        
-        GameStats stats = GameStatsManager.GetStats(currentGameMode);
-
-        this.currentLTCount = stats.leftTriggerCount;
-        currentRTCount = stats.rightTriggerCount;
-        currentDuckCount = stats.duckCount;
-        currentPlayerHitCount = stats.playerHitCount;
-        currentPlayerHeadPunchCount = stats.playerHeadPunchCount;
-        currentPlayerBodyPunchCount = stats.playerBodyPunchCount;
-        gameModePlayerScore = stats.playerScore;
-        gameModeEnemyScore = stats.enemyScore;
-
-        Debug.Log($"Game Mode: {currentGameMode}");
-        Debug.Log($"Left trigger has been pressed {currentLTCount} times.");
-        // ... (log other stats)
-    }*/
-
+        return roundDataList.Find(data => data.roundNumber == roundNumber);
+    }
 
 }
 

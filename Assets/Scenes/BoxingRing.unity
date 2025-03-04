@@ -10786,7 +10786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   warmUpDuration: 300
-  roundDuration: 600
+  roundDuration: 60
   totalRounds: 3
   warmUpStartAudio: {fileID: 8300000, guid: 7097f9535a7a24340bf7c2a4bcf3c07a, type: 3}
   warmUpExercises:

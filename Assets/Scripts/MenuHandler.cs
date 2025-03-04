@@ -260,7 +260,7 @@ public class AccessibleMenu : MonoBehaviour
         }
     }
 
-    void UpdateStats(int leftTrigCount, int rightTrigCount, int duckCount, int playerHitCount, int headPunchCount, int bodyPunchCount)
+    void UpdateMenuUIStats(int leftTrigCount, int rightTrigCount, int duckCount, int playerHitCount, int headPunchCount, int bodyPunchCount)
     {
         
         if (LTCount != null)
@@ -294,7 +294,7 @@ public class AccessibleMenu : MonoBehaviour
             currentPlayerHitCount = EnemyAttackBehavior.GetPlayerHitCount();
             currentPlayerHeadPunchCount = PlayAudioOnBoxing.GetPlayerHeadPunchCount();
             currentPlayerBodyPunchCount = PlayAudioOnBoxing.GetPlayerBodyPunchCount();
-            UpdateStats(currentLTCount, currentRTCount, currentDuckCount, currentPlayerHitCount, currentPlayerHeadPunchCount, currentPlayerBodyPunchCount);
+            UpdateMenuUIStats(currentLTCount, currentRTCount, currentDuckCount, currentPlayerHitCount, currentPlayerHeadPunchCount, currentPlayerBodyPunchCount);
             if (isFirstActivation)
             {
                 StartCoroutine(PlayPauseMenuActiveSound());
@@ -571,34 +571,6 @@ public class AccessibleMenu : MonoBehaviour
         Debug.Log("Resuming game...");
     }
 
-    void GetGameStats()
-    {
-        currentLTCount = DirectionHelper.GetLeftTriggerPressCount();
-        Debug.Log("Left trigger has been pressed " + currentLTCount + " times.");
-
-        currentRTCount = MoveEnemyInFront.GetRightTriggerPressCount();
-        Debug.Log("Right trigger has been pressed " + currentRTCount + " times.");
-
-        currentDuckCount = EnemyAttackBehavior.GetPlayerDuckCount();
-        Debug.Log("Player has ducked " + currentDuckCount + " times.");
-
-        currentPlayerHitCount = EnemyAttackBehavior.GetPlayerHitCount();
-        Debug.Log("Enemy has hit the player " + currentPlayerHitCount + " times.");
-
-        currentPlayerHeadPunchCount = PlayAudioOnBoxing.GetPlayerHeadPunchCount();
-        Debug.Log("Player has punched the enemy's head " + currentPlayerHeadPunchCount + " times.");
-
-        currentPlayerBodyPunchCount = PlayAudioOnBoxing.GetPlayerBodyPunchCount();
-        Debug.Log("Player has punched the enemy's body " + currentPlayerBodyPunchCount + " times.");
-
-    }
-
-    public static void ResetLeftTriggerCount()
-    {
-        DirectionHelper.ResetTriggerPressCount();
-        MoveEnemyInFront.ResetTriggerPressCount();
-    }
-
     public static void SetOffensiveMode(bool mode)
     {
         isOffensiveMode = mode;
@@ -616,46 +588,6 @@ public class AccessibleMenu : MonoBehaviour
         difficultyButton.colors = colors;
     }
 
-
-    public void ClearCurrentStats()
-    {
-        // Debugging
-        GetGameStats();
-
-        // Clear all current values
-        currentLTCount = 0;
-        currentRTCount = 0;
-        currentDuckCount = 0;
-        currentPlayerHitCount = 0;
-        currentPlayerHeadPunchCount = 0;
-        currentPlayerBodyPunchCount = 0;
-
-        // Reset counters in other scripts
-        DirectionHelper.ResetTriggerPressCount();
-        MoveEnemyInFront.ResetTriggerPressCount();
-
-        // Update UI
-        UpdateStats(currentLTCount, currentRTCount, currentDuckCount, currentPlayerHitCount, currentPlayerHeadPunchCount, currentPlayerBodyPunchCount);
-
-        Debug.Log("All current stats have been cleared.");
-    }
-
-    public void SaveStats(string currentGameMode, int playerScore, int enemyScore)
-    {
-        GameStats currentStats = GameStatsManager.GetStats(currentGameMode);
-
-        currentStats.leftTriggerCount = currentLTCount;
-        currentStats.rightTriggerCount = currentRTCount;
-        currentStats.duckCount = currentDuckCount;
-        currentStats.playerHitCount = currentPlayerHitCount;
-        currentStats.playerHeadPunchCount = currentPlayerHeadPunchCount;
-        currentStats.playerBodyPunchCount = currentPlayerBodyPunchCount;
-        currentStats.playerScore = playerScore;
-        currentStats.enemyScore = enemyScore;
-
-        GameStatsManager.SaveStats(currentGameMode, currentStats);
-
-    }
 }
 
 /*

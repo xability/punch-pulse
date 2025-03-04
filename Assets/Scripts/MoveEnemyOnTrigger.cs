@@ -41,6 +41,11 @@ public class MoveEnemyInFront : MonoBehaviour
         return rightTriggerPressCount;
     }
 
+    public static void SetRightTriggerPressCount(int value)
+    {
+        rightTriggerPressCount = value;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

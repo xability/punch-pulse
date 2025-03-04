@@ -57,9 +57,19 @@ public class PlayAudioOnBoxing : MonoBehaviour
         return playerHeadPunchCount;
     }
 
+    public static void SetPlayerHeadPunchCount(int value)
+    {
+        playerHeadPunchCount = value;
+    }
+
     public static int GetPlayerBodyPunchCount()
     {
         return playerBodyPunchCount;
+    }
+
+    public static void SetPlayerBodyPunchCount(int value)
+    {
+        playerBodyPunchCount = value;
     }
 
     // Start is called before the first frame update
