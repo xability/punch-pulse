@@ -149,7 +149,7 @@ public class RoundsManager : MonoBehaviour
         audioSource.PlayOneShot(boxingBellStart);
         yield return new WaitForSeconds(boxingBellStart.length);
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(120f);
 
         Debug.Log("Warm-Up round ended.");
         audioSource.PlayOneShot(warmUpEndAudio);
@@ -282,7 +282,7 @@ public class RoundsManager : MonoBehaviour
     private IEnumerator RoundBreak()
     {
         Debug.Log("Round break. Duration: 60 seconds.");
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(60f);
 
         // Fetch the stats
         RoundData currentRoundData = new RoundData
