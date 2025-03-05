@@ -175,7 +175,7 @@ public class EnemyAttackBehavior : MonoBehaviour
         duckingThresholdPercentage = 0.75f; // Set to 75% of initial height
         duckingThreshold = duckingThresholdPercentage * initialHeadsetHeight;
 
-        Debug.Log("Initial headset height: " + initialHeadsetHeight + ". Ducking threshold set to: " + duckingThreshold);
+        // Debug.Log("Initial headset height: " + initialHeadsetHeight + ". Ducking threshold set to: " + duckingThreshold);
         // Flash red lights
         if (warningLight != null)
         {
@@ -195,7 +195,7 @@ public class EnemyAttackBehavior : MonoBehaviour
                 do
                 {
                     distanceToTarget = MoveEnemyInFront.MoveEnemyTowardsTarget(targetPosition);
-                    Debug.Log("Distance to target: " + distanceToTarget);
+                    // Debug.Log("Distance to target: " + distanceToTarget);
                     yield return null; // Wait for the next frame
                 } while (distanceToTarget > 1f); // Continue until the enemy is close enough
             }

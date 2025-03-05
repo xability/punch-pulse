@@ -105,18 +105,14 @@ public class RoundsManager : MonoBehaviour
         for (int roundIndex = 1; roundIndex <= totalRounds; roundIndex++)
         {
             RoundNumber += 1;
+            Debug.Log("Round number : " + RoundNumber);
+
+
             yield return StartCoroutine(HandleMainRound(roundIndex));
             if (roundIndex < totalRounds)
             {
                 yield return RoundBreak();
             }
-        }
-
-        // Play game over audio
-        if (audioSource != null && gameOverAudio != null)
-        {
-            audioSource.PlayOneShot(gameOverAudio);
-            yield return new WaitForSeconds(gameOverAudio.length);
         }
 
         ShowGameOver();
@@ -153,7 +149,7 @@ public class RoundsManager : MonoBehaviour
         audioSource.PlayOneShot(boxingBellStart);
         yield return new WaitForSeconds(boxingBellStart.length);
 
-        yield return new WaitForSeconds(30f);
+        yield return new WaitForSeconds(10f);
 
         Debug.Log("Warm-Up round ended.");
         audioSource.PlayOneShot(warmUpEndAudio);
@@ -167,7 +163,7 @@ public class RoundsManager : MonoBehaviour
         AccessibleMenu.IsOffensiveMode = true;
 
         // Set difficulty
-        SetDifficultyForRound(roundNumber);
+        yield return StartCoroutine(SetDifficultyForRound(roundNumber));
 
         // Play round start audio
         yield return StartCoroutine(PlayRoundStartAudio(roundNumber));
@@ -219,6 +215,7 @@ public class RoundsManager : MonoBehaviour
     {
         AccessibleMenu.DifficultyLevel difficulty = AccessibleMenu.DifficultyLevel.Easy;
 
+        Debug.Log($"Setting difficulty for round {roundNumber}...");
         switch (roundNumber)
         {
             case 1:
@@ -229,6 +226,9 @@ public class RoundsManager : MonoBehaviour
                 break;
             case 3:
                 difficulty = AccessibleMenu.DifficultyLevel.UltraHard;
+                break;
+            default:
+                Debug.LogWarning($"Unexpected round number: {roundNumber}. Defaulting to Easy difficulty.");
                 break;
         }
 
@@ -265,15 +265,24 @@ public class RoundsManager : MonoBehaviour
             yield return StartCoroutine(scoreManager.AnnouncePlayerScore());
             yield return StartCoroutine(scoreManager.AnnounceEnemyScore());
         }
+        Debug.Log(" Round number : " + RoundNumber);
+        if (RoundNumber == 3)
+        {
+            audioSource.PlayOneShot(gameOverAudio);
+            yield return new WaitForSeconds(gameOverAudio.length);
+        }
+        else
+        {
+            audioSource.PlayOneShot(roundBreakAudio);
+            yield return new WaitForSeconds(roundBreakAudio.length);
+        }
 
-        audioSource.PlayOneShot(roundBreakAudio);
-        yield return new WaitForSeconds(roundBreakAudio.length);
     }
 
     private IEnumerator RoundBreak()
     {
         Debug.Log("Round break. Duration: 60 seconds.");
-        yield return new WaitForSeconds(60f);
+        yield return new WaitForSeconds(10f);
 
         // Fetch the stats
         RoundData currentRoundData = new RoundData
@@ -308,9 +317,69 @@ public class RoundsManager : MonoBehaviour
         if (gameOverUI != null)
         {
             gameOverUI.SetActive(true);
+
+            // Create three panels for each round
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject panel = CreateStatsPanel(i + 1);
+                PositionPanelInFrontOfPlayer(panel, i);
+                PopulateStatsPanel(panel, i + 1);
+            }
         }
         Debug.Log("All rounds completed. Game Over.");
     }
+
+    private GameObject CreateStatsPanel(int roundNumber)
+    {
+        GameObject panel = new GameObject($"Round {roundNumber} Stats Panel");
+        RectTransform rectTransform = panel.AddComponent<RectTransform>();
+        Image image = panel.AddComponent<Image>();
+        image.color = new Color(0.1f, 0.1f, 0.1f, 0.8f); // Semi-transparent dark background
+
+        rectTransform.sizeDelta = new Vector2(0.5f, 0.7f); // Set size in meters
+        panel.transform.SetParent(gameOverUI.transform, false);
+
+        return panel;
+    }
+
+    private void PositionPanelInFrontOfPlayer(GameObject panel, int index)
+    {
+        float xOffset = (index - 1) * 0.6f; // Spread panels horizontally
+        panel.transform.position = playerCamera.transform.position + playerCamera.transform.forward * 2f + playerCamera.transform.right * xOffset;
+        panel.transform.rotation = playerCamera.transform.rotation;
+    }
+
+    private void PopulateStatsPanel(GameObject panel, int roundNumber)
+    {
+        RoundData data = GetRoundData(roundNumber);
+        if (data.roundNumber == 0) return; // No data for this round
+
+        string statsText = $"Round {roundNumber} Stats:\n\n" +
+                           $"Left Trigger Count: {data.leftTriggerCount}\n" +
+                           $"Right Trigger Count: {data.rightTriggerCount}\n" +
+                           $"Duck Count: {data.duckCount}\n" +
+                           $"Player Hit Count: {data.playerHitCount}\n" +
+                           $"Head Punch Count: {data.playerHeadPunchCount}\n" +
+                           $"Body Punch Count: {data.playerBodyPunchCount}\n" +
+                           $"Player Score: {data.playerScore}\n" +
+                           $"Enemy Score: {data.enemyScore}";
+
+        GameObject textObject = new GameObject("Stats Text");
+        textObject.transform.SetParent(panel.transform, false);
+
+        TextMeshProUGUI tmpText = textObject.AddComponent<TextMeshProUGUI>();
+        tmpText.text = statsText;
+        tmpText.fontSize = 0.02f; // Adjust as needed
+        tmpText.color = Color.white;
+        tmpText.alignment = TextAlignmentOptions.Center;
+
+        RectTransform textRectTransform = tmpText.GetComponent<RectTransform>();
+        textRectTransform.anchorMin = Vector2.zero;
+        textRectTransform.anchorMax = Vector2.one;
+        textRectTransform.sizeDelta = Vector2.zero;
+        textRectTransform.anchoredPosition = Vector2.zero;
+    }
+
 
     public void ResetEnemyPosition()
     {

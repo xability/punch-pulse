@@ -143,8 +143,8 @@ public class MoveEnemyInFront : MonoBehaviour
         {
             float distanceToTarget;
             float stopDistance;
-            Debug.Log("Current Difficulty: " + AccessibleMenu.CurrentDifficulty);
-            Debug.Log("Moving the enemy after pressing right trigger");
+            // Debug.Log("Current Difficulty: " + AccessibleMenu.CurrentDifficulty);
+            //Debug.Log("Moving the enemy after pressing right trigger");
             if (AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Hard || AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.UltraHard)
             {
                 // should not be in use after changing right trigger functionality
