@@ -39,6 +39,41 @@ public class RoundsManager : MonoBehaviour
     public Transform playerTransform;
     public Camera playerCamera;
     public AccessibleMenu menu;
+    public bool skipWarmupRound = false;
+
+    [Header("Panels for Results")]
+    public GameObject panelRound1;
+    public GameObject panelRound2;
+    public GameObject panelRound3;
+
+    [Header("Text Fields for Results")]
+    public TextMeshProUGUI round1LTCountText;
+    public TextMeshProUGUI round1RTCountText;
+    public TextMeshProUGUI round1DuckCountText;
+    public TextMeshProUGUI round1PlayerHitsText;
+    public TextMeshProUGUI round1HeadPunchesText;
+    public TextMeshProUGUI round1BodyPunchesText;
+    public TextMeshProUGUI round1PlayerScoreText;
+    public TextMeshProUGUI round1EnemyScoreText;
+
+    public TextMeshProUGUI round2LTCountText;
+    public TextMeshProUGUI round2RTCountText;
+    public TextMeshProUGUI round2DuckCountText;
+    public TextMeshProUGUI round2PlayerHitsText;
+    public TextMeshProUGUI round2HeadPunchesText;
+    public TextMeshProUGUI round2BodyPunchesText;
+    public TextMeshProUGUI round2PlayerScoreText;
+    public TextMeshProUGUI round2EnemyScoreText;
+
+    public TextMeshProUGUI round3LTCountText;
+    public TextMeshProUGUI round3RTCountText;
+    public TextMeshProUGUI round3DuckCountText;
+    public TextMeshProUGUI round3PlayerHitsText;
+    public TextMeshProUGUI round3HeadPunchesText;
+    public TextMeshProUGUI round3BodyPunchesText;
+    public TextMeshProUGUI round3PlayerScoreText;
+    public TextMeshProUGUI round3EnemyScoreText;
+
 
     [System.Serializable]
     public struct RoundData
@@ -86,6 +121,8 @@ public class RoundsManager : MonoBehaviour
         {
             Debug.LogError("GameModuleManager reference not set in the Inspector for RoundsManager!");
         }
+
+
     }
 
     public void BeginRounds()
@@ -99,7 +136,11 @@ public class RoundsManager : MonoBehaviour
     private IEnumerator HandleAllGameModes()
     {
         // Warm-up round
-        yield return StartCoroutine(HandleWarmUpRound());
+        ResetEnemyPosition();
+        if (!skipWarmupRound)
+        {
+            yield return StartCoroutine(HandleWarmUpRound());
+        }
 
         // Main rounds
         for (int roundIndex = 1; roundIndex <= totalRounds; roundIndex++)
@@ -107,7 +148,7 @@ public class RoundsManager : MonoBehaviour
             RoundNumber += 1;
             Debug.Log("Round number : " + RoundNumber);
 
-
+            ResetEnemyPosition();
             yield return StartCoroutine(HandleMainRound(roundIndex));
             if (roundIndex < totalRounds)
             {
@@ -154,6 +195,11 @@ public class RoundsManager : MonoBehaviour
         Debug.Log("Warm-Up round ended.");
         audioSource.PlayOneShot(warmUpEndAudio);
         yield return new WaitForSeconds(warmUpEndAudio.length);
+
+        audioSource.PlayOneShot(roundBreakAudio);
+        yield return new WaitForSeconds(roundBreakAudio.length);
+        Debug.Log("Round break. Duration: 60 seconds.");
+        yield return new WaitForSeconds(60f);
     }
 
 
@@ -314,72 +360,55 @@ public class RoundsManager : MonoBehaviour
 
     private void ShowGameOver()
     {
-        if (gameOverUI != null)
-        {
-            gameOverUI.SetActive(true);
-
-            // Create three panels for each round
-            for (int i = 0; i < 3; i++)
-            {
-                GameObject panel = CreateStatsPanel(i + 1);
-                PositionPanelInFrontOfPlayer(panel, i);
-                PopulateStatsPanel(panel, i + 1);
-            }
-        }
         Debug.Log("All rounds completed. Game Over.");
+
+        // Activate panels
+        if (panelRound1 != null) panelRound1.SetActive(true);
+        if (panelRound2 != null) panelRound2.SetActive(true);
+        if (panelRound3 != null) panelRound3.SetActive(true);
+
+        // Populate data for Round 1
+        RoundData round1Data = GetRoundData(1);
+        if (round1Data.roundNumber == 1)
+        {
+            round1LTCountText.text = "LT Count: " + round1Data.leftTriggerCount.ToString();
+            round1RTCountText.text = "RT Count: " + round1Data.rightTriggerCount.ToString();
+            round1DuckCountText.text = "Ducks: " + round1Data.duckCount.ToString();
+            round1PlayerHitsText.text = "Player Hits: " + round1Data.playerHitCount.ToString();
+            round1HeadPunchesText.text = "Head Punches: " + round1Data.playerHeadPunchCount.ToString();
+            round1BodyPunchesText.text = "Body Punches: " + round1Data.playerBodyPunchCount.ToString();
+            round1PlayerScoreText.text = "Player Score: " + round1Data.playerScore.ToString();
+            round1EnemyScoreText.text = "Enemy Score: " + round1Data.enemyScore.ToString();
+        }
+
+        // Populate data for Round 2
+        RoundData round2Data = GetRoundData(2);
+        if (round2Data.roundNumber == 2)
+        {
+            round2LTCountText.text = "LT Count: " + round2Data.leftTriggerCount.ToString();
+            round2RTCountText.text = "RT Count: " + round2Data.rightTriggerCount.ToString();
+            round2DuckCountText.text = "Ducks: " + round2Data.duckCount.ToString();
+            round2PlayerHitsText.text = "Player Hits: " + round2Data.playerHitCount.ToString();
+            round2HeadPunchesText.text = "Head Punches: " + round2Data.playerHeadPunchCount.ToString();
+            round2BodyPunchesText.text = "Body Punches: " + round2Data.playerBodyPunchCount.ToString();
+            round2PlayerScoreText.text = "Player Score: " + round2Data.playerScore.ToString();
+            round2EnemyScoreText.text = "Enemy Score: " + round2Data.enemyScore.ToString();
+        }
+
+        // Populate data for Round 3
+        RoundData round3Data = GetRoundData(3);
+        if (round3Data.roundNumber == 3)
+        {
+            round3LTCountText.text = "LT Count: " + round3Data.leftTriggerCount.ToString();
+            round3RTCountText.text = "RT Count: " + round3Data.rightTriggerCount.ToString();
+            round3DuckCountText.text = "Ducks: " + round3Data.duckCount.ToString();
+            round3PlayerHitsText.text = "Player Hits: " + round3Data.playerHitCount.ToString();
+            round3HeadPunchesText.text = "Head Punches: " + round3Data.playerHeadPunchCount.ToString();
+            round3BodyPunchesText.text = "Body Punches: " + round3Data.playerBodyPunchCount.ToString();
+            round3PlayerScoreText.text = "Player Score: " + round3Data.playerScore.ToString();
+            round3EnemyScoreText.text = "Enemy Score: " + round3Data.enemyScore.ToString();
+        }
     }
-
-    private GameObject CreateStatsPanel(int roundNumber)
-    {
-        GameObject panel = new GameObject($"Round {roundNumber} Stats Panel");
-        RectTransform rectTransform = panel.AddComponent<RectTransform>();
-        Image image = panel.AddComponent<Image>();
-        image.color = new Color(0.1f, 0.1f, 0.1f, 0.8f); // Semi-transparent dark background
-
-        rectTransform.sizeDelta = new Vector2(0.5f, 0.7f); // Set size in meters
-        panel.transform.SetParent(gameOverUI.transform, false);
-
-        return panel;
-    }
-
-    private void PositionPanelInFrontOfPlayer(GameObject panel, int index)
-    {
-        float xOffset = (index - 1) * 0.6f; // Spread panels horizontally
-        panel.transform.position = playerCamera.transform.position + playerCamera.transform.forward * 2f + playerCamera.transform.right * xOffset;
-        panel.transform.rotation = playerCamera.transform.rotation;
-    }
-
-    private void PopulateStatsPanel(GameObject panel, int roundNumber)
-    {
-        RoundData data = GetRoundData(roundNumber);
-        if (data.roundNumber == 0) return; // No data for this round
-
-        string statsText = $"Round {roundNumber} Stats:\n\n" +
-                           $"Left Trigger Count: {data.leftTriggerCount}\n" +
-                           $"Right Trigger Count: {data.rightTriggerCount}\n" +
-                           $"Duck Count: {data.duckCount}\n" +
-                           $"Player Hit Count: {data.playerHitCount}\n" +
-                           $"Head Punch Count: {data.playerHeadPunchCount}\n" +
-                           $"Body Punch Count: {data.playerBodyPunchCount}\n" +
-                           $"Player Score: {data.playerScore}\n" +
-                           $"Enemy Score: {data.enemyScore}";
-
-        GameObject textObject = new GameObject("Stats Text");
-        textObject.transform.SetParent(panel.transform, false);
-
-        TextMeshProUGUI tmpText = textObject.AddComponent<TextMeshProUGUI>();
-        tmpText.text = statsText;
-        tmpText.fontSize = 0.02f; // Adjust as needed
-        tmpText.color = Color.white;
-        tmpText.alignment = TextAlignmentOptions.Center;
-
-        RectTransform textRectTransform = tmpText.GetComponent<RectTransform>();
-        textRectTransform.anchorMin = Vector2.zero;
-        textRectTransform.anchorMax = Vector2.one;
-        textRectTransform.sizeDelta = Vector2.zero;
-        textRectTransform.anchoredPosition = Vector2.zero;
-    }
-
 
     public void ResetEnemyPosition()
     {

@@ -340,13 +340,13 @@ public class AccessibleMenu : MonoBehaviour
                             audioSource.PlayOneShot(difficultyEasyHoverSound);
                             break;
                         case DifficultyLevel.Medium:
-                            audioSource.PlayOneShot(difficultyMediumHoverSound);
+                            audioSource.PlayOneShot(difficultyEasyHoverSound);
                             break;
                         case DifficultyLevel.Hard:
-                            audioSource.PlayOneShot(difficultyHardHoverSound);
+                            audioSource.PlayOneShot(difficultyMediumHoverSound);
                             break;
                         case DifficultyLevel.UltraHard:
-                            audioSource.PlayOneShot(difficultyUltraHardHoverSound);
+                            audioSource.PlayOneShot(difficultyHardHoverSound);
                             break;
                     }
                 }
@@ -547,16 +547,16 @@ public class AccessibleMenu : MonoBehaviour
         switch (currentDifficulty)
         {
             case DifficultyLevel.Easy:
-                difficultyText.text = "Difficulty: Easy";
+                difficultyText.text = "Difficulty: Novice";
                 break;
             case DifficultyLevel.Medium:
-                difficultyText.text = "Difficulty: Medium";
+                difficultyText.text = "Difficulty: Easy";
                 break;
             case DifficultyLevel.Hard:
-                difficultyText.text = "Difficulty: Hard";
+                difficultyText.text = "Difficulty: Medium";
                 break;
             case DifficultyLevel.UltraHard:
-                difficultyText.text = "Difficulty: UltraHard";
+                difficultyText.text = "Difficulty: Hard";
 
                 break;
         }

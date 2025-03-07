@@ -101,14 +101,14 @@ public class EnemyAttackBehavior : MonoBehaviour
                 break;
             case AccessibleMenu.DifficultyLevel.Medium:
                 minAttackInterval =  2f;
-                maxAttackInterval =  7f;
-                cooldownAfterAttack = 3f;
-                reflex_time_duration = 1.7f;
+                maxAttackInterval =  4.5f;
+                cooldownAfterAttack = 1.3f;
+                reflex_time_duration = 1.25f;
                 break;
             case AccessibleMenu.DifficultyLevel.Hard:
                 minAttackInterval =  1.5f;
-                maxAttackInterval =  4f;
-                cooldownAfterAttack = 1.5f;
+                maxAttackInterval =  3f;
+                cooldownAfterAttack = 0.9f;
                 reflex_time_duration = 1.3f;
                 break;
             case AccessibleMenu.DifficultyLevel.UltraHard:
