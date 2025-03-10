@@ -119,24 +119,27 @@ public class TutorialManager : MonoBehaviour
         {*/
 
             currentClip = 0;
-            PlayNextClip();
+        StartCoroutine(PlayNextClip());
         
     }
 
-    void PlayNextClip()
+    IEnumerator PlayNextClip()
     {
         var step = tutorialSteps[currentStep];
         if (currentClip < step.narration.Length)
         {
             audioSource.clip = step.narration[currentClip];
-            audioSource.Play();
+            audioSource.PlayOneShot(step.narration[currentClip]);
             isAudioPlaying = true;
-            StartCoroutine(WaitForClipEnd());
+            yield return new WaitForSeconds(step.narration[currentClip].length);
+            isAudioPlaying = false;
+            waitingForAction = true;
 
         }
         else
         {
             NextStep();
+            yield return new WaitForSeconds(1);
         }
     }
 
@@ -147,13 +150,6 @@ public class TutorialManager : MonoBehaviour
         UpdateTutorialStep();
         // Optionally, you might want to call ExitTutorial here if you want to immediately end the tutorial
         // ExitTutorial(new InputAction.CallbackContext());
-    }
-
-    IEnumerator WaitForClipEnd()
-    {
-        yield return new WaitForSeconds(audioSource.clip.length);
-        isAudioPlaying = false;
-        waitingForAction = true;
     }
 
     void CheckRequiredAction()
@@ -172,7 +168,7 @@ public class TutorialManager : MonoBehaviour
             }
             else
             {
-                PlayNextClip();
+                StartCoroutine(PlayNextClip());
             }
         }
     }
@@ -191,13 +187,19 @@ public class TutorialManager : MonoBehaviour
         // Wait for the current audio clip to finish
         if (step.StepNum == 2)
         {
-            if (clipIndex == 0 || clipIndex == 5)
+            if (clipIndex == 0)
             {
-                yield return new WaitForSeconds(3);
+                Debug.Log("iNC wait time");
+                yield return new WaitForSeconds(6);
             }
             else if (clipIndex == 2)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(2);
+            }
+            else if (clipIndex == 5)
+            {
+                Debug.Log("iNCREASED wait time");
+                yield return new WaitForSeconds(10);
             }
         }
         else if (step.StepNum == 3)
@@ -206,18 +208,19 @@ public class TutorialManager : MonoBehaviour
                 TutorialAttackFlag = true;
                 yield return StartCoroutine(enemyAttackBehavior.PerformAttack());
                 TutorialAttackFlag = false;
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(4);
             }
-            if (clipIndex == 1)
+            else if (clipIndex == 1)
             {
                 TutorialAttackFlag = true;
                 yield return StartCoroutine(enemyAttackBehavior.PerformAttack());
                 TutorialAttackFlag = false;
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(5);
             }
         }
         Debug.Log("Waiting for audio to finish");
-        PlayNextClip();
+        StartCoroutine(PlayNextClip());
+        yield return new WaitForSeconds(2);
     }
 
     private void OnNextButtonPressed(InputAction.CallbackContext context)

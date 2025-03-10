@@ -3371,7 +3371,7 @@ MonoBehaviour:
   objectToToggle0: {fileID: 2125929131}
   objectToToggle1: {fileID: 864913198}
   boxingbell: {fileID: 8300000, guid: debd6328823174d729af747e5c86b32f, type: 3}
-  skipToLastStep: 1
+  skipToLastStep: 0
   tutorialSteps:
   - instruction: Introduction
     narration:
