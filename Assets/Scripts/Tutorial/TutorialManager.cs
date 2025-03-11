@@ -190,7 +190,7 @@ public class TutorialManager : MonoBehaviour
             if (clipIndex == 0)
             {
                 Debug.Log("iNC wait time");
-                yield return new WaitForSeconds(6);
+                yield return new WaitForSeconds(7);
             }
             else if (clipIndex == 2)
             {
@@ -199,13 +199,14 @@ public class TutorialManager : MonoBehaviour
             else if (clipIndex == 5)
             {
                 Debug.Log("iNCREASED wait time");
-                yield return new WaitForSeconds(10);
+                yield return new WaitForSeconds(11);
             }
         }
         else if (step.StepNum == 3)
         {
             if (clipIndex == 0) { 
                 TutorialAttackFlag = true;
+                Debug.Log("Enemy attack set , called in clipindex 0");
                 yield return StartCoroutine(enemyAttackBehavior.PerformAttack());
                 TutorialAttackFlag = false;
                 yield return new WaitForSeconds(4);
@@ -213,6 +214,7 @@ public class TutorialManager : MonoBehaviour
             else if (clipIndex == 1)
             {
                 TutorialAttackFlag = true;
+                Debug.Log("Enemy attack set , called in clipindex 0");
                 yield return StartCoroutine(enemyAttackBehavior.PerformAttack());
                 TutorialAttackFlag = false;
                 yield return new WaitForSeconds(5);

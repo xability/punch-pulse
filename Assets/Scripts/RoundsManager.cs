@@ -148,12 +148,10 @@ public class RoundsManager : MonoBehaviour
             RoundNumber += 1;
             Debug.Log("Round number : " + RoundNumber);
 
-            ResetEnemyPosition();
+            
             yield return StartCoroutine(HandleMainRound(roundIndex));
-            if (roundIndex < totalRounds)
-            {
-                yield return RoundBreak();
-            }
+            ResetEnemyPosition();
+            yield return RoundBreak();
         }
 
         ShowGameOver();
@@ -161,6 +159,14 @@ public class RoundsManager : MonoBehaviour
 
     private IEnumerator HandleWarmUpRound()
     {
+        ScoreManager.ResetScores();
+        DirectionHelper.SetTriggerPressCount(0);
+        MoveEnemyInFront.SetRightTriggerPressCount(0);
+        EnemyAttackBehavior.SetPlayerDuckCount(0);
+        EnemyAttackBehavior.SetPlayerHitCount(0);
+        PlayAudioOnBoxing.SetPlayerHeadPunchCount(0);
+        PlayAudioOnBoxing.SetPlayerBodyPunchCount(0);
+
         Debug.Log("Warm-Up round started.");
         isRoundOngoing = false;
         AccessibleMenu.IsOffensiveMode = false;
@@ -190,7 +196,7 @@ public class RoundsManager : MonoBehaviour
         audioSource.PlayOneShot(boxingBellStart);
         yield return new WaitForSeconds(boxingBellStart.length);
 
-        yield return new WaitForSeconds(120f);
+        yield return new WaitForSeconds(20f);
 
         Debug.Log("Warm-Up round ended.");
         audioSource.PlayOneShot(warmUpEndAudio);
@@ -199,14 +205,13 @@ public class RoundsManager : MonoBehaviour
         audioSource.PlayOneShot(roundBreakAudio);
         yield return new WaitForSeconds(roundBreakAudio.length);
         Debug.Log("Round break. Duration: 60 seconds.");
-        yield return new WaitForSeconds(60f);
+        yield return new WaitForSeconds(10f);
     }
 
 
     private IEnumerator HandleMainRound(int roundNumber)
     {
-        isRoundOngoing = true;
-        AccessibleMenu.IsOffensiveMode = true;
+
 
         // Set difficulty
         yield return StartCoroutine(SetDifficultyForRound(roundNumber));
@@ -215,7 +220,11 @@ public class RoundsManager : MonoBehaviour
         yield return StartCoroutine(PlayRoundStartAudio(roundNumber));
 
         Debug.Log($"Round {roundNumber} has started.");
+        isRoundOngoing = true;
 
+        // add a delay here if needed for the player to get ready
+
+        AccessibleMenu.IsOffensiveMode = true;
         // Wait for the round duration
         yield return new WaitForSeconds(roundDuration);
 
@@ -283,8 +292,11 @@ public class RoundsManager : MonoBehaviour
 
         if (audioSource != null && difficultIncreased != null)
         {
-            audioSource.PlayOneShot(difficultIncreased);
-            yield return new WaitForSeconds(difficultIncreased.length);
+            if (difficulty != AccessibleMenu.DifficultyLevel.Medium)
+            {
+                audioSource.PlayOneShot(difficultIncreased);
+                yield return new WaitForSeconds(difficultIncreased.length);
+            }
         }
     }
 
