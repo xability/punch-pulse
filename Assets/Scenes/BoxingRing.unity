@@ -17341,51 +17341,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &1890196138
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1890196140}
-  - component: {fileID: 1890196139}
-  m_Layer: 0
-  m_Name: GameSettings
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1890196139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1890196138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a50cf6243b4f764c9eb395e2bf052c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isHardMode: 1
---- !u!4 &1890196140
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1890196138}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1899942795
 GameObject:
   m_ObjectHideFlags: 0
@@ -20405,11 +20360,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20417,11 +20379,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 0
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:LeftUpLeg
     joint: {fileID: 212845730}
     target: {fileID: 1921478596}
@@ -20438,11 +20444,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20450,11 +20463,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 1
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:LeftLeg
     joint: {fileID: 55785500}
     target: {fileID: 826718606}
@@ -20471,11 +20528,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20483,11 +20547,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 2
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:LeftFoot
     joint: {fileID: 603221373}
     target: {fileID: 50996746}
@@ -20504,11 +20612,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20516,11 +20631,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 3
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:RightUpLeg
     joint: {fileID: 1936135649}
     target: {fileID: 1039470531}
@@ -20537,11 +20696,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20549,11 +20715,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 4
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:RightLeg
     joint: {fileID: 1078585168}
     target: {fileID: 583603205}
@@ -20570,11 +20780,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20582,11 +20799,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 5
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:RightFoot
     joint: {fileID: 691091166}
     target: {fileID: 367869457}
@@ -20603,11 +20864,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20615,11 +20883,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 6
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:Spine1
     joint: {fileID: 955061701}
     target: {fileID: 2020603282}
@@ -20636,11 +20948,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20648,11 +20967,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 7
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:LeftArm
     joint: {fileID: 135250739}
     target: {fileID: 2128147513}
@@ -20669,11 +21032,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20681,11 +21051,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 8
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:LeftForeArm
     joint: {fileID: 213122890}
     target: {fileID: 1599763950}
@@ -20702,11 +21116,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20714,11 +21135,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 9
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:LeftHand
     joint: {fileID: 801258524}
     target: {fileID: 1448186301}
@@ -20735,11 +21200,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20747,11 +21219,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 10
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:Head
     joint: {fileID: 744751058}
     target: {fileID: 860204138}
@@ -20768,11 +21284,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20780,11 +21303,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 11
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:RightArm
     joint: {fileID: 1564111314}
     target: {fileID: 1077909269}
@@ -20801,11 +21368,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20813,11 +21387,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 12
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:RightForeArm
     joint: {fileID: 213122887}
     target: {fileID: 1404587216}
@@ -20834,11 +21452,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20846,11 +21471,55 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 13
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   - name: mixamorig:RightHand
     joint: {fileID: 1202916061}
     target: {fileID: 1718314395}
@@ -20867,11 +21536,18 @@ MonoBehaviour:
       animatedTargetChildren: []
     parentIndexes: 
     childIndexes: 
-    childFlags: 
+    childFlags: []
     kinshipDegrees: 
     broadcaster: {fileID: 0}
     jointBreakBroadcaster: {fileID: 0}
     positionOffset: {x: 0, y: 0, z: 0}
+    <transform>k__BackingField: {fileID: 0}
+    <rigidbody>k__BackingField: {fileID: 0}
+    <connectedBodyTarget>k__BackingField: {fileID: 0}
+    <targetAnimatedPosition>k__BackingField: {x: 0, y: 0, z: 0}
+    <targetAnimatedWorldRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <targetVelocity>k__BackingField: {x: 0, y: 0, z: 0}
+    <additionalRigidbody>k__BackingField: {fileID: 0}
     additionalPin: {fileID: 0}
     additionalPinTarget: {fileID: 0}
     additionalPinWeight: 0
@@ -20879,15 +21555,102 @@ MonoBehaviour:
     mappedAngularVelocity: {x: 0, y: 0, z: 0}
     isPropMuscle: 0
     index: 14
+    <targetRotationRelative>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <rebuildConnectedBody>k__BackingField: {fileID: 0}
+    <rebuildTargetParent>k__BackingField: {fileID: 0}
+    <defaultTargetPosRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0}
+    <defaultTargetRotRelToMuscle>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    <defaultMuscleRotRelToTarget>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+    rebuildParent: {fileID: 0}
+    rebuildPosition: {x: 0, y: 0, z: 0}
+    rebuildRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildTargetPosition: {x: 0, y: 0, z: 0}
+    rebuildTargetRotation: {x: 0, y: 0, z: 0, w: 1}
+    rebuildAngularXMotion: 0
+    rebuildAngularYMotion: 0
+    rebuildAngularZMotion: 0
     ignoreTargetVelocity: 0
     targetMappedPosition: {x: 0, y: 0, z: 0}
     targetMappedRotation: {x: 0, y: 0, z: 0, w: 1}
     targetSampledPosition: {x: 0, y: 0, z: 0}
     targetSampledRotation: {x: 0, y: 0, z: 0, w: 1}
+    lastJointDriveRotationWeight: -1
+    lastRotationDamper: -1
+    defaultPosition: {x: 0, y: 0, z: 0}
+    defaultTargetLocalPosition: {x: 0, y: 0, z: 0}
+    lastMappedPosition: {x: 0, y: 0, z: 0}
+    defaultLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    localRotationConvert: {x: 0, y: 0, z: 0, w: 0}
+    toParentSpace: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceInverse: {x: 0, y: 0, z: 0, w: 0}
+    toJointSpaceDefault: {x: 0, y: 0, z: 0, w: 0}
+    targetAnimatedRotation: {x: 0, y: 0, z: 0, w: 0}
+    defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+    rotationRelativeToTarget: {x: 0, y: 0, z: 0, w: 0}
+    defaultTargetLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMappedRotation: {x: 0, y: 0, z: 0, w: 0}
+    targetParent: {fileID: 0}
+    connectedBodyTransform: {fileID: 0}
+    angularXMotionDefault: 0
+    angularYMotionDefault: 0
+    angularZMotionDefault: 0
+    directTargetParent: 0
+    initiated: 0
+    _colliders: []
+    lastReadTime: 0
+    lastWriteTime: 0
+    disabledColliders: []
+    additionalTargetVelocity: {x: 0, y: 0, z: 0}
+    targetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    additionalPinTargetAnimatedCenterOfMass: {x: 0, y: 0, z: 0}
+    defaultTargetRotRelToMuscleInverse: {x: 0, y: 0, z: 0, w: 1}
   propMuscles: []
+  _targetAnimator: {fileID: 0}
+  <targetAnimation>k__BackingField: {fileID: 0}
+  <initiated>k__BackingField: 0
   solvers: []
   mapDisconnectedMuscles: 1
+  internalCollisionsEnabled: 1
+  angularLimitsEnabled: 1
+  fixedFrame: 0
+  lastSolverIterationCount: 0
+  isLegacy: 0
+  animatorDisabled: 0
+  awakeFailed: 0
+  interpolated: 0
+  freezeFlag: 0
+  hasBeenDisabled: 0
+  hierarchyIsFlat: 0
+  teleport: 0
+  teleportPosition: {x: 0, y: 0, z: 0}
+  teleportRotation: {x: 0, y: 0, z: 0, w: 1}
+  teleportMoveToTarget: 0
+  rebuildFlag: 0
+  onPostRebuildFlag: 0
+  disconnectMuscleFlags: []
+  muscleDisconnectModes: 
+  disconnectDeactivateFlags: []
+  reconnectMuscleFlags: []
+  defaultMuscles: []
+  rebuildPelvisPos: {x: 0, y: 0, z: 0}
+  rebuildPelvisRot: {x: 0, y: 0, z: 0, w: 1}
+  simulationDeltaTime: 0
+  readInFixedUpdate: 0
+  <isSwitchingMode>k__BackingField: 0
+  activeMode: 0
+  lastMode: 0
+  mappingBlend: 1
+  <isKilling>k__BackingField: 0
+  activeState: 0
+  lastState: 0
+  angularLimitsEnabledOnKill: 0
+  internalCollisionsEnabledOnKill: 0
+  animationDisabledbyStates: 0
   storeTargetMappedState: 1
+  targetMappedStateStored: 0
+  targetMappedStateSampled: 0
+  sampleTargetMappedState: 0
+  hasProp: 0
 --- !u!1 &948084843540841132
 GameObject:
   m_ObjectHideFlags: 0
@@ -21960,7 +22723,6 @@ SceneRoots:
   - {fileID: 1941777329}
   - {fileID: 106579152}
   - {fileID: 282555734}
-  - {fileID: 1890196140}
   - {fileID: 1595875437}
   - {fileID: 897061041}
   - {fileID: 387403151}
