@@ -120,30 +120,27 @@ public class TutorialManager : MonoBehaviour
 
         currentClip = 0;
         StartCoroutine(PlayNextClip());
-        
+
     }
 
     IEnumerator PlayNextClip()
     {
         var step = tutorialSteps[currentStep];
+        if (currentClip < step.narration.Length)
+        {
+            audioSource.clip = step.narration[currentClip];
+            audioSource.PlayOneShot(step.narration[currentClip]);
+            isAudioPlaying = true;
+            yield return new WaitForSeconds(step.narration[currentClip].length);
+            isAudioPlaying = false;
+            waitingForAction = true;
 
-        // If no more clips in this step, move on to next step
-        if (currentClip >= step.narration.Length)
+        }
+        else
         {
             NextStep();
             yield return new WaitForSeconds(1);
         }
-
-        isAudioPlaying = true;
-        audioSource.clip = step.narration[currentClip];
-        audioSource.Play();
-        // Wait for the audio clip to finish
-        yield return new WaitForSeconds(audioSource.clip.length);
-        isAudioPlaying = false;
-
-        // Only after the clip finishes do we require the player action:
-        waitingForAction = true;
-
     }
 
     private void SkipToLastStep()
@@ -158,39 +155,31 @@ public class TutorialManager : MonoBehaviour
     void CheckRequiredAction()
     {
         var step = tutorialSteps[currentStep];
-        // If the currentClip is still within array bounds, see if that clip has a required action:
-        if (currentClip < step.requiredActions.Length)
+        if (step.requiredActions[currentClip].action.triggered)
         {
-            if (step.requiredActions[currentClip].action.triggered)
-            {
-                waitingForAction = false;
-                Debug.Log("Tutorial Step number " + currentClip + " completed");
+            waitingForAction = false;
+            Debug.Log("Tutorial Step number " + currentClip + " completed");
+            currentClip++;
 
-                // Check if the current step requires waiting for audio
-                if (StepRequiresAudioWait(step, currentClip - 1))
-                {
-                    StartCoroutine(WaitForAudioAndPlayNext(step, currentClip - 1));
-                }
-                else
-                {
-                    currentClip++;
-                    StartCoroutine(PlayNextClip());
-                }
+            // Check if the current step requires waiting for audio
+            if (StepRequiresAudioWait(step, currentClip - 1))
+            {
+                StartCoroutine(WaitForAudioAndPlayNext(step, currentClip - 1));
+            }
+            else
+            {
+                StartCoroutine(PlayNextClip());
             }
         }
-
     }
 
     bool StepRequiresAudioWait(TutorialStep step, int clipIndex)
     {
         // Define the steps and clips that require waiting for audio
 
-        if (step.StepNum == 2 && (clipIndex == 0 || clipIndex == 2 || clipIndex == 5))
-            return true;
-        if (step.StepNum == 3)
-            return true;
-
-        return false;
+        return (step.StepNum == 2 && (clipIndex == 0 || clipIndex == 2 || clipIndex == 5)) || (step.StepNum == 3);
+        //||
+        // (step.StepNum == 5 && clipIndex == 0);
     }
 
     IEnumerator WaitForAudioAndPlayNext(TutorialStep step, int clipIndex)
@@ -213,29 +202,28 @@ public class TutorialManager : MonoBehaviour
                 yield return new WaitForSeconds(11);
             }
         }
-        // 2) If step == 3, handle enemy attacks:
         else if (step.StepNum == 3)
         {
-            // Kick off the enemy attack
-            TutorialAttackFlag = true;
-            Debug.Log("Enemy attack set");
-            yield return StartCoroutine(enemyAttackBehavior.PerformAttack());
-            TutorialAttackFlag = false;
-
-            // Then some extra wait
             if (clipIndex == 0)
             {
-                yield return new WaitForSeconds(4f);
+                TutorialAttackFlag = true;
+                Debug.Log("Enemy attack set , called in clipindex 0");
+                yield return StartCoroutine(enemyAttackBehavior.PerformAttack());
+                TutorialAttackFlag = false;
+                yield return new WaitForSeconds(6);
             }
             else if (clipIndex == 1)
             {
-                yield return new WaitForSeconds(5f);
+                TutorialAttackFlag = true;
+                Debug.Log("Enemy attack set , called in clipindex 0");
+                yield return StartCoroutine(enemyAttackBehavior.PerformAttack());
+                TutorialAttackFlag = false;
+                yield return new WaitForSeconds(6);
             }
         }
         Debug.Log("Waiting for audio to finish");
-        currentClip++;
         StartCoroutine(PlayNextClip());
-
+        yield return new WaitForSeconds(2);
     }
 
     private void OnNextButtonPressed(InputAction.CallbackContext context)
@@ -294,9 +282,6 @@ public class TutorialManager : MonoBehaviour
         exitTutorialAction.action.performed -= ExitTutorial;
     }
 
-    /// <summary>
-    /// Public method to completely restart the tutorial from scratch.
-    /// </summary>
     public void RestartTutorial()
     {
         currentStep = 0;
@@ -307,7 +292,8 @@ public class TutorialManager : MonoBehaviour
         TutorialCompleted = false;
         TutorialAttackFlag = false;
 
-        // Re‐init UI to default
+        // Reset any other necessary variables
+
         instructionText.text = "Press right select button to start";
         stepcount.text = "0";
 
@@ -315,4 +301,3 @@ public class TutorialManager : MonoBehaviour
     }
 
 }
-

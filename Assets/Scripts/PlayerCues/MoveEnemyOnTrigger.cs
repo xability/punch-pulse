@@ -31,6 +31,8 @@ public class MoveEnemyInFront : MonoBehaviour
 
     private float lastAudioPlayTime = 0f;
     private float audioCooldown = 0.5f;
+    private bool hasPlayedMovementAudio = false;
+
 
     private AccessibleMenu.DifficultyLevel currentDifficulty;
 
@@ -145,9 +147,14 @@ public class MoveEnemyInFront : MonoBehaviour
             float stopDistance;
             // Debug.Log("Current Difficulty: " + AccessibleMenu.CurrentDifficulty);
             //Debug.Log("Moving the enemy after pressing right trigger");
+            if (!hasPlayedMovementAudio && movementAudioSource != null && footsteps != null)
+            {
+                movementAudioSource.PlayOneShot(footsteps);
+                hasPlayedMovementAudio = true;
+            }
+
             if (AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.Hard || AccessibleMenu.CurrentDifficulty == AccessibleMenu.DifficultyLevel.UltraHard)
             {
-                // should not be in use after changing right trigger functionality
                 distanceToTarget = MoveEnemyTowardsTargetHardMode(targetPosition);
                 stopDistance = 1.5f;
             }
@@ -155,6 +162,12 @@ public class MoveEnemyInFront : MonoBehaviour
             {
                 distanceToTarget = MoveEnemyTowardsTarget(targetPosition);
                 stopDistance = 0.8f;
+            }
+
+            if (distanceToTarget < stopDistance)
+            {
+                shouldMove = false;
+                hasPlayedMovementAudio = false; // Reset for next trigger
             }
 
             if (distanceToTarget < stopDistance)
@@ -181,12 +194,6 @@ public class MoveEnemyInFront : MonoBehaviour
     {
         if (enemy == null) return 0.0f;
 
-        // Play the audio clip
-        if (movementAudioSource != null && footsteps != null && Time.time - lastAudioPlayTime > audioCooldown)
-        {
-            movementAudioSource.PlayOneShot(footsteps);
-            lastAudioPlayTime = Time.time;
-        }
 
         // Move the enemy towards the target position (only Z and Y)
         Vector3 currentPosition = enemy.position;
@@ -212,12 +219,6 @@ public class MoveEnemyInFront : MonoBehaviour
     {
         if (enemy == null) return 0.0f;
 
-        // Play the audio clip
-        if (movementAudioSource != null && footsteps != null && Time.time - lastAudioPlayTime > audioCooldown)
-        {
-            movementAudioSource.PlayOneShot(footsteps);
-            lastAudioPlayTime = Time.time;
-        }
 
         // Move the enemy towards the target position (only Z and Y) at half speed
         Vector3 currentPosition = enemy.position;
