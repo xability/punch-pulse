@@ -2,7 +2,7 @@
 
 An accessible VR boxing game designed for blind and low vision users. Built with Unity, OpenXR and deployed on Meta Quest 2, this project brings together spatial audio, haptic feedback, and adaptive gameplay to promote physical activity in an inclusive way.
 
-Developed by the [xAbility Design Lab](https://ischool.illinois.edu/research/centers/xability-design-lab) at the University of Illinois Urbana-Champaign.
+Developed by the xAbility Design Lab at the University of Illinois Urbana-Champaign.
 
 ---
 
@@ -73,12 +73,6 @@ We welcome contributions to improve the game's accessibility and features. Pleas
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- [xAbility Design Lab](https://ischool.illinois.edu/research/centers/xability-design-lab) team members
-- All testers and contributors who helped improve the game's accessibility
-- Unity and Meta for their development platforms and tools
 
 ## 📧 Contact
 
