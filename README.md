@@ -80,4 +80,3 @@ For questions or feedback, please open an issue in the GitHub repository or cont
 
 ---
 
-Made with ❤️ by the xAbility Design Lab at UIUC
