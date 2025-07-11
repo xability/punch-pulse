@@ -4,7 +4,7 @@
 
 ## View Project Demo
 
-[![Project Demo](img/boxing.jpg)](https://youtu.be/3gX_wjZ6JY0)
+[![Project Demo](img/boxing.jpg)](https://youtu.be/-IcF1tVPFXQ)
 
 A cross-platform accessible virtual reality boxing application designed to provide inclusive physical activity experiences for blind and low vision users. This project implements a research-informed approach to VR accessibility, leveraging spatial audio, haptic feedback systems, and adaptive interaction paradigms.
 
