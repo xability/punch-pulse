@@ -2,6 +2,10 @@
 
 <img src="./PunchPulse_logo.JPEG" alt="PunchPulse logo: a boxing glove with motion lines and the word 'PunchPulse' across the glove" width="180" />
 
+## View Project Demo
+
+[![Project Demo](img/boxing.jpg)](https://youtu.be/3gX_wjZ6JY0)
+
 A cross-platform accessible virtual reality boxing application designed to provide inclusive physical activity experiences for blind and low vision users. This project implements a research-informed approach to VR accessibility, leveraging spatial audio, haptic feedback systems, and adaptive interaction paradigms.
 
 **Developed by:** xAbility Design Lab, University of Illinois Urbana-Champaign
